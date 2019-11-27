@@ -19,7 +19,7 @@
 
 {% block content %}
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-4">
     <h3>Ріелтор: </h3><a href="#">{{ created_by.first_name }}
 {{created_by.second_name}}</a></p>
       <h4>Телефони: </h4>
@@ -30,12 +30,12 @@
       {% endif%}
     <h3>Агенство: </h3>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-4">
     <p>Тут буде фото ріелтора</p>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-4">
 <h4>Додаткові умови: </h4>
   <ul>
     {% if object.agree_price is True%}
@@ -66,13 +66,15 @@
   <h4>Розташування: <a href="#">{{object.get_district_display}}</a></h4>
   {{object.street}}, {{object.house}}, Черкаси, Черкаська область, Україна</p>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-4">
     <p>Тут буде форма для запиту ріелтору</p>
   </div>
 </div>
 
+<br />
+
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-4">
     <h3>Основні характеристики об'єкта</h3>
     <table class="table table-striped">
       <thead>
@@ -130,8 +132,10 @@
   </div>
 </div>
 
+<br />
+
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-4">
     <h3>Побутова техніка</h3>
     <table class="table table-striped">
       <thead>
@@ -183,7 +187,7 @@
         </tr>
       </tbody>
     </table>
-
+<br />
     <h3>Мультимедіа</h3>
     <table class="table table-striped">
       <thead>
@@ -219,7 +223,7 @@
         </tr>
       </tbody>
     </table>
-
+<br />
     <h3>Комфорт</h3>
     <table class="table table-striped">
       <thead>
@@ -328,6 +332,7 @@
       </tbody>
     </table>
 
+<br />
     <h3>Комунікації</h3>
     <table class="table table-striped">
       <thead>
@@ -363,8 +368,8 @@
         </tr>
       </tbody>
     </table>
-  
 
+<br />
     <h3>Інфраструктура (в радіусі 500 метрів)</h3>
     <table class="table table-striped">
       <thead>
@@ -395,16 +400,128 @@
           <td>{%if object.market is True%}Так{%else%}-{%endif%}</td>
         </tr>
         <tr>
-          <th scope="row"></th>
-          <td>{%if object.no_communication is True%}Так{%else%}-{%endif%}</td>
+          <th scope="row">Магазин, кіоск</th>
+          <td>{%if object.shop_kiosk is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Супермаркет, ТРЦ</th>
+          <td>{%if object.supermarket_mall is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Парк, зелена зона</th>
+          <td>{%if object.park_green_area is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Дитячий майданчик</th>
+          <td>{%if object.playground is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Аптека</th>
+          <td>{%if object.pharmacy is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Лікарня, поліклініка</th>
+          <td>{%if object.hospital_clinic is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Центр міста</th>
+          <td>{%if object.city_center is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Ресторан, кафе</th>
+          <td>{%if object.restaurant_cafe is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Кінотеатр, театр</th>
+          <td>{%if object.cinema_theater is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Відділення пошти</th>
+          <td>{%if object.post_office is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Відділення банку, банкомат</th>
+          <td>{%if object.bank_branch_ATM is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Автовокзал</th>
+          <td>{%if object.bus_station is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Залізнична станція</th>
+          <td>{%if object.railway_station is True%}Так{%else%}-{%endif%}</td>
         </tr>
       </tbody>
     </table>
-  </div>
+<br />
+
+<h3>Ландшафт (в радіусі 1 км)</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Опція</th>
+          <th scope="col">Наявність</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Річка</th>
+          <td>{% if object.river is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Водосховище</th>
+          <td>{% if object.reservoir is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Озеро</th>
+          <td>{% if object.lake is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Пагорби</th>
+          <td>{% if object.hills is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Гори</th>
+          <td>{% if object.mountains is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Парк</th>
+          <td>{% if object.park is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Ліс</th>
+          <td>{% if object.forest is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+
   <div class="col-md-6">
     <p>Тут будуть фото об'єкту</p>
   </div>
 </div>
+<br />
+  <h2>Опис об'єкту</h2>
+    <div class="row">
+      <div class="col-md-6">
+      {{ object.body }}
+    </div>
+    </div>
+<br />
+{% if user.is_authenticated %}
+
+  <h2>Службова інформація</h2>
+    <div class="row">
+      {{ object.notes }}
+    </div>
+    <p><em>Дата публікації оголошення: {{ object.pub_date|date}}</em></p>
+    <p><em>Кількість переглядів оголошення: {{ object.num_visits }} </em></p>
+
+<br />
+{% endif%}
+
+
+
 
 
 
