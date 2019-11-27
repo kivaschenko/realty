@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'home'%}">Головна</a></li>
+<li class="breadcrumb-item"><a href="{% url 'flats' %}">Квартири, кімнати</a></li>
+<li class="breadcrumb-item active">Додати квартиру</li>
+{% endblock %}
+
+{% block content%}
+<div class=container align='center'>
+<form method="post">{% csrf_token %}
+    <table>{{ form.as_table }}</table>
+    <input type="submit" value="Додати">
+</form>
+</div>
+{% endblock%}

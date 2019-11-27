@@ -1,0 +1,411 @@
+{% extends 'base.html'%}
+{% block title %}{{ object.title }}{% endblock title %}
+{% block breadcrumb %}
+<li class="breadcrumb-item active"><a href="{% url 'home' %}">Головна</a>
+<li class="breadcrumb-item active"><a href="{% url 'flats' %}">
+  Квартири, кімнати</a>
+<li class="breadcrumb-item active"><a href="#">
+  {{ object.get_type_offer_display}}</a>
+<li class="breadcrumb-item active"><a href="#">
+  {{ object.get_district_display}}</a>
+<li class="breadcrumb-item">{{ object.title }}</a>
+{% endblock %}
+
+{% block header %}
+<h1>{{ object.title }}</h1>
+<h1>Ціна: <span class="badge badge-secondary">{{ object.price}}
+  {{object.get_currency_display}}</span></h1>
+{% endblock header %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6">
+    <h3>Ріелтор: </h3><a href="#">{{ created_by.first_name }}
+{{created_by.second_name}}</a></p>
+      <h4>Телефони: </h4>
+      {% if created_by.rieltor.phones_list %}
+        {% for phone in created_by.rieltor.phones_list%}
+          <p>{{phone}}</p>
+        {% endfor%}
+      {% endif%}
+    <h3>Агенство: </h3>
+  </div>
+  <div class="col-md-6">
+    <p>Тут буде фото ріелтора</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+<h4>Додаткові умови: </h4>
+  <ul>
+    {% if object.agree_price is True%}
+      <li>Ціна договірна</li>
+    {% else %}
+      <li>Без торгу</li>
+    {% endif %}
+
+    {% if object.without_commission is True%}
+      <li>Без комісійних</li>
+    {% else %}
+      <li>Додатково є коміссійні</li>
+    {% endif%}
+
+    {% if object.exchange is True%}
+      <li>Можливість обміну</li>
+    {% else %}
+      <li>Немає можливості обміну</li>
+    {% endif %}
+
+    {% if object.collaboration is True%}
+    <li>Можу співпрацювати з ріелторами</li>
+    {% else %}
+    <li>Продаємо самостійно</li>
+    {% endif%}
+  </ul>
+
+  <h4>Розташування: <a href="#">{{object.get_district_display}}</a></h4>
+  {{object.street}}, {{object.house}}, Черкаси, Черкаська область, Україна</p>
+  </div>
+  <div class="col-md-6">
+    <p>Тут буде форма для запиту ріелтору</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <h3>Основні характеристики об'єкта</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Характеристика</th>
+          <th scope="col">Значення</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Тип будинку</th>
+          <td>{{object.get_building_display}}</td>
+        </tr>
+        <tr>
+          <th scope="row">Поверх / Поверхів</th>
+          <td>{{object.floor}} / {{object.total_floor}}</td>
+        </tr>
+        <tr>
+          <th scope="row">Загальна площа / Кухня</th>
+          <td>{{object.area}} / {{object.kitchen}}</td>
+        </tr>
+        <tr>
+          <th scope="row">Матеріал стін</th>
+          <td>{{object.get_walls_display}}</td>
+        </tr>
+        <tr>
+          <th scope="row">Кількість кімнат</th>
+          <td>{{object.rooms}}</td>
+        </tr>
+        <tr>
+          <th scope="row">Планування квартири</th>
+          <td>{{object.get_planning_display}}</td>
+        </tr>
+        <tr>
+          <th scope="row">Санвузол</th>
+          <td>{{object.get_bathroom_display}}</td>
+        </tr>
+        <tr>
+          <th scope="row">Опалення</th>
+          <td>{{object.get_heating_display}}</td>
+        </tr>
+        <tr>
+          <th scope="row">Ремонт</th>
+          <td>{{object.get_repair_display}}</td>
+        </tr>
+        <tr>
+          <th scope="row"></th>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-6">
+    <p>Тут буде мапа з маркером розташування об'єкта</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <h3>Побутова техніка</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Прилад</th>
+          <th scope="col">Наявність</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Плита</th>
+          <td>{% if object.plate is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Варочна поверхня</th>
+          <td>{%if object.cooking_plate is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Духова шафа</th>
+          <td>{%if object.oven is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Мікрохвильова піч</th>
+          <td>{%if object.microwave is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Холодильник</th>
+          <td>{%if object.refrigerator is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Посудомийна машина</th>
+          <td>{%if object.dishwashers is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Пральна машина</th>
+          <td>{%if object.washing_machine is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Сушильна машина</th>
+          <td>{%if object.dryer is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Без побутової техніки</th>
+          <td>{%if object.without_appliances is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row"></th>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Мультимедіа</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Опція</th>
+          <th scope="col">Наявність</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">WI-FI</th>
+          <td>{% if object.wi_fi is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Швидкісний інтернет</th>
+          <td>{%if object.high_speed_internet is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Телевізор</th>
+          <td>{%if object.tv is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Кабельнеб цифрове ТБ</th>
+          <td>{%if object.cable_digital_tv is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Супутникове ТБ</th>
+          <td>{%if object.satellite_tv is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Без мультимедіа</th>
+          <td>{%if object.without_multimedia is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Комфорт</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Опція</th>
+          <th scope="col">Наявність</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Кондиціонер</th>
+          <td>{% if object.air_conditioning is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Підігрів підлоги</th>
+          <td>{%if object.floor_heating is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Ванна</th>
+          <td>{%if object.bath is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Душ</th>
+          <td>{%if object.shower is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Меблі на кухні</th>
+          <td>{%if object.kitchen_furniture is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Гардероб</th>
+          <td>{%if object.wardrobe is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Балкон, лоджія</th>
+          <td>{%if object.balcony is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Тераса</th>
+          <td>{%if object.terrace is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Панорамні вікна</th>
+          <td>{%if object.panoramic_windows is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Грати на вікнах</th>
+          <td>{%if object.grid_on_the_windows is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Сигналізація</th>
+          <td>{%if object.alarms is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Пожежна сигналізація</th>
+          <td>{%if object.fire_alarm is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Відеоспостереження</th>
+          <td>{%if object.video_surveillance is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Конс'ерж</th>
+          <td>{%if object.concierge is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Охорона території</th>
+          <td>{%if object.protection_of_the_territory is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Паркувальне місце</th>
+          <td>{%if object.parking_space is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Гостьовий паркінг</th>
+          <td>{%if object.guest_parking is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Підземний паркінг</th>
+          <td>{%if object.underground_parking is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Гараж</th>
+          <td>{%if object.garage is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Ліфт</th>
+          <td>{%if object.elevator is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Грузовий ліфт</th>
+          <td>{%if object.freight_elevator is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Госп. приміщення, комора</th>
+          <td>{%if object.pantry is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Технологія "розумний будинок"</th>
+          <td>{%if object.smart_home_technology is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Автономний електрогенератор</th>
+          <td>{%if object.autonomous_generator is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Комунікації</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Опція</th>
+          <th scope="col">Наявність</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Газ</th>
+          <td>{% if object.gas is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Центральний водопровід</th>
+          <td>{%if object.central_water_supply is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Каналізація септик</th>
+          <td>{%if object.septic_tank is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Вивіз відходів</th>
+          <td>{%if object.removal_of_waste is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Асфальтована дорога</th>
+          <td>{%if object.asphalt_road is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Без комунікацій</th>
+          <td>{%if object.no_communication is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+
+    <h3>Інфраструктура (в радіусі 500 метрів)</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Опція</th>
+          <th scope="col">Наявність</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Дитячий садок</th>
+          <td>{% if object.kindergarten is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Школа</th>
+          <td>{%if object.school is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Бювет</th>
+          <td>{%if object.the_pump_room is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Зупинка транспорту</th>
+          <td>{%if object.transportation_stop is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Ринок</th>
+          <td>{%if object.market is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row"></th>
+          <td>{%if object.no_communication is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-6">
+    <p>Тут будуть фото об'єкту</p>
+  </div>
+</div>
+
+
+
+{% endblock content %}

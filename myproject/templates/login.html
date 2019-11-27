@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Зайти{% endblock %}
+
+{% block content %}
+<div class="container">
+<div class="row justify-content-center">
+<div class="col-sm-6">
+<div class="card">
+<div class="card-body">
+<h2 class="card-title">Залогінитись</h2>
+<form method="post">
+  {% csrf_token %}
+  <table>{{ form.as_table}}</table>
+  <button class="btn btn-success" type="submit">Зайти</button>
+</form>
+</div>
+<div class="card-footer text-muted text-center">
+<a href="{% url 'password_reset' %}">Забули пароль?</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endblock content %}

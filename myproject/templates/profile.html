@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %} Профіль користувача {{username}} {% endblock %}
+{% block content %}
+<h1>Мій профіль користувача {{username}}</h1>
+{% include 'include/user_card.html' %}
+<br />
+<p class="text-right"><a href="{% url 'update' %}" class="btn btn-light">
+Редагувати профіль</a>
+</p>
+{% endblock %}

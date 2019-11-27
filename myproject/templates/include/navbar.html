@@ -1,0 +1,59 @@
+
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <a class="navbar-brand" style="font-family: 'Lobster', cursive;" 
+  href="{% url 'home' %}">ElitFlatCherkasy.Org.UA</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ol class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'flats' %}">Квартири, кімнати</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Будинки</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Комерційна нерухомість</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Земля
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#">Земля сільськогосподарського призначення</a>
+          <a class="dropdown-item" href="#">Земля житлової й суспільної забудови</a>
+          <a class="dropdown-item" href="#">Земля оздоровчого призначення</a>
+          <a class="dropdown-item" href="#">Земля рекреаційного призначення</a>
+          <a class="dropdown-item" href="#">Земля лісового фонду</a>
+          <a class="dropdown-item" href="#">Земля водного фонду</a>
+          <a class="dropdown-item" href="#">Земля промисловості, транспорту та іншого призначення</a>
+          <a class="dropdown-item" href="#">Земля запасу, резервного фонду та загального користування</a>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+    {% if user.is_authenticated %}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Вітаємо, {{ user.username }}!
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#">Мій профіль</a>
+          <a class="dropdown-item" href="#">Мої оголошення</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'password_change'%}">Змінити пароль</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'logout' %}">Вийти</a>
+          </div>
+      </li>
+    {% else %}
+      <form class="form-inline ml-auto">
+        <a href="{% url 'login' %}" class="btn btn-outline-secondary">Зайти</a>
+        <a href="{% url 'signup' %}" class="btn btn-outline-success ml-2">Реєстрація</a>
+      </form>
+    {% endif %}
+
+</nav>
