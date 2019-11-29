@@ -1,18 +1,14 @@
 {% extends 'base.html'%}
 {% block title%}Головна сторінка {% endblock title%}
 
-{% block breadcrumb %}
-<li class="breadcrumb-item active">Головна</li>
-{% endblock %}
-
 {% block content %}
+{% if user.is_authenticated%}
   <table class="table">
     <thead class="thead-inverse">
       <tr>
         <th>Рубрики</th>
         <th>Об'єктів на продаж</th>
         <th>Об'єктів в архіві</th>
-        <th>Додати об'єкт</th>
       </tr>
     </thead>
     <tbody>
@@ -25,8 +21,6 @@
         </td>
         <td class="align-middle">0</td>
         <td class="align-middle">0</td>
-        <td> <a href="{% url 'create_flat'%}" type="button"
-              class="btn btn-outline-primary">Додати об'єкт</a></td>
       </tr>
       <tr>
         <td>
@@ -37,8 +31,6 @@
         </td>
         <td class="align-middle">0</td>
         <td class="align-middle">0</td>
-        <td> <a href="{% url 'create_flat'%}" type="button"
-              class="btn btn-outline-primary">Додати об'єкт</a></td>
       </tr>
       <tr>
         <td>
@@ -55,8 +47,6 @@
         </td>
         <td class="align-middle">0</td>
         <td class="align-middle">0</td>
-        <td> <a href="#" type="button"
-              class="btn btn-outline-primary">Додати об'єкт</a></td>
       </tr>
       <tr>
         <td>
@@ -67,10 +57,19 @@
         </td>
         <td class="align-middle">0</td>
         <td class="align-middle">0</td>
-        <td> <a href="#" type="button"
-              class="btn btn-outline-primary">Додати об'єкт</a></td>
       </tr>
-
     </tbody>
   </table>
+{% else %}
+<form>
+  <div class="row">
+    <div class="col-md-6"
+    <label for="formGroupExampleInput">
+Пошук об'єкта нерухомості або ріелтора</label>
+    <input type="text" class="form-control" id="formGroupExampleInput"
+placeholder="Введіть район, вулицю, назву агенства, ім'я ріелтора тощо...">
+  </div>
+  </div>
+</form>
+{% endif %}
 {% endblock content %}

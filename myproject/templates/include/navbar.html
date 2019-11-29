@@ -1,23 +1,23 @@
 
-<nav class="navbar navbar-expand-sm navbar-light bg-light">
-  <a class="navbar-brand" style="font-family: 'Lobster', cursive;" 
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <a class="navbar-brand" style="font-family: 'Lobster', cursive; font-size: 26px;;"
   href="{% url 'home' %}">ElitFlatCherkasy.Org.UA</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
   </button>
-
+{% if user.is_authenticated %}
   <div class="collapse navbar-collapse" id="collapsibleNavbar">
     <ol class="navbar-nav">
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'flats' %}">Квартири, кімнати</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link" href="#">Будинки</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link" href="#">Комерційна нерухомість</a>
       </li>
-      <li class="nav-item dropdown">
+      <li class="nav-item active dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Земля
         </a>
@@ -32,13 +32,14 @@
           <a class="dropdown-item" href="#">Земля запасу, резервного фонду та загального користування</a>
         </div>
       </li>
-    </ol>
-  </div>
 
-    {% if user.is_authenticated %}
+
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Вітаємо, {{ user.username }}!
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+        role="button" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">
+        Вітаємо вас,
+{% if user.first_name%}{{user.first_name}}{%else%}{{user.username}}!{%endif%}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="#">Мій профіль</a>
@@ -46,14 +47,16 @@
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'password_change'%}">Змінити пароль</a>
           <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'signup' %}">Реєстрація ріелтора</button>
+          <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'logout' %}">Вийти</a>
           </div>
       </li>
-    {% else %}
-      <form class="form-inline ml-auto">
-        <a href="{% url 'login' %}" class="btn btn-outline-secondary">Зайти</a>
-        <a href="{% url 'signup' %}" class="btn btn-outline-success ml-2">Реєстрація</a>
-      </form>
-    {% endif %}
-
+    </ol>
+  </div>
+  {% else %}
+    <form class="form-inline ml-auto">
+      <a href="{% url 'login' %}" class="btn btn-outline-secondary">Зайти</a>
+    </form>
+  {% endif %}
 </nav>

@@ -1,7 +1,11 @@
+from django.shortcuts import render
 from flats.models import Offer
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from django.views.generic import CreateView
-class OfferCreate(CreateView):
+
+# profile_form = ProfileForm(request.POST, instance=request.user.profile, request.FILES or None)
+class OfferCreate(LoginRequiredMixin, CreateView):
     """The generic based class representing form to create a new offer.
     """
     model = Offer
@@ -106,9 +110,18 @@ class OfferCreate(CreateView):
         'street',
         'house',
         'flat',
-        'image',
         'notes',
+        'image1',
+        'image2',
+        'image3',
+        'image4',
+        'image5',
+        'image6',
+        'image7',
+        'image8',
+        'image9',
         ]
+    success_url = reverse_lazy('flats')
     def form_valid(self, form):
         """
         The function doing created_by default current user.
@@ -128,7 +141,7 @@ class OfferList(ListView):
     Class represents all offers in list
     """
     model = Offer
-    paginate_by = 10
+    paginate_by = 3
 
 from django.views.generic import UpdateView
 # Class View to update current offer
@@ -235,8 +248,17 @@ class OfferUpdate(UpdateView):
         'street',
         'house',
         'flat',
-        'image',
         'notes',
+        'contract',
+        'image1',
+        'image2',
+        'image3',
+        'image4',
+        'image5',
+        'image6',
+        'image7',
+        'image8',
+        'image9',
     ]
     template_name_suffix = '_update_form'
 
@@ -244,7 +266,16 @@ class OfferUpdate(UpdateView):
         obj = self.get_object()
         return obj.created_by == self.request.user
 
-from django.views.generic import DetailView
-class OfferDetail(DetailView):
-    model = Offer
-    # query_pk_and_slug = True
+# from django.views.generic import DetailView
+# class OfferDetail(DetailView):
+#     model = Offer
+#     # query_pk_and_slug = True
+
+from django.db.models import Q
+def details(request, pk, slug):
+    """ This function returns the selected offer and a list of the same offers."""
+    object = Offer.objects.filter(Q(pk=pk) & Q(slug=slug)).get()
+    object.num_visits += 1
+    object.save()
+
+    return render(request, 'flats/offer_detail.html', {'object': object})

@@ -11,13 +11,13 @@ class Offer(models.Model):
     """
     # CHOICES
     TYPE_OFFER = (('sale', 'Продаж'), ('rent', 'Оренда довгострокова'))
-    SOLD = (('yes','Так'),('no', 'Ні'))
+    YESNO = (('yes','Так'),('no', 'Ні'))
     TYPES_OBJECT = (
         ('flat', 'Квартира'),
         ('part_flat', 'Частина квартири'),
         ('room', 'Кімната')
     )
-    CURRENCY = (('UAH', 'грн.'), ('USD', 'USD'), ('EUR', 'EUR'))
+    CURRENCY = (('UAH', 'грн.'), ('USD', 'USD'))
     BUILDING_TYPE = (
         ('royal', 'Царський будинок'),
         ('stalin', 'Сталінка'),
@@ -70,6 +70,7 @@ class Offer(models.Model):
         ('other', 'Інше'),
     )
     REPAIR = (
+        ('None', 'Виберіть стан ремонту'),
         ('authors_project', 'Авторський проект'),
         ('european_repair', 'Євроремонт'),
         ('cosmetical_repair', 'Косметичний ремонт'),
@@ -147,14 +148,16 @@ class Offer(models.Model):
         ('Yasnoziria', "Яснозір'я"))
         ),
     )
-    type_offer = models.CharField(max_length=5, blank=False,
-               verbose_name="Тип оголошення", choices=TYPE_OFFER,default='sale')
+    type_offer = models.CharField(max_length=5, verbose_name="Тип оголошення",
+               choices=TYPE_OFFER,default='sale')
     title = models.CharField(max_length=70, verbose_name='Заголовок',
           help_text='70 знаків', blank=False)
     slug = models.SlugField(default='', editable=False, max_length=100)
-    sold_true = models.CharField(verbose_name="ОБ'ЄКТ ПРОДАНО", max_length=3,
-              choices=SOLD, blank=False, default='no')
-    price = models.CharField(max_length=9, verbose_name='Ціна')
+    sold_true = models.CharField(verbose_name="ОБ'ЄКТ під ЗАДАТКОМ?", max_length=3,
+              choices=YESNO, default='no',
+              help_text="""Якщо об'єкт під задатком виберіть "Так".
+              Картка об'єкта буде знята з пошуку.""")
+    price = models.PositiveIntegerField(verbose_name='Ціна')
     currency = models.CharField(verbose_name='Валюта', max_length=3,
              choices=CURRENCY, blank=False, help_text="Виберіть валюту",
              default='USD',)
@@ -164,31 +167,25 @@ class Offer(models.Model):
     collaboration = models.BooleanField(
         verbose_name='Готовий співпрацювати з ріелторами')
     type_object = models.CharField(max_length=10, choices=TYPES_OBJECT,
-                null=False, blank=False, verbose_name="Тип об'єкта",
-                default='flat')
+                verbose_name="Тип об'єкта", default='flat')
     # CONSTRACTION PARAMETERS
-    building = models.CharField(max_length=12, null=False,choices=BUILDING_TYPE,
-             blank=False, verbose_name='Тип будинку', )
-    floor = models.CharField(max_length=5,verbose_name='Поверх',null=False,
-          blank=False)
-    total_floor = models.CharField(max_length=2, verbose_name='Поверховість',
-                null=False, blank=False)
-    area = models.CharField(max_length=6,verbose_name='Загальна площа',
-         blank=False, null=False)
-    kitchen = models.CharField(max_length=5, verbose_name='Кухня площа',
-            blank=False, null=False)
+    building = models.CharField(max_length=12,choices=BUILDING_TYPE,
+             verbose_name='Тип будинку', )
+    floor = models.PositiveSmallIntegerField(verbose_name='Поверх')
+    total_floor = models.PositiveSmallIntegerField(verbose_name='Поверхів')
+    area = models.PositiveSmallIntegerField(verbose_name='Загальна площа, кв.м')
+    kitchen = models.PositiveSmallIntegerField(verbose_name='Кухня площа, кв.м')
     walls = models.CharField(max_length=10, verbose_name='Матеріал стін',
-          choices=WALLS, null=False, blank=False,)
-    rooms = models.CharField(max_length=2, verbose_name='Кількість кімнат',
-          blank=False, null=True)
-    planning = models.CharField(max_length=14, blank=False, null=True,
-             verbose_name='Планування квартири', choices=PLANNING, )
+          choices=WALLS)
+    rooms = models.PositiveSmallIntegerField(verbose_name='Кількість кімнат')
+    planning = models.CharField(max_length=14, choices=PLANNING,
+             verbose_name='Планування квартири', )
     bathroom = models.CharField(max_length=14, verbose_name='Санвузол',
-             null=False, blank=False, choices=BATHROOM)
-    heating = models.CharField(max_length=24, verbose_name='Опалення', null=False,
-            blank=False, choices=HEATING)
-    repair = models.CharField(max_length=24, verbose_name='Ремонт', null=False,
-           blank=False, choices=REPAIR)
+             choices=BATHROOM)
+    heating = models.CharField(max_length=24, verbose_name='Опалення',
+            choices=HEATING)
+    repair = models.CharField(max_length=24, verbose_name='Ремонт',
+           choices=REPAIR)
     furniture = models.CharField(max_length=3, verbose_name='Меблювання',
               choices=( ('yes', 'Так'), ('no', 'Ні')),)
     # Appliances
@@ -289,15 +286,40 @@ class Offer(models.Model):
     flat = models.CharField(max_length=3, verbose_name='Номер квартири',
          null=True, blank=True,
          help_text="Не показується на сайті. Необов'язкове поле.'")
-    image = models.ImageField(upload_to='photos/', null=True, blank=True)
+
     notes = models.TextField(max_length=1000,
-          verbose_name='Примітки для службового користування')
+          verbose_name='Примітки для службового користування', blank=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL,
                related_name='flats', verbose_name='Власник оголошення',
                null=True,)
-    slug = models.CharField(max_length=70)
+    slug = models.CharField(max_length=100)
     pub_date = models.DateTimeField(auto_now_add=True)
     num_visits = models.PositiveIntegerField(default=0)
+
+    # SAVING MEDIA FILES
+    def user_directory_path(instance, filename):
+        img_path = 'flats_{0}/user_{1}/{2}'.format(instance.id,
+                 instance.created_by.id, filename)
+        return img_path
+
+    image1 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Фото 1', null=True, blank=True)
+    image2 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Фото 2', null=True, blank=True)
+    image3 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Фото 3', null=True, blank=True)
+    image4 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Фото 4', null=True, blank=True)
+    image5 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Фото 5', null=True, blank=True)
+    image6 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Фото 6', null=True, blank=True)
+    image7 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Фото 7', null=True, blank=True)
+    image8 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Фото 8', null=True, blank=True)
+    image9 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Фото 9', null=True, blank=True)
 
     # META CLASS
     class Meta:
