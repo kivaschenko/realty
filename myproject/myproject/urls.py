@@ -20,7 +20,10 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('', TemplateView.as_view(template_name="home.html"), name='home'),
     path('rules/', TemplateView.as_view(template_name='rules.html'), name='rules'),
+    path('cookie_policy/',
+TemplateView.as_view(template_name='cookie_policy.html'), name='cookies'),
     path('flats/', include('flats.urls')),
+    path('realtors/', include('realtor.urls')),
     path('admin/', admin.site.urls),
     ]
 
@@ -67,3 +70,10 @@ from django.conf.urls.static import static
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# CONTACT FORM
+from .views import contact
+
+urlpatterns += [
+    path('contact/send_mail/', contact, name='contact'),
+]

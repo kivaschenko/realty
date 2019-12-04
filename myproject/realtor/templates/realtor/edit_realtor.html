@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %} Профіль користувача {{object.username}} {% endblock %}
+
+{% block content %}
+<div class="container content">
+  <h3>Редагувати профіль ріелтора:</h3>
+  <h2> {{ request.user.first_name }}
+  {{request.user.last_name}}</h2>
+    <div class="row" style="margin-left: 20px;">
+        <div class="col5">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <table class="table">
+            {{form.as_table}}
+          </table>
+          <input type="submit" class="btn btn-info" value="Відправити">
+        </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

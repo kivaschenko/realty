@@ -1,65 +1,68 @@
 {% extends 'base.html'%}
 {% block title%}Головна сторінка {% endblock title%}
+{% load static%}
+{% block breadcrumb %}
+<li class="breadcrumb-item">Головна</li>
+{% endblock breadcrumb %}
 
 {% block content %}
 {% if user.is_authenticated%}
-  <table class="table">
-    <thead class="thead-inverse">
-      <tr>
-        <th>Рубрики</th>
-        <th>Об'єктів на продаж</th>
-        <th>Об'єктів в архіві</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <h2><a href="{% url 'flats' %}">Квартири, кімнати</a></h2>
-          <small class="text-muted d-block">
-            Довгострокова оренда квартир, кімнат
-            Продаж квартир, кімнат </small>
-        </td>
-        <td class="align-middle">0</td>
-        <td class="align-middle">0</td>
-      </tr>
-      <tr>
-        <td>
-          <h2><a href="#">Будинки</a></h2>
-          <small class="text-muted d-block">
-          Довгострокова оренда будинків
-          Продаж будинків</small>
-        </td>
-        <td class="align-middle">0</td>
-        <td class="align-middle">0</td>
-      </tr>
-      <tr>
-        <td>
-          <h2><a href="#">Земля</a></h2>
-          <small class="text-muted d-block">Продаж та довгострокова оренда
-          Земля сільськогосподарського призначення
-          Земля житлової й суспільної забудови
-          Земля оздоровчого призначення
-          Земля рекреаційного призначення
-          Земля лісового фонду
-          Земля водного фонду
-          Земля промисловості, транспорту та іншого призначення
-          Земля запасу, резервного фонду та загального користування</small>
-        </td>
-        <td class="align-middle">0</td>
-        <td class="align-middle">0</td>
-      </tr>
-      <tr>
-        <td>
-          <h2><a href="#">Комерційна нерухомість</a></h2>
-          <small class="text-muted d-block">
-            Оренда комерційної нерухомості
-            Продаж комерційної нерухомості</small>
-        </td>
-        <td class="align-middle">0</td>
-        <td class="align-middle">0</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="row">
+  <div class="col-sm-9">
+    <table class="table">
+      <thead class="thead-inverse">
+        <tr>
+          <th>Рубрики</th>
+          <th>Об'єктів на продаж</th>
+          <th>Об'єктів в архіві</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <h2><a href="{% url 'flats' %}">Квартири, кімнати</a></h2>
+            <small class="text-muted d-block">
+              Довгострокова оренда квартир, кімнат
+              Продаж квартир, кімнат
+              Новобудови</small>
+          </td>
+          <td class="align-middle">0</td>
+          <td class="align-middle">0</td>
+        </tr>
+        <tr>
+          <td>
+            <h2><a href="#">Будинки</a></h2>
+            <small class="text-muted d-block">
+            Довгострокова оренда будинків
+            Продаж будинків</small>
+          </td>
+          <td class="align-middle">0</td>
+          <td class="align-middle">0</td>
+        </tr>
+        <tr>
+          <td>
+            <h2><a href="#">Земля</a></h2>
+            <small class="text-muted d-block">
+              Продаж землі
+              Довгострокова оренда землі</small>
+          </td>
+          <td class="align-middle">0</td>
+          <td class="align-middle">0</td>
+        </tr>
+        <tr>
+          <td>
+            <h2><a href="#">Комерційна нерухомість</a></h2>
+            <small class="text-muted d-block">
+              Оренда комерційної нерухомості
+              Продаж комерційної нерухомості</small>
+          </td>
+          <td class="align-middle">0</td>
+          <td class="align-middle">0</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 {% else %}
 <form>
   <div class="row">

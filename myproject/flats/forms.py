@@ -1,8 +1,11 @@
+from django import forms
 from django.forms import ModelForm
-from flats.models import OfferFlat
+from flats.models import Offer
 
 
-class CreateFlatForm(ModelForm):
+class OfferCreateForm(ModelForm):
+    """ Create main fields to offer .
+    """
     class Meta:
-        model = OfferFlat
+        model = Offer
         exclude = ['created_by', 'num_visits']

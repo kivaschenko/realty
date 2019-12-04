@@ -38,10 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Third-party
-    'crispy_forms',  # new
+    # 'crispy_forms',  # new
     # new
     'flats',
     'accounts',
+    'realtor',
 ]
 
 MIDDLEWARE = [
@@ -130,4 +131,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGOUT_REDIRECT_URL = 'home'
 LOGIN_REDIRECT_URL = 'home'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+
+# Add new email settings to send messages
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'elitflatcherkasy@gmail.com'
+EMAIL_HOST_PASSWORD = 'ElitFlatToSale102019'
+DEFAULT_FROM_EMAIL = "elitflatcherkasy@gmail.com"
+DEFAULT_TO_EMAIL = 'elitflatcherkasy@gmail.com'

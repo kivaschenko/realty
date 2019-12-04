@@ -4,41 +4,53 @@
 <li class="breadcrumb-item active"><a href="{% url 'home' %}">Головна</a>
 <li class="breadcrumb-item active"><a href="{% url 'flats' %}">
   Квартири, кімнати</a>
-<li class="breadcrumb-item active"><a href="#">
+<li class="breadcrumb-item active">
+  <a href="{% url 'type_offer' object.type_offer%}">
   {{ object.get_type_offer_display}}</a>
-<li class="breadcrumb-item active"><a href="#">
+<li class="breadcrumb-item active">
+  <a href="{% url 'type_offer_district' object.type_offer object.district %}">
   {{ object.get_district_display}}</a>
 <li class="breadcrumb-item">{{ object.title }}</a>
 {% endblock %}
 
-{% block header %}
-<h1>{{ object.title }}</h1>
-<h1>Ціна: <span class="badge badge-secondary">{{ object.price}}
-  {{object.get_currency_display}}</span></h1>
-{% endblock header %}
-
 {% block content %}
+{% load static%}
+<div class="container-content">
+  <h1>{{ object.title }}</h1>
+  <h1>Ціна: <span class="badge badge-secondary">{{ object.price}}
+    {{object.get_currency_display}}</span></h1>
+<div class="row">
+
+  <div class="col-md-4">
+
+  </div>
+
+  <div class="col-md-4">
+    {%if object.created_by.realtor.avatar%}
+    <img src="{{object.created_by.realtor.avatar.url}}" alt="фото ріелтора"
+    class="img-thumbnail" width="200">
+    {%else%}<img src="{% static 'img/user.png'%}" width="200">{%endif%}
+  </div>
+  <div class="row">
+  <h3>Ріелтор: </h3>
+  <h4><a href="{%url 'realtor' object.created_by.realtor.id%}">
+  {{ object.created_by.first_name }}
+  {{object.created_by.last_name}}</a></h4>
+  <h4>Телефони: </h4>
+  <ul>
+  <li><a href="tel:{{object.created_by.realtor.phone}}">
+  {{object.created_by.realtor.phone}}</li>
+  <li><a href="tel:{{object.created_by.realtor.phone2}}">
+  {{object.created_by.realtor.phone2}}</a></li>
+  <ul>
+  <p>Агенство: <p>
+  <h4><a href="#">{{object.created_by.realtor.agensy}}</a></h4>
+</div>
 
 <div class="row">
   <div class="col-md-4">
-    <h3>Ріелтор: </h3><a href="#">{{ created_by.first_name }}
-{{created_by.second_name}}</a></p>
-      <h4>Телефони: </h4>
-      {% if created_by.rieltor.phones_list %}
-        {% for phone in created_by.rieltor.phones_list%}
-          <p>{{phone}}</p>
-        {% endfor%}
-      {% endif%}
-    <h3>Агенство: </h3>
-  </div>
-  <div class="col-md-4">
-    <p>Тут буде фото ріелтора</p>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-4">
-<h4>Додаткові умови: </h4>
-  <ul>
+    <h4>Додаткові умови: </h4>
+    <ul>
     {% if object.agree_price is True%}
       <li>Ціна договірна</li>
     {% else %}
@@ -62,19 +74,24 @@
     {% else %}
     <li>Продаємо самостійно</li>
     {% endif%}
-  </ul>
-
-  <h4>Розташування: <a href="#">{{object.get_district_display}}</a></h4>
-  {{object.street}}, {{object.house}}, Черкаси, Черкаська область, Україна</p>
+    </ul>
+    <h4>Розташування: <a href="{% url 'type_offer_district' object.type_offer object.district %}">
+      {{object.get_district_display}}</a></h4>
+    {{object.street}}, {{object.house}}, Черкаси, Черкаська область, Україна</p>
+    </div>
+    <!-- 2 col -->
+    <div class="col-md-4">
+      <p>Тут буде map</p>
+    </div>
+    <!-- 3 col -->
+    <div class="col-md-4">
+      <p>What will be here?</p>
+    </div>
+    <!-- END OF ROW -->
   </div>
-  <div class="col-md-4">
-    <p>Тут буде форма для запиту ріелтору</p>
-  </div>
-</div>
-
-<br />
 
 <div class="row">
+
   <div class="col-md-4">
     <h3>Основні характеристики об'єкта</h3>
     <table class="table table-striped">
@@ -128,14 +145,23 @@
       </tbody>
     </table>
   </div>
-  <div class="col-md-6">
-    <p>Тут буде мапа з маркером розташування об'єкта</p>
+
+  <div class="col-md-8">
+  <h2>Опис об'єкту</h2>
+    <div class="row">
+      <div class="col">
+      {{ object.body |linebreaks }}
+      </div>
+    </div>
+<br />
   </div>
+  <!-- END OF ROW -->
 </div>
 
 <br />
 
 <div class="row">
+
   <div class="col-md-4">
     <h3>Побутова техніка</h3>
     <table class="table table-striped">
@@ -189,6 +215,10 @@
       </tbody>
     </table>
 <br />
+  </div>
+
+  <!-- 2 col -->
+  <div class="col-md-4">
     <h3>Мультимедіа</h3>
     <table class="table table-striped">
       <thead>
@@ -225,6 +255,49 @@
       </tbody>
     </table>
 <br />
+</div>
+<!-- 3 col -->
+  <div class="col-md-4">
+    <h3>Комунікації</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Опція</th>
+          <th scope="col">Наявність</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Газ</th>
+          <td>{% if object.gas is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Центральний водопровід</th>
+          <td>{%if object.central_water_supply is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Каналізація септик</th>
+          <td>{%if object.septic_tank is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Вивіз відходів</th>
+          <td>{%if object.removal_of_waste is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Асфальтована дорога</th>
+          <td>{%if object.asphalt_road is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+        <tr>
+          <th scope="row">Без комунікацій</th>
+          <td>{%if object.no_communication is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
     <h3>Комфорт</h3>
     <table class="table table-striped">
       <thead>
@@ -332,45 +405,9 @@
         </tr>
       </tbody>
     </table>
+  </div>
 
-<br />
-    <h3>Комунікації</h3>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">Опція</th>
-          <th scope="col">Наявність</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">Газ</th>
-          <td>{% if object.gas is True%}Так{%else%}-{%endif%}</td>
-        </tr>
-        <tr>
-          <th scope="row">Центральний водопровід</th>
-          <td>{%if object.central_water_supply is True%}Так{%else%}-{%endif%}</td>
-        </tr>
-        <tr>
-          <th scope="row">Каналізація септик</th>
-          <td>{%if object.septic_tank is True%}Так{%else%}-{%endif%}</td>
-        </tr>
-        <tr>
-          <th scope="row">Вивіз відходів</th>
-          <td>{%if object.removal_of_waste is True%}Так{%else%}-{%endif%}</td>
-        </tr>
-        <tr>
-          <th scope="row">Асфальтована дорога</th>
-          <td>{%if object.asphalt_road is True%}Так{%else%}-{%endif%}</td>
-        </tr>
-        <tr>
-          <th scope="row">Без комунікацій</th>
-          <td>{%if object.no_communication is True%}Так{%else%}-{%endif%}</td>
-        </tr>
-      </tbody>
-    </table>
-
-<br />
+  <div class="col-md-4">
     <h3>Інфраструктура (в радіусі 500 метрів)</h3>
     <table class="table table-striped">
       <thead>
@@ -454,9 +491,11 @@
         </tr>
       </tbody>
     </table>
-<br />
-
-<h3>Ландшафт (в радіусі 1 км)</h3>
+    <br />
+  </div>
+  <!-- 2 col -->
+  <div class="col-md-4">
+    <h3>Ландшафт (в радіусі 1 км)</h3>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -495,72 +534,64 @@
         </tr>
       </tbody>
     </table>
-</div>
+  </div>
+
+
 
   <div class="col-md-6">
+    {% if user.is_authenticated %}
 
-    <h2>Image Size</h2>
+      <h2>Службова інформація</h2>
+      {{ object.notes | linebreaks }}
+      <p><em>Дата публікації оголошення: {{ object.pub_date|date}}</em></p>
+      <p><em>Кількість переглядів оголошення: {{ object.num_visits }} </em></p>
+    {% endif %}
+  </div>
+</div>
 
-<p>Use the style attribute to specify the width and height of an image:</p>
-{% if object.image1.url %}
-<img src="{{object.image1.url}}" alt="{{object.title}} - фото 1"
-style="width:500px;">
-{%endif%}
-{% if object.image2.url %}
-<img src="{{object.image2.url}}" alt="{{object.title}} - фото 1"
-style="width:500px;">
-{%endif%}
-{% if object.image3 %}
-<img src="{{object.image3.url}}" alt="{{object.title}} - фото 1"
-style="width:500px;">
-{%endif%}
-{% if object.image4 %}
-<img src="{{object.image4.url}}" alt="{{object.title}} - фото 1"
-style="width:500px;">
-{%endif%}
-{% if object.image5 %}
-<img src="{{object.image5.url}}" alt="{{object.title}} - фото 1"
-style="width:500px;">
-{%endif%}
-{% if object.image6 %}
-<img src="{{object.image6.url}}" alt="{{object.title}} - фото 1"
-style="width:500px;">
-{%endif%}
-{% if object.image7 %}
-<img src="{{object.image7.url}}" alt="{{object.title}} - фото 1"
-style="width:500px;">
-{%endif%}
-{% if object.image8 %}
-<img src="{{object.image8.url}}" alt="{{object.title}} - фото 1"
-style="width:500px;">
-{%endif%}
-{% if object.image9 %}
-<img src="{{object.image9.url}}" alt="{{object.title}} - фото 1"
-style="width:500px;">
-{%endif%}
+<div class="row">
+  <div class="col-md-12">
+
+    {% if object.image1%}
+    <img src="{{object.image1.url}}" alt="{{object.title}} - фото 1" class="img-fluid">
+    {%endif%}
+
+    {% if object.image2 %}
+    <img src="{{object.image2.url}}" alt="{{object.title}} - фото 1" class="img-fluid">
+    {%endif%}
+
+    {% if object.image3 %}
+    <img src="{{object.image3.url}}" alt="{{object.title}} - фото 1" class="img-fluid">
+    {%endif%}
+
+    {% if object.image4 %}
+    <img src="{{object.image4.url}}" alt="{{object.title}} - фото 1" class="img-fluid">
+    {%endif%}
+
+    {% if object.image5 %}
+    <img src="{{object.image5.url}}" alt="{{object.title}} - фото 1" class="img-fluid">
+    {%endif%}
+
+    {% if object.image6 %}
+    <img src="{{object.image6.url}}" alt="{{object.title}} - фото 1" class="img-fluid">
+    {%endif%}
+
+    {% if object.image7 %}
+    <img src="{{object.image7.url}}" alt="{{object.title}} - фото 1" class="img-fluid">
+    {%endif%}
+
+    {% if object.image8 %}
+    <img src="{{object.image8.url}}" alt="{{object.title}} - фото 1" class="img-fluid">
+    {%endif%}
+
+    {% if object.image9 %}
+    <img src="{{object.image9.url}}" alt="{{object.title}} - фото 1" class="img-fluid">
+    {%endif%}
+
   </div>
 </div>
 <br />
-  <h2>Опис об'єкту</h2>
-    <div class="row">
-      <div class="col-md-6">
-      {{ object.body }}
-    </div>
-    </div>
-<br />
-{% if user.is_authenticated %}
-
-  <h2>Службова інформація</h2>
-    <div class="row">
-      {{ object.notes }}
-    </div>
-    <p><em>Дата публікації оголошення: {{ object.pub_date|date}}</em></p>
-    <p><em>Кількість переглядів оголошення: {{ object.num_visits }} </em></p>
-
-<br />
-{% endif%}
-
-
+</div>
 
 
 

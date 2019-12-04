@@ -1,17 +1,18 @@
 {% extends "base.html" %}
-{% block title %}Список оголошень Квартири та кімнати в Черкасах.
-продаж і довгострокова оренда{% endblock %}
+{% block title %}Список оголошень Квартири та кімнати - {{type}} в Черкасах{% endblock %}
 
 {% block breadcrumb %}
-  <li class="breadcrumb-item"><a href="{% url 'home'%}">Головна</a></li>
-  <li class="breadcrumb-item active">Квартири, кімнати</li>
+<li class="breadcrumb-item active"><a href="{% url 'home' %}">Головна</a>
+<li class="breadcrumb-item active"><a href="{% url 'flats' %}">
+  Квартири, кімнати</a>
+<li class="breadcrumb-item">{{ type}}</li>
 {% endblock %}
 
 {% block content %}
-<h2>Квартири та кімнати на продажу в Черкасах</h2>
+<h2>Квартири та кімнати {{type}} в Черкасах</h2>
 {% if user.is_authenticated%}
   <div class="row">
-    <div class="col-8">
+    <div class="col-7">
       <p>Введіть що-небудь в поле нижче для пошуку по таблиці:</p>
       <input id="myInput" type="text" placeholder="Пошук.."
       class="form-control mb-4 mr-sm-4">
@@ -26,7 +27,7 @@
 <table class="table table-striped">
   <thead>
   <tr>
-    <th scope="col">Тип</th>
+    <th scope="col">Ріелтор</th>
     <th scope="col">Заголовок</th>
     <th scope="col">Райони</th>
     <th scope="col">Вулиця</th>
@@ -34,19 +35,17 @@
     <th scope="col">Поверх/ Поверхів</th>
     <th scope="col">Площа/ Кухня</th>
     <th scope="col">Ремонт</th>
-    <th scope="col">Дата</th>
+    <th scope="col">Співпраця</th>
   </tr>
   </thead>
   <tbody id="myTable">
 {% if object_list %}
     {% for object in object_list %}
   <tr>
-    <td scope="row"><a href="{% url 'type_offer' object.type_offer%}">
-      {{ object.get_type_offer_display}}</a></td>
-    <td scope="row"> <a href="{% url 'offer-detail' object.pk object.slug%}">
-      {{ object.title }}</a>
-    </td>
-    <td><a href="{%url 'type_offer_district' object.type_offer object.district%}">
+    <td scope="row"><a href="#">{{user.username}}</a></td>
+    <td scope="row"> <a href="{% url 'offer-detail' object.pk object.slug%}">{{ object.title }}</a></td>
+    <td>
+      <a href="{%url 'type_offer_district' object.type_offer object.district%}">
       {{ object.get_district_display }}</a>
     </td>
     <td>{{ object.street}}</a></td>
@@ -54,7 +53,9 @@
     <td> {{ object.floor}} / {{ object.total_floor}}</td>
     <td>{{ object.area }} / {{object.kitchen}}</td>
     <td>{{ object.get_repair_display}}</td>
-    <td><em>{{ object.pub_date|date }}</em></td>
+    <td><em>{% if object.collaboration is True%}Можу співпрацювати з ріелторами
+        {% else %}Продаємо самостійно{% endif%}</em>
+    </td>
   </tr>
      {% endfor %}
 {% else %}

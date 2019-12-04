@@ -2,24 +2,19 @@
 
 {% block title %}Реєстрація{% endblock %}
 
+{% block breadcrumb%}
+<li class="breadcrumb-item">Реєстрація</li>
+{%endblock%}
+
 {% block content %}
-<div class="container">
-<div class="row justify-content-center">
-<div class="col-sm-7">
-<div class="card">
-<div class="card-body">
-<h2 class="card-title">Реєстрація</h2>
-<form method='post' novalidate>
-	{% csrf_token %}
-	<table>{{form.as_table}}</table>
-<button type='submit' class="btn btn-primary">Створити акаунт</button>
-</form>
-</div>
-<div class="card-footer text-muted text-center">
-Вже маєте акаунт? <a href="{% url 'login' %}">Зайти</a>
-</div>
-</div>
-</div>
-</div>
+<h2>Реєстрація</h2>
+<div class="col-sm-6">
+	<div class="row">
+	<form method='post' novalidate>
+		{% csrf_token %}
+		<table class="table">{{form.as_table}}</table>
+	<button type='submit' class="btn btn-primary">Створити акаунт</button>
+	</form>
+	</div>
 </div>
 {% endblock content %}

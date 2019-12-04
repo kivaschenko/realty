@@ -6,153 +6,159 @@ from django.utils.text import slugify
 from django.contrib.auth.models import User
 
 
+# CHOICES
+TYPE_OFFER = (
+    ('sale', 'Продаж'),
+    ('rent', 'Оренда довгострокова'),
+    ('new', 'Новобудова'),
+)
+YESNO = (('yes','Так'),('no', 'Ні'))
+TYPES_OBJECT = (
+    ('flat', 'Квартира'),
+    ('part_flat', 'Частина квартири'),
+    ('room', 'Кімната')
+)
+CURRENCY = (('UAH', 'грн.'), ('USD', 'USD'))
+BUILDING_TYPE = (
+    ('royal', 'Царський будинок'),
+    ('stalin', 'Сталінка'),
+    ('hruschov', 'Хрущовка'),
+    ('czech',  'Чешка'),
+    ('guest',  'Гостинка'),
+    ('sovmin', 'Совмін'),
+    ('hostel', 'Гуртожиток'),
+    ('90',   'Житловий фонд 80-90'),
+    ('2000', 'Житловий фонд 91-2000'),
+    ('2010', 'Житловий фонд 2001-2010'),
+    ('2019', 'Житловий фонд від 2011'),
+    ('constraction', 'На етапі будівництва')
+)
+WALLS = (
+    ('brick', 'Цегляний'),
+    ('panel', 'Панельний'),
+    ('monolit', 'Монолітний'),
+    ('wood', "Дерев'яний'"),
+    ('cinder_block', 'Шлакоблочний'),
+    ('air_concrete', 'Газоблок'),
+    ('sip', 'СІП панель'),
+    ('other', 'Інше'),
+)
+PLANNING = (
+    ('adjacent', 'Суміжна, прохідна'),
+    ('different', 'Роздільна'),
+    ('studio', 'Студія'),
+    ('penthouse', 'Пентхаус'),
+    ('multilevel', 'Багаторівнева'),
+    ('small_family', 'Малосімейка, гостинка'),
+    ('smart_flat', 'Смарт-квартира'),
+    ('free_planning', 'Вільне планування'),
+    ('two_sides', 'Двостороння'),
+)
+BATHROOM = (
+    ('different', 'Роздільний'),
+    ('adjacent', 'Суміжний'),
+    ('two_and_more', '2 і більше'),
+    ('no_bathrooms', 'Санвузол відсутній'),
+)
+HEATING = (
+    ('centralize', 'Централізоване'),
+    ('own_boiler_room', 'Власна котельня'),
+    ('individual_gas', 'Індивідуальне газове'),
+    ('individual_electricity', 'Індивідуальне електричне'),
+    ('hard_fuel', 'Твердопаливне'),
+    ('heat_pump', 'Тепловий насос'),
+    ('combination', 'Комбіноване'),
+    ('other', 'Інше'),
+)
+REPAIR = (
+    ('None', 'Виберіть стан ремонту'),
+    ('authors_project', 'Авторський проект'),
+    ('european_repair', 'Євроремонт'),
+    ('cosmetical_repair', 'Косметичний ремонт'),
+    ('life_condition', 'Житловий стан'),
+    ('after_construction', 'Після будівельників'),
+    ('for_clean_processing', 'під чистову обробку'),
+    ('emergency_condition', 'Аварійний стан'),
+)
+DISTRICTS = (
+    ('Райони', (
+    ('700-richchia', '700-річчя'),
+    ('Vantazhnyi port', 'Вантажний порт'),
+    ('Vodokanal-Nevskoho', 'Водоканал-Невського'),
+    ('Dakhnivka', 'Дахнівка'),
+    ('Dniprovskyi', 'Дніпровський'),
+    ('Zaliznychnyi vokzal', 'Залізничний вокзал'),
+    ('Zelena', 'Зелена'),
+    ('k-t Myr', 'к-т Мир'),
+    ('Kazbet', 'Казбет'),
+    ('Litak', 'Літак'),
+    ('Lunacharskyi', 'Луначарський'),
+    ('Mytnytsia', 'Митниця'),
+    ('Mytnytsia-richport', 'Митниця-річпорт'),
+    ('Mytnytsia-tsentr', 'Митниця-центр'),
+    ('PZR', 'ПЗР'),
+    ('Prydniprovskyi', 'Придніпровський'),
+    ('Piatykhatky', 'Пятихатки'),
+    ('Raion D', 'Район Д'),
+    ('Siedova', 'Сєдова'),
+    ('Sosnivka', 'Соснівка'),
+    ('Sosnivskyi', 'Соснівський'),
+    ('Khimselyshche', 'Хімселище'),
+    ('Tsentr', 'Центр'),
+    ('Shkilna', 'Шкільна'),
+    ('Yabluchnyi', 'Яблучний'))
+    ),
+    ('Передмістя', (
+    ('Biloziria', "Білозір'я"),
+    ('Heronymivka', 'Геронимівка'),
+    ('Orshanets', 'Оршанець'),
+    ('Ruska Poliana', 'Руська Поляна'),
+    ('Chervona Sloboda', 'Червона Слобода'))
+    ),
+    ('Села', (
+    ('Yelyzavetovka', 'Єлизаветовка'),
+    ('Irdyn', 'Ірдинь'),
+    ('Baibuzy', 'Байбузи'),
+    ('Berezniaky', 'Березняки'),
+    ('Budyshche', 'Будище'),
+    ('Buzukiv', 'Бузуків'),
+    ('Verhuny', 'Вергуни'),
+    ('Dubiivka', 'Дубіївка'),
+    ('Dumantsi', 'Думанці'),
+    ('Kumeiky', 'Кумейки'),
+    ('Lesky', 'Леськи'),
+    ('Lozivok', 'Лозівок'),
+    ('Moshny', 'Мошни'),
+    ('Moshnohiria', "Мошногір'я"),
+    ('Nechaivka', 'Нечаївка'),
+    ('Novoselivka', 'Новоселівка'),
+    ('Pervomaiske', 'Первомайське'),
+    ('Sahunivka', 'Сагунівка'),
+    ('Svitanok', 'Світанок'),
+    ('Svydivok', 'Свидівок'),
+    ('Sokyrno', 'Сокирно'),
+    ('Sofiivka', 'Софіївка'),
+    ('Stepanky', 'Степанки'),
+    ('Tubiltsi', 'Тубільці'),
+    ('Khatsky', 'Хацьки'),
+    ('Khreshchatyk', 'Хрещатик'),
+    ('Khudiaky', 'Худяки'),
+    ('Khutory', 'Хутори'),
+    ('Chorniavka', 'Чорнявка'),
+    ('Shelepukhy', 'Шелепухи'),
+    ('Yasnoziria', "Яснозір'я"))
+    ),
+)
 class Offer(models.Model):
     """ Define a row of flat in database.
     """
-    # CHOICES
-    TYPE_OFFER = (('sale', 'Продаж'), ('rent', 'Оренда довгострокова'))
-    YESNO = (('yes','Так'),('no', 'Ні'))
-    TYPES_OBJECT = (
-        ('flat', 'Квартира'),
-        ('part_flat', 'Частина квартири'),
-        ('room', 'Кімната')
-    )
-    CURRENCY = (('UAH', 'грн.'), ('USD', 'USD'))
-    BUILDING_TYPE = (
-        ('royal', 'Царський будинок'),
-        ('stalin', 'Сталінка'),
-        ('hruschov', 'Хрущовка'),
-        ('czech',  'Чешка'),
-        ('guest',  'Гостинка'),
-        ('sovmin', 'Совмін'),
-        ('hostel', 'Гуртожиток'),
-        ('90',   'Житловий фонд 80-90'),
-        ('2000', 'Житловий фонд 91-2000'),
-        ('2010', 'Житловий фонд 2001-2010'),
-        ('2019', 'Житловий фонд від 2011'),
-        ('constraction', 'На етапі будівництва')
-    )
-    WALLS = (
-        ('brick', 'Цегляний'),
-        ('panel', 'Панельний'),
-        ('monolit', 'Монолітний'),
-        ('wood', "Дерев'яний'"),
-        ('cinder_block', 'Шлакоблочний'),
-        ('air_concrete', 'Газоблок'),
-        ('sip', 'СІП панель'),
-        ('other', 'Інше'),
-    )
-    PLANNING = (
-        ('adjacent', 'Суміжна, прохідна'),
-        ('different', 'Роздільна'),
-        ('studio', 'Студія'),
-        ('penthouse', 'Пентхаус'),
-        ('multilevel', 'Багаторівнева'),
-        ('small_family', 'Малосімейка, гостинка'),
-        ('smart_flat', 'Смарт-квартира'),
-        ('free_planning', 'Вільне планування'),
-        ('two_sides', 'Двостороння'),
-    )
-    BATHROOM = (
-        ('different', 'Роздільний'),
-        ('adjacent', 'Суміжний'),
-        ('two_and_more', '2 і більше'),
-        ('no_bathrooms', 'Санвузол відсутній'),
-    )
-    HEATING = (
-        ('centralize', 'Централізоване'),
-        ('own_boiler_room', 'Власна котельня'),
-        ('individual_gas', 'Індивідуальне газове'),
-        ('individual_electricity', 'Індивідуальне електричне'),
-        ('hard_fuel', 'Твердопаливне'),
-        ('heat_pump', 'Тепловий насос'),
-        ('combination', 'Комбіноване'),
-        ('other', 'Інше'),
-    )
-    REPAIR = (
-        ('None', 'Виберіть стан ремонту'),
-        ('authors_project', 'Авторський проект'),
-        ('european_repair', 'Євроремонт'),
-        ('cosmetical_repair', 'Косметичний ремонт'),
-        ('life_condition', 'Житловий стан'),
-        ('after_construction', 'Після будівельників'),
-        ('for_clean_processing', 'під чистову обробку'),
-        ('emergency_condition', 'Аварійний стан'),
-    )
-    DISTRICTS = (
-        ('Райони', (
-        ('700-richchia', '700-річчя'),
-        ('Vantazhnyi port', 'Вантажний порт'),
-        ('Vodokanal-Nevskoho', 'Водоканал-Невського'),
-        ('Dakhnivka', 'Дахнівка'),
-        ('Dniprovskyi', 'Дніпровський'),
-        ('Zaliznychnyi vokzal', 'Залізничний вокзал'),
-        ('Zelena', 'Зелена'),
-        ('k-t Myr', 'к-т Мир'),
-        ('Kazbet', 'Казбет'),
-        ('Litak', 'Літак'),
-        ('Lunacharskyi', 'Луначарський'),
-        ('Mytnytsia', 'Митниця'),
-        ('Mytnytsia-richport', 'Митниця-річпорт'),
-        ('Mytnytsia-tsentr', 'Митниця-центр'),
-        ('PZR', 'ПЗР'),
-        ('Prydniprovskyi', 'Придніпровський'),
-        ('Piatykhatky', 'Пятихатки'),
-        ('Raion D', 'Район Д'),
-        ('Siedova', 'Сєдова'),
-        ('Sosnivka', 'Соснівка'),
-        ('Sosnivskyi', 'Соснівський'),
-        ('Khimselyshche', 'Хімселище'),
-        ('Tsentr', 'Центр'),
-        ('Shkilna', 'Шкільна'),
-        ('Yabluchnyi', 'Яблучний'))
-        ),
-        ('Передмістя', (
-        ('Biloziria', "Білозір'я"),
-        ('Heronymivka', 'Геронимівка'),
-        ('Orshanets', 'Оршанець'),
-        ('Ruska Poliana', 'Руська Поляна'),
-        ('Chervona Sloboda', 'Червона Слобода'))
-        ),
-        ('Села', (
-        ('Yelyzavetovka', 'Єлизаветовка'),
-        ('Irdyn', 'Ірдинь'),
-        ('Baibuzy', 'Байбузи'),
-        ('Berezniaky', 'Березняки'),
-        ('Budyshche', 'Будище'),
-        ('Buzukiv', 'Бузуків'),
-        ('Verhuny', 'Вергуни'),
-        ('Dubiivka', 'Дубіївка'),
-        ('Dumantsi', 'Думанці'),
-        ('Kumeiky', 'Кумейки'),
-        ('Lesky', 'Леськи'),
-        ('Lozivok', 'Лозівок'),
-        ('Moshny', 'Мошни'),
-        ('Moshnohiria', "Мошногір'я"),
-        ('Nechaivka', 'Нечаївка'),
-        ('Novoselivka', 'Новоселівка'),
-        ('Pervomaiske', 'Первомайське'),
-        ('Sahunivka', 'Сагунівка'),
-        ('Svitanok', 'Світанок'),
-        ('Svydivok', 'Свидівок'),
-        ('Sokyrno', 'Сокирно'),
-        ('Sofiivka', 'Софіївка'),
-        ('Stepanky', 'Степанки'),
-        ('Tubiltsi', 'Тубільці'),
-        ('Khatsky', 'Хацьки'),
-        ('Khreshchatyk', 'Хрещатик'),
-        ('Khudiaky', 'Худяки'),
-        ('Khutory', 'Хутори'),
-        ('Chorniavka', 'Чорнявка'),
-        ('Shelepukhy', 'Шелепухи'),
-        ('Yasnoziria', "Яснозір'я"))
-        ),
-    )
     type_offer = models.CharField(max_length=5, verbose_name="Тип оголошення",
                choices=TYPE_OFFER,default='sale')
     title = models.CharField(max_length=70, verbose_name='Заголовок',
           help_text='70 знаків', blank=False)
-    slug = models.SlugField(default='', editable=False, max_length=100)
+    type_object = models.CharField(max_length=10, choices=TYPES_OBJECT,
+                    verbose_name="Тип об'єкта", default='flat')
+
     sold_true = models.CharField(verbose_name="ОБ'ЄКТ під ЗАДАТКОМ?", max_length=3,
               choices=YESNO, default='no',
               help_text="""Якщо об'єкт під задатком виберіть "Так".
@@ -161,13 +167,14 @@ class Offer(models.Model):
     currency = models.CharField(verbose_name='Валюта', max_length=3,
              choices=CURRENCY, blank=False, help_text="Виберіть валюту",
              default='USD',)
+
+    # COLLABORATION
     agree_price = models.BooleanField('Договірна')
-    without_commission = models.BooleanField(verbose_name='Без комісії')
+    no_commission = models.BooleanField(verbose_name='Без комісії')
     exchange = models.BooleanField(verbose_name='Можливість обміну')
     collaboration = models.BooleanField(
         verbose_name='Готовий співпрацювати з ріелторами')
-    type_object = models.CharField(max_length=10, choices=TYPES_OBJECT,
-                verbose_name="Тип об'єкта", default='flat')
+
     # CONSTRACTION PARAMETERS
     building = models.CharField(max_length=12,choices=BUILDING_TYPE,
              verbose_name='Тип будинку', )
@@ -197,8 +204,8 @@ class Offer(models.Model):
     dishwashers = models.BooleanField(verbose_name='Посудомийна машина')
     washing_machine = models.BooleanField(verbose_name='Пральна машина')
     dryer = models.BooleanField(verbose_name='Сушильна машина')
-    without_appliances = models.BooleanField(
-                       verbose_name='Без побутової техніки')
+    # without_appliances = models.BooleanField(
+    #                    verbose_name='Без побутової техніки')
     # Multimedia
     wi_fi = models.BooleanField(verbose_name='WI-FI')
     high_speed_internet = models.BooleanField(
@@ -206,7 +213,7 @@ class Offer(models.Model):
     tv = models.BooleanField(verbose_name='Телевізор')
     cable_digital_tv = models.BooleanField(verbose_name='Кабельнеб цифрове ТБ')
     satellite_tv = models.BooleanField(verbose_name='Супутникове ТБ')
-    without_multimedia = models.BooleanField(verbose_name='Без мультимедіа')
+    # without_multimedia = models.BooleanField(verbose_name='Без мультимедіа')
     # Comfort
     air_conditioning = models.BooleanField(verbose_name='Кондиціонер')
     floor_heating = models.BooleanField(verbose_name='Підігрів підлоги')
@@ -246,7 +253,8 @@ class Offer(models.Model):
     septic_tank = models.BooleanField(verbose_name='Каналізація септик')
     removal_of_waste = models.BooleanField(verbose_name='Вивіз відходів')
     asphalt_road = models.BooleanField(verbose_name='Асфальтована дорога')
-    no_communication = models.BooleanField(verbose_name='Без комунікацій')
+    # no_communication = models.BooleanField(verbose_name='Без комунікацій')
+
     # Infrastructure (up to 500 meters)
     kindergarten = models.BooleanField(verbose_name='Дитячий садок')
     school = models.BooleanField(verbose_name='Школа')
@@ -267,6 +275,7 @@ class Offer(models.Model):
                     verbose_name='Відділення банку, банкомат')
     bus_station = models.BooleanField(verbose_name='Автовокзал')
     railway_station = models.BooleanField(verbose_name='Залізнична станція')
+
     # Landscape (up to 1 km.)
     river = models.BooleanField(verbose_name='Річка')
     reservoir = models.BooleanField(verbose_name='Водосховище')
@@ -275,8 +284,12 @@ class Offer(models.Model):
     mountains = models.BooleanField(verbose_name='Гори')
     park = models.BooleanField(verbose_name='Парк')
     forest = models.BooleanField(verbose_name='Ліс')
-    # Text add
-    body = models.TextField(max_length=9000, verbose_name='Опис')
+
+    # BODY TEXT
+    body = models.TextField(max_length=9000, verbose_name='Опис',
+            help_text="<em>до 9000 знаків</em>")
+
+    # ADDRESS
     district = models.CharField(max_length=30,choices=DISTRICTS, null=False,
              blank=False, verbose_name='Район')
     street = models.CharField(max_length=55,
@@ -287,19 +300,16 @@ class Offer(models.Model):
          null=True, blank=True,
          help_text="Не показується на сайті. Необов'язкове поле.'")
 
-    notes = models.TextField(max_length=1000,
-          verbose_name='Примітки для службового користування', blank=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL,
                related_name='flats', verbose_name='Власник оголошення',
                null=True,)
-    slug = models.CharField(max_length=100)
+    slug = models.SlugField(default='', editable=False, max_length=100)
     pub_date = models.DateTimeField(auto_now_add=True)
     num_visits = models.PositiveIntegerField(default=0)
 
     # SAVING MEDIA FILES
     def user_directory_path(instance, filename):
-        img_path = 'flats_{0}/user_{1}/{2}'.format(instance.id,
-                 instance.created_by.id, filename)
+        img_path = 'user_{0}/{1}'.format(instance.created_by.id, filename)
         return img_path
 
     image1 = models.ImageField(upload_to=user_directory_path,
@@ -320,6 +330,23 @@ class Offer(models.Model):
             verbose_name='Фото 8', null=True, blank=True)
     image9 = models.ImageField(upload_to=user_directory_path,
             verbose_name='Фото 9', null=True, blank=True)
+
+    # CONTRACT AND INSIDE INFORMATION
+    def contract_path(instance, filename):
+        contr_path = 'user_{0}/{1}'.format(instance.created_by.id, filename)
+        return contr_path
+
+    contract = models.FileField(upload_to=contract_path, null=True, blank=True,
+                verbose_name='Файл договору на продаж',
+                help_text="""Підписаний договір на продаж або ексклюзивний
+                договір. Необов'язково. Але додає рейтинг як підтвердження,
+                що об'єкт дійсно існує та ріелтор уповноважений власником
+                його продавати .""")
+
+    notes = models.TextField(max_length=1000,
+          verbose_name='Примітки для службового користування', blank=True,
+          help_text="""<em>Бачите тільки Ви та ріелтори, що додані в  друзі.
+          До 1000 символів.</em>""")
 
     # META CLASS
     class Meta:

@@ -1,139 +1,40 @@
-from django.shortcuts import render
-from flats.models import Offer
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.views.generic import CreateView
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.db import transaction
 
-# profile_form = ProfileForm(request.POST, instance=request.user.profile, request.FILES or None)
-class OfferCreate(LoginRequiredMixin, CreateView):
-    """The generic based class representing form to create a new offer.
-    """
-    model = Offer
-    fields= [
-        'type_offer',
-        'title',
-        'sold_true',
-        'price',
-        'currency',
-        'agree_price',
-        'without_commission',
-        'exchange',
-        'collaboration',
-        'type_object',
-        'building',
-        'floor',
-        'total_floor',
-        'area',
-        'kitchen',
-        'walls',
-        'rooms',
-        'planning',
-        'bathroom',
-        'heating',
-        'repair',
-        'furniture',
-        'plate',
-        'cooking_plate',
-        'oven',
-        'microwave',
-        'refrigerator',
-        'dishwashers',
-        'washing_machine',
-        'dryer',
-        'without_appliances',
-        'wi_fi',
-        'high_speed_internet',
-        'tv',
-        'cable_digital_tv',
-        'satellite_tv',
-        'without_multimedia',
-        'air_conditioning',
-        'floor_heating',
-        'bath',
-        'shower',
-        'kitchen_furniture',
-        'wardrobe',
-        'balcony',
-        'terrace',
-        'panoramic_windows',
-        'grid_on_the_windows',
-        'alarms',
-        'fire_alarm',
-        'video_surveillance',
-        'concierge',
-        'protection_of_the_territory',
-        'parking_space',
-        'guest_parking',
-        'underground_parking',
-        'garage',
-        'elevator',
-        'freight_elevator',
-        'pantry',
-        'smart_home_technology',
-        'autonomous_generator',
-        'gas',
-        'central_water_supply',
-        'well',
-        'electricity',
-        'central_sewerage',
-        'septic_tank',
-        'removal_of_waste',
-        'asphalt_road',
-        'no_communication',
-        'kindergarten',
-        'school',
-        'the_pump_room',
-        'transportation_stop',
-        'market',
-        'shop_kiosk',
-        'supermarket_mall',
-        'park_green_area',
-        'playground',
-        'pharmacy',
-        'hospital_clinic',
-        'city_center',
-        'restaurant_cafe',
-        'cinema_theater',
-        'post_office',
-        'bank_branch_ATM',
-        'bus_station',
-        'railway_station',
-        'river',
-        'reservoir',
-        'lake',
-        'hills',
-        'mountains',
-        'park',
-        'forest',
-        'body',
-        'district',
-        'street',
-        'house',
-        'flat',
-        'notes',
-        'image1',
-        'image2',
-        'image3',
-        'image4',
-        'image5',
-        'image6',
-        'image7',
-        'image8',
-        'image9',
-        ]
-    success_url = reverse_lazy('flats')
-    def form_valid(self, form):
-        """
-        The function doing created_by default current user.
-        Ovverride This
-            def form_valid(self, form):
-                "If the form is valid, save the associated model."
-                self.object = form.save()
-                return super().form_valid(form)
-        """
-        form.instance.created_by = self.request.user
-        return super(OfferCreate, self).form_valid(form)
+from flats.forms import OfferCreateForm
+from flats.models import Offer
 
+
+@login_required
+def post_offer(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = OfferCreateForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.instance.created_by = request.user
+            form.save()
+            messages.success(request, "Об'єкт додано.")
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            return HttpResponseRedirect('/')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = OfferCreateForm()
+
+    return render(request, 'flats/post_offer.html', {'form': form})
+
+
+@login_required
+def offer_edit(request, offer_id):
+    pass
 
 from django.views.generic import ListView
 class OfferList(ListView):
@@ -141,135 +42,8 @@ class OfferList(ListView):
     Class represents all offers in list
     """
     model = Offer
-    paginate_by = 3
+    paginate_by = 30
 
-from django.views.generic import UpdateView
-# Class View to update current offer
-class OfferUpdate(UpdateView):
-    model = Offer
-    fields = [
-        'type_offer',
-        'title',
-        'sold_true', #<- field means flat was sold
-        'price', #<- sold price for archive
-        'currency',
-        'agree_price',
-        'without_commission',
-        'exchange',
-        'collaboration',
-        'type_object',
-        'building',
-        'floor',
-        'total_floor',
-        'area',
-        'kitchen',
-        'walls',
-        'rooms',
-        'planning',
-        'bathroom',
-        'heating',
-        'repair',
-        'furniture',
-        'plate',
-        'cooking_plate',
-        'oven',
-        'microwave',
-        'refrigerator',
-        'dishwashers',
-        'washing_machine',
-        'dryer',
-        'without_appliances',
-        'wi_fi',
-        'high_speed_internet',
-        'tv',
-        'cable_digital_tv',
-        'satellite_tv',
-        'without_multimedia',
-        'air_conditioning',
-        'floor_heating',
-        'bath',
-        'shower',
-        'kitchen_furniture',
-        'wardrobe',
-        'balcony',
-        'terrace',
-        'panoramic_windows',
-        'grid_on_the_windows',
-        'alarms',
-        'fire_alarm',
-        'video_surveillance',
-        'concierge',
-        'protection_of_the_territory',
-        'parking_space',
-        'guest_parking',
-        'underground_parking',
-        'garage',
-        'elevator',
-        'freight_elevator',
-        'pantry',
-        'smart_home_technology',
-        'autonomous_generator',
-        'gas',
-        'central_water_supply',
-        'well',
-        'electricity',
-        'central_sewerage',
-        'septic_tank',
-        'removal_of_waste',
-        'asphalt_road',
-        'no_communication',
-        'kindergarten',
-        'school',
-        'the_pump_room',
-        'transportation_stop',
-        'market',
-        'shop_kiosk',
-        'supermarket_mall',
-        'park_green_area',
-        'playground',
-        'pharmacy',
-        'hospital_clinic',
-        'city_center',
-        'restaurant_cafe',
-        'cinema_theater',
-        'post_office',
-        'bank_branch_ATM',
-        'bus_station',
-        'railway_station',
-        'river',
-        'reservoir',
-        'lake',
-        'hills',
-        'mountains',
-        'park',
-        'forest',
-        'body',
-        'district',
-        'street',
-        'house',
-        'flat',
-        'notes',
-        'contract',
-        'image1',
-        'image2',
-        'image3',
-        'image4',
-        'image5',
-        'image6',
-        'image7',
-        'image8',
-        'image9',
-    ]
-    template_name_suffix = '_update_form'
-
-    def test_func(self):
-        obj = self.get_object()
-        return obj.created_by == self.request.user
-
-# from django.views.generic import DetailView
-# class OfferDetail(DetailView):
-#     model = Offer
-#     # query_pk_and_slug = True
 
 from django.db.models import Q
 def details(request, pk, slug):
@@ -279,3 +53,23 @@ def details(request, pk, slug):
     object.save()
 
     return render(request, 'flats/offer_detail.html', {'object': object})
+
+@login_required
+def type_offer(request, type_offer):
+    queryset = Offer.objects.filter(type_offer=type_offer).all()
+    type = queryset[0].get_type_offer_display
+    return render(request, 'flats/type_offer_list.html',
+        {'object_list':queryset, 'type':type})
+
+
+@login_required
+def type_offer_district(request, type_offer, district):
+    queryset = Offer.objects.filter(Q(type_offer=type_offer)&
+                Q(district=district)).all()
+    type = queryset[0].get_type_offer_display
+    district = queryset[0].get_district_display
+    # for link in breadcrumb menu
+    type_slug = queryset[0].type_offer
+    return render(request, 'flats/type_offer_district_list.html',
+        {'object_list':queryset, 'type':type, 'district':district,
+            'type_slug':type_slug})

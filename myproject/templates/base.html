@@ -24,10 +24,11 @@ $(document).ready(function(){
 </head>
 <body>
 {% include 'include/navbar.html'%}
+{% include 'include/messages.html'%}
 
 {% block style%}
   {% load static %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
 {% endblock style%}
 
   <div class="container" id="body">
@@ -40,6 +41,15 @@ $(document).ready(function(){
     </div>
 <header>
 {% block header %}
+
+  {% if messages %}
+  <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+  </ul>
+  {% endif %}
+
 <!-- Head of page -->
 {% endblock header %}
 </header>
