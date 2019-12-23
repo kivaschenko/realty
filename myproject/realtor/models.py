@@ -81,8 +81,6 @@ class Realtor(models.Model):
     """
     phone = models.CharField(max_length=13, verbose_name="Телефон основний",
         help_text="міжнародний формат, +38067XXXYYZZ",)
-    phone2 = models.CharField(max_length=13, verbose_name="Телефон додатковий",
-        help_text="міжнародний формат, +38067XXXYYZZ", blank=True)
     start_year = models.CharField(max_length=4,
         verbose_name='Рік початку роботи ріелтором')
     agensy = models.CharField(max_length=50, blank=True, null=True,

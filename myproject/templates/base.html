@@ -1,14 +1,19 @@
 <!DOCTYPE html>
+{% load leaflet_tags %}
 <html lang="ua">
 <head>
-  <meta charset="utf-8">
+	
+<meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <title>ElitFlatCherkasy.Org.ua | {% block title %}{% endblock title %}</title>
+<!-- Leaflet Info goes here -->
+{% block leaflet %}{% endblock %}
 <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 <!-- Що ти тут забув? -->
+
 <!-- Filter table -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
@@ -21,20 +26,23 @@ $(document).ready(function(){
   });
 });
 </script>
+
 </head>
 <body>
 {% include 'include/navbar.html'%}
 {% include 'include/messages.html'%}
 
 {% block style%}
+
   {% load static %}
   <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+
 {% endblock style%}
 
   <div class="container" id="body">
 
     <div class="row">
-    	<ol class="breadcrumb my-4">
+    	<ol class="breadcrumb my-2">
     		{% block breadcrumb %}
     		{% endblock %}
     	</ol>

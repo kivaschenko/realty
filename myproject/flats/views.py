@@ -1,14 +1,31 @@
+import folium
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.views.generic import CreateView
-from django.http import HttpResponseRedirect
+from django.views.generic import CreateView, ListView, UpdateView, DetailView
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
 from django.db import transaction
 
 from flats.forms import OfferCreateForm
-from flats.models import Offer
+from flats.models import *
 
+def flat_on_map(request, pk):
+    try:
+        object = Offer.objects.get(pk=pk)
+    except Offer.DoesNotExist:
+        return Http404("Такого об'єкту немає в базі!")
+    # start_coords = object.geometry.coords
+
+    template_name = "flats/flat_map.html"
+    
+    return render(request, template_name=template_name, context={'object':object})
+
+
+
+class OfferDetailMapView(DetailView):
+    model = Offer
+    template_name = 'flats/map.html'
 
 @login_required
 def post_offer(request):

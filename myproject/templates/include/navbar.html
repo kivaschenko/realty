@@ -14,29 +14,12 @@
         <a class="nav-link" href="#">Будинки</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="#">Комерційна нерухомість</a>
-      </li>
-      <li class="nav-item active dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Земля
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="#">Земля сільськогосподарського призначення</a>
-          <a class="dropdown-item" href="#">Земля житлової й суспільної забудови</a>
-          <a class="dropdown-item" href="#">Земля оздоровчого призначення</a>
-          <a class="dropdown-item" href="#">Земля рекреаційного призначення</a>
-          <a class="dropdown-item" href="#">Земля лісового фонду</a>
-          <a class="dropdown-item" href="#">Земля водного фонду</a>
-          <a class="dropdown-item" href="#">Земля промисловості, транспорту та іншого призначення</a>
-          <a class="dropdown-item" href="#">Земля запасу, резервного фонду та загального користування</a>
-        </div>
-      </li>
-      <li class="nav-item active">
         <a class="nav-link" href="{% url 'realtors' %}">Ріелтори</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'contact' %}">Контакт</a>
+        <a class="nav-link" href="#">Мапа</a>
       </li>
+
 {% if user.is_authenticated %}
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
@@ -48,11 +31,11 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           {%if user.realtor %}
           <a class="dropdown-item" href="{% url 'realtor' user.realtor.pk %}">
+            Мій профіль ріелтора</a>
           {%else%}
           <a class="dropdown-item" href="{%url 'create_realtor'%}">
-            Мій профіль ріелтора</a>
+            Створити профіль ріелтора</a>
           {%endif%}
-          <a class="dropdown-item" href="#">Мої оголошення</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'password_change'%}">Змінити пароль</a>
           <div class="dropdown-divider"></div>
@@ -67,5 +50,8 @@
       <a href="{% url 'signup' %}" class="btn btn-primary ml-2">Реєстрація</a>
     </form>
   {% endif %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'contact' %}">Контакт</a>
+        </li>
   </div>
 </nav>

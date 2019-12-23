@@ -37,8 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.gis',
     # Third-party
-    # 'crispy_forms',  # new
+    'leaflet',  # new
+    'geopy', #<- new
     # new
     'flats',
     'accounts',
@@ -82,8 +84,12 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'realtydb',
+        'USER': 'ray',
+        'PASSWORD': 'Ki150797',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -125,7 +131,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -142,3 +149,13 @@ EMAIL_HOST_USER = 'elitflatcherkasy@gmail.com'
 EMAIL_HOST_PASSWORD = 'ElitFlatToSale102019'
 DEFAULT_FROM_EMAIL = "elitflatcherkasy@gmail.com"
 DEFAULT_TO_EMAIL = 'elitflatcherkasy@gmail.com'
+
+LEAFLET_CONFIG = {
+    'SPATIAL_EXTENT': (31.44, 49.217, 32.47, 49.68), #<- xmin,ymin,xmax,ymax
+    'DEFAULT_CENTER': (49.448, 32.05),
+    'DEFAULT_ZOOM': 12,
+    'MIN_ZOOM': 0,
+    'MAX_ZOOM': 24,
+    'TILES': 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    'MINIMAP': True,
+}

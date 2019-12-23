@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% load leaflet_tags %}
+  {% leaflet_js plugins="forms" %}
+   {% leaflet_css plugins="forms" %}
 
 {% block breadcrumb %}
 <li class="breadcrumb-item"><a href="{% url 'home'%}">Головна</a></li>

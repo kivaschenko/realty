@@ -16,7 +16,7 @@ def contact(request):
 
             recipients = ['elitflatcherkasy@gmail.com',]
             if cc_myself:
-                recipients.append(sender)
+                recipients.append(email)
 
             send_mail(subject, message, email, recipients)
             messages.success(request, 'Ваше повідомлення відправлено!')

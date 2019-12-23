@@ -4,13 +4,12 @@
 {% endblock %}
 
 {% block breadcrumb %}
-<li class="breadcrumb-item active"><a href="{% url 'home' %}">Головна</a>
+<li class="breadcrumb-item active"><a href="{% url 'home' %}">Головна</a></li>
 <li class="breadcrumb-item active"><a href="{% url 'flats' %}">
-  Квартири, кімнати</a>
-<li class="breadcrumb-item-active">
-  <a href="{%url 'type_offer' type_slug %}">
-  {{ type}}</a></li>
-<li class="breadcrumb-item">{{district}}</li>
+  Квартири, кімнати</a></li>
+<li class="breadcrumb-item active"><a href="{%url 'type_offer' type_slug %}">
+  {{ type}} </a></li>
+<li class="breadcrumb-item"> {{district}} </li>
 {% endblock %}
 
 {% block content %}

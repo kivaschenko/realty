@@ -1,16 +1,17 @@
 import datetime
 from translitua import translit
 from django.db import models
+from django.contrib.gis.db import models as geomodels
 from django.urls import reverse
 from django.utils.text import slugify
 from django.contrib.auth.models import User
+
 
 
 # CHOICES
 TYPE_OFFER = (
     ('sale', 'Продаж'),
     ('rent', 'Оренда довгострокова'),
-    ('new', 'Новобудова'),
 )
 YESNO = (('yes','Так'),('no', 'Ні'))
 TYPES_OBJECT = (
@@ -299,6 +300,13 @@ class Offer(models.Model):
     flat = models.CharField(max_length=3, verbose_name='Номер квартири',
          null=True, blank=True,
          help_text="Не показується на сайті. Необов'язкове поле.'")
+    geometry = geomodels.PointField()
+    @property
+    def lat_lng(self):
+        return list(getattr(self.geometry, 'coords', [])[::-1])
+    @property
+    def popupContent(self):
+      return f'{self.street}, {self.house}'
 
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL,
                related_name='flats', verbose_name='Власник оголошення',
@@ -331,6 +339,7 @@ class Offer(models.Model):
     image9 = models.ImageField(upload_to=user_directory_path,
             verbose_name='Фото 9', null=True, blank=True)
 
+
     # CONTRACT AND INSIDE INFORMATION
     def contract_path(instance, filename):
         contr_path = 'user_{0}/{1}'.format(instance.created_by.id, filename)
@@ -358,7 +367,6 @@ class Offer(models.Model):
 
     # PREPROCESSING SLUGS
     def _generate_slug(self):
-        max_length = self._meta.get_field('slug').max_length
         value = translit(self.title)
         slug_candidate = slugify(value, allow_unicode=True)
         ctime = datetime.datetime.now().ctime()

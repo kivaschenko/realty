@@ -14,3 +14,8 @@ urlpatterns += [
     path('offers/<type_offer>/<district>/', type_offer_district,
         name='type_offer_district'),
 ]
+
+# Add map with all flats
+urlpatterns += [
+    path('map/<int:pk>/', flat_on_map, name="flat_map"),
+]
