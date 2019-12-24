@@ -61,6 +61,9 @@ class OfferList(ListView):
     model = Offer
     paginate_by = 30
 
+def map(request):
+    queryset = Offer.objects.all()
+    return render(request, 'flats/map.html', context={'object_list':queryset})
 
 from django.db.models import Q
 def details(request, pk, slug):

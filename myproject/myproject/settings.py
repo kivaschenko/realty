@@ -158,4 +158,5 @@ LEAFLET_CONFIG = {
     'MAX_ZOOM': 24,
     'TILES': 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     'MINIMAP': True,
+    'RESET_VIEW': False,
 }

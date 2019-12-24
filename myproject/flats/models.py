@@ -305,8 +305,12 @@ class Offer(models.Model):
     def lat_lng(self):
         return list(getattr(self.geometry, 'coords', [])[::-1])
     @property
-    def popupContent(self):
+    def popupAddress(self):
       return f'{self.street}, {self.house}'
+    @property
+    def popupContent(self):
+        text = f'<strong>{self.title}</strong>\n{self.type_object}\n{self.price} {self.currency}'
+        return text
 
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL,
                related_name='flats', verbose_name='Власник оголошення',

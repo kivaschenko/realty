@@ -20,18 +20,18 @@
 
 </style>
   <div class="col-sm-12" style="height:480px;">
-    {% leaflet_map "main" callback="map_init" %}
+    {% leaflet_map "flats" callback="map_init" %}
   </div>
 
   <script type="text/javascript">
     function map_init(map, options) {
-        // get point lat and lon
-
+        {% for object in object_list %}
         // zoom to point & add it to map
         map.setView({{object.lat_lng}}, 15);
-        L.marker({{object.lat_lng}})
-          .addTo(map)
-          .bindTooltip('{{object.popupAddress}}')
-          .openTooltip();
+        
+        L.marker({{object.lat_lng}}).addTo(map)
+          .bindPopup('{{object.popupContent}}')
+          .openPopup();
+        {% endfor %}
     }
   </script>
