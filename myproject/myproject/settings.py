@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     # Third-party
     'leaflet',  # new
     'geopy', #<- new
-    # new
+
     'flats',
     'accounts',
     'realtor',

@@ -1,4 +1,4 @@
-import folium
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -12,7 +12,7 @@ from flats.models import *
 
 def flat_on_map(request, pk):
     try:
-        object = Offer.objects.get(pk=pk)
+        object = Offer.objects.filter(pk=pk)
     except Offer.DoesNotExist:
         return Http404("Такого об'єкту немає в базі!")
     # start_coords = object.geometry.coords
