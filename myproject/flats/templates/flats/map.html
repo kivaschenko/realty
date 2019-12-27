@@ -27,11 +27,11 @@
  <script type="text/javascript">
 
   function onEachFeature(feature, layer) {
-		var popupContent = "<p>I started out as a GeoJSON " +
-				feature.geometry.type + ", but now I'm a Leaflet vector!</p>";
+		var popupContent = "<h3> " +
+				feature.properties.price + " " + feature.properties.currency + "</h3>";
 
-		if (feature.properties && feature.properties.popupContent) {
-			popupContent += feature.properties.popupContent;
+		if (feature.properties && feature.properties.title) {
+			popupContent += feature.properties.title;
 		}
 
 		layer.bindPopup(popupContent);

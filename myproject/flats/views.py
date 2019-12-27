@@ -12,7 +12,7 @@ from flats.models import *
 
 def get_map(request):
     data = serialize('geojson', Offer.objects.all(), geometry_field='geometry', 
-                     fields=('image1', 'title', 'price', 'type_offer',))
+                     fields=('title', 'price', 'currency',))
     return render(request, 'flats/map.html', context={'data':data})
 
 
