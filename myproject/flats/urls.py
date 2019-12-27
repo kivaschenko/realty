@@ -18,5 +18,5 @@ urlpatterns += [
 # Add map with all flats
 urlpatterns += [
     path('map/<int:pk>/', OfferDetailMapView.as_view(), name="flat_map"),
-    path('map/', map, name="map"),
+    path('on/map/', get_map, name="map"),
 ]

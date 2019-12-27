@@ -1,4 +1,4 @@
-
+from django.core.serializers import serialize
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -10,16 +10,10 @@ from django.db import transaction
 from flats.forms import OfferCreateForm
 from flats.models import *
 
-def flat_on_map(request, pk):
-    try:
-        object = Offer.objects.filter(pk=pk)
-    except Offer.DoesNotExist:
-        return Http404("Такого об'єкту немає в базі!")
-    # start_coords = object.geometry.coords
-
-    template_name = "flats/flat_map.html"
-    
-    return render(request, template_name=template_name, context={'object':object})
+def get_map(request):
+    data = serialize('geojson', Offer.objects.all(), geometry_field='geometry', 
+                     fields=('image1', 'title', 'price', 'type_offer',))
+    return render(request, 'flats/map.html', context={'data':data})
 
 
 
