@@ -28,13 +28,13 @@
 
   function onEachFeature(feature, layer) {
 		var popupContent = "<h3> " +
-				feature.properties.price + " " + feature.properties.currency + "</h3>";
-
-		if (feature.properties && feature.properties.title) {
-			popupContent += feature.properties.title;
-		}
-
-		layer.bindPopup(popupContent);
+      feature.properties.price + " " + feature.properties.currency + "</h3>" +
+      '<a href="http://127.0.0.1:8000/flats/' +
+      feature.properties.pk + '/' +
+      feature.properties.slug + '/">' +
+      feature.properties.title +'</a>';
+		
+    layer.bindPopup(popupContent);    
   }
   
   var geojsonFeatures = {{ data | safe }};
@@ -59,5 +59,6 @@
         });
       }
     }).addTo(map);
+    
   } 
  </script>
