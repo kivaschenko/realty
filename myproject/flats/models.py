@@ -287,8 +287,8 @@ class Offer(models.Model):
     forest = models.BooleanField(verbose_name='Ліс')
 
     # BODY TEXT
-    body = models.TextField(max_length=9000, verbose_name='Опис',
-            help_text="<em>до 9000 знаків</em>")
+    body = models.TextField(max_length=2000, verbose_name='Опис',
+            help_text="<em>до 2000 знаків</em>")
 
     # ADDRESS
     district = models.CharField(max_length=30,choices=DISTRICTS, null=False,
@@ -307,10 +307,7 @@ class Offer(models.Model):
     @property
     def popupAddress(self):
       return f'{self.street}, {self.house}'
-    @property
-    def popupContent(self):
-        text = f'<strong>{self.title}</strong>\n{self.type_object}\n{self.price} {self.currency}'
-        return text
+
 
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL,
                related_name='flats', verbose_name='Власник оголошення',

@@ -1,64 +1,16 @@
+{% extends 'base.html' %}
 {% load leaflet_tags %} 
     {% leaflet_css %}
     {% leaflet_js %}	
 
 
-    <style>
+{% block breadcrumb %}
+<li class="breadcrumb-item active"><a href="{% url 'home' %}">Головна</a>
+<li class="breadcrumb-item">Мапа квартир</a>
+{% endblock %}
 
-        .leaflet-container {  /* all maps */
-            /* width:  1300px; */
-            height: 100%;
-        }
-      
-        #specialbigmap {
-            height: 800px;
-        }
-      
-        /* Resize the "display_raw" textbox */
-        .django-leaflet-raw-textarea {
-            width: 100%;
-        }
-      
-      </style>
-        <div class="col-sm-12">
-          {% leaflet_map "main" callback='window.map_init' %}
-        </div>
+{% block content %}
 
- <script type="text/javascript">
+{% include 'include/map.html' %}
 
-  function onEachFeature(feature, layer) {
-		var popupContent = "<h3> " +
-      feature.properties.price + " " + feature.properties.currency + "</h3>" +
-      '<a href="http://127.0.0.1:8000/flats/' +
-      feature.properties.pk + '/' +
-      feature.properties.slug + '/">' +
-      feature.properties.title +'</a>';
-		
-    layer.bindPopup(popupContent);    
-  }
-  
-  var geojsonFeatures = {{ data | safe }};
-
-  function map_init(map, options) {
-    L.geoJSON(geojsonFeatures, {
-
-      style: function (feature) {
-        return feature.properties && feature.properties.style;
-      },
-
-      onEachFeature: onEachFeature,
-
-      pointToLayer: function (feature, latlng) {
-        return L.circleMarker(latlng, {
-          radius: 8,
-          fillColor: "#ff7800",
-          color: "#000",
-          weight: 1,
-          opacity: 1,
-          fillOpacity: 0.8
-        });
-      }
-    }).addTo(map);
-    
-  } 
- </script>
+{% endblock content %}

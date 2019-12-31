@@ -24,6 +24,7 @@ urlpatterns = [
 TemplateView.as_view(template_name='cookie_policy.html'), name='cookies'),
     path('flats/', include('flats.urls')),
     path('realtors/', include('realtor.urls')),
+    path('houses/', include('houses.urls')),
     path('admin/', admin.site.urls),
     ]
 

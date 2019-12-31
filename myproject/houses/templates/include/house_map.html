@@ -1,0 +1,37 @@
+
+{% load leaflet_tags %} 
+ {% leaflet_css %}
+ {% leaflet_js %}	
+ <style>
+
+  .leaflet-container {  /* all maps */
+      /* width:  1300px; */
+      height: 480px;
+  }
+
+  #specialbigmap {
+      height: 800px;
+  }
+
+  /* Resize the "display_raw" textbox */
+  .django-leaflet-raw-textarea {
+      width: 100%;
+  }
+
+</style>
+  <div class="col-sm-12" style="height:480px;">
+    {% leaflet_map "main" callback="map_init" %}
+  </div>
+
+  <script type="text/javascript">
+    function map_init(map, options) {
+        // get point lat and lon
+
+        // zoom to point & add it to map
+        map.setView({{object.lat_lng}}, 15);
+        L.marker({{object.lat_lng}})
+          .addTo(map)
+          .bindTooltip('{{object.address}}')
+          .openTooltip();
+    }
+  </script>

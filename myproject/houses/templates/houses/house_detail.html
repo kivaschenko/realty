@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load leaflet_tags %}
+{% block title %} {% endblock title %}
+
+{% block leaflet %}
+{% leaflet_js %}
+{% leaflet_css %}
+<style>
+  .leaflet-container { height: 100%; }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<p>{{ object.address }}</p>
+<p><strong>GPS coordinates: </strong>{{object.geometry.y}}, {{object.geometry.x}}</p>
+<div class="row">
+{% include 'include/house_map.html' %}
+</div>
+{% endblock %}
