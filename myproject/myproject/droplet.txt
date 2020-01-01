@@ -1,0 +1,12 @@
+Success. You can now start the database server using:
+
+    pg_ctlcluster 12 main start
+
+Ubuntu 18.04
+user: ray
+password: 2358
+
+PostgreSQL
+DATABESE: realtydb
+user: ray
+password: 'Ki150797'
