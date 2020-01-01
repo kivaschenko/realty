@@ -6,7 +6,9 @@ from django.urls import reverse
 from django.utils.text import slugify
 from django.contrib.auth.models import User
 
+from geopy.geocoders import Nominatim
 
+geolocator = Nominatim(timeout=7, user_agent='flats')
 
 # CHOICES
 TYPE_OFFER = (
@@ -293,22 +295,8 @@ class Offer(models.Model):
     # ADDRESS
     district = models.CharField(max_length=30,choices=DISTRICTS, null=False,
              blank=False, verbose_name='Район')
-    street = models.CharField(max_length=55,
-           verbose_name='Вулиця, провулок, бульвар',null=False)
-    house = models.CharField(max_length=6, verbose_name='Номер будинку',
-          null=False, blank=False)
-    flat = models.CharField(max_length=3, verbose_name='Номер квартири',
-         null=True, blank=True,
-         help_text="Не показується на сайті. Необов'язкове поле.'")
-    geometry = geomodels.PointField()
-    @property
-    def lat_lng(self):
-        return list(getattr(self.geometry, 'coords', [])[::-1])
-    @property
-    def popupAddress(self):
-      return f'{self.street}, {self.house}'
-
-
+    address = models.CharField(max_length=255, verbose_name='Адреса')
+    # INVISIBLE FIELDS IN FORM
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL,
                related_name='flats', verbose_name='Власник оголошення',
                null=True,)
@@ -339,8 +327,6 @@ class Offer(models.Model):
             verbose_name='Фото 8', null=True, blank=True)
     image9 = models.ImageField(upload_to=user_directory_path,
             verbose_name='Фото 9', null=True, blank=True)
-
-
     # CONTRACT AND INSIDE INFORMATION
     def contract_path(instance, filename):
         contr_path = 'user_{0}/{1}'.format(instance.created_by.id, filename)
@@ -357,6 +343,24 @@ class Offer(models.Model):
           verbose_name='Примітки для службового користування', blank=True,
           help_text="""<em>Бачите тільки Ви та ріелтори, що додані в  друзі.
           До 1000 символів.</em>""")
+    # GEOMETRY FIELD
+    geometry = geomodels.PointField(extent=(31.44, 49.217, 32.47, 49.68))
+    # create latitude and longitude coordinates for leaflet map:
+    @property
+    def lat_lng(self):
+        return list(getattr(self.geometry, 'coords', [])[::-1])
+
+    # PREPROCESSING ADDRESS
+    def _generate_address(self):
+        location = geolocator.reverse((self.geometry.y, self.geometry.x))
+        addr = location.address
+        addr_split = addr.split(',')
+        address = ', '.join(addr_split[:-4])
+        self.address = address
+
+    @property
+    def popupAddress(self):
+      return self.address
 
     # META CLASS
     class Meta:
@@ -377,7 +381,7 @@ class Offer(models.Model):
     def save(self, *args, **kwargs):
         if not self.pk:
             self._generate_slug()
-
+            self._generate_address()
         super().save(*args, **kwargs)
 
     # ABSOLUTE URL METHOD

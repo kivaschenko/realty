@@ -1,9 +1,7 @@
 from django import forms
-from django.forms import ModelForm
 from leaflet.forms.fields import PointField
 from leaflet.forms.widgets import LeafletWidget
-
-from flats.models import Offer
+from .models import House
 
 LEAFLET_WIDGET_ATTRS = {
     'map_height': '500px',
@@ -16,15 +14,12 @@ LEAFLET_WIDGET_ATTRS = {
             }
 }
 
-class OfferCreateForm(ModelForm):
-    """ Create main fields to offer .
-    """
-    geometry = PointField()
+class HouseForm(forms.ModelForm):
+    geometry = PointField
+
     class Meta:
-        model = Offer
-        exclude = ['created_by', 'num_visits']
+        model = House
+        fields = ('geometry',)
         widgets = {
         'geometry': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS),
     }
-
-

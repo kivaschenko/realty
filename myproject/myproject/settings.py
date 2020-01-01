@@ -151,13 +151,13 @@ EMAIL_HOST_PASSWORD = 'ElitFlatToSale102019'
 DEFAULT_FROM_EMAIL = "elitflatcherkasy@gmail.com"
 DEFAULT_TO_EMAIL = 'elitflatcherkasy@gmail.com'
 
-LEAFLET_CONFIG = {
-    'SPATIAL_EXTENT': (31.44, 49.217, 32.47, 49.68), #<- xmin,ymin,xmax,ymax
-    'DEFAULT_CENTER': (49.448, 32.05),
-    'DEFAULT_ZOOM': 12,
-    'MIN_ZOOM': 0,
-    'MAX_ZOOM': 24,
-    'TILES': 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    'MINIMAP': True,
-    'RESET_VIEW': False,
-}
+# LEAFLET_CONFIG = {
+#     'SPATIAL_EXTENT': (31.44, 49.217, 32.47, 49.68), #<- xmin,ymin,xmax,ymax
+#     'DEFAULT_CENTER': (49.448, 32.05),
+#     'DEFAULT_ZOOM': 12,
+#     'MIN_ZOOM': 0,
+#     'MAX_ZOOM': 24,
+#     'TILES': 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+#     'MINIMAP': True,
+#     'RESET_VIEW': False,
+# }
