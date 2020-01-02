@@ -7,6 +7,7 @@
         {{object.area}} / {{object.kitchen}} кв. м., {{object.get_walls_display}}, 
         {{object.rooms}} кімн., {{object.get_planning_display}}, 
         санвузол: {{object.get_bathroom_display}}, {{object.get_repair_display}} ремонт.</p>
-      <a href="#" class="btn btn-primary">{{ object.price}} {{object.get_currency_display}}</a>
+      <a href="{%url 'offer-detail' object.pk object.slug%}" class="btn btn-primary">
+          {{ object.price}} {{object.get_currency_display}}</a>
     </div>
   </div>

@@ -14,8 +14,11 @@
     {% for object in object_list %}
     <div class="container">
       <div class="row">
-        <div class="col-sm">
-          {% include 'include/card.html' %}
+        <div class="col-sm-8">
+          {%include 'include/map.html'}
+        </div>
+        <div class="col-sm-3">
+          {% include 'include/card.html' %}<br />
         </div>
       </div>
     </div>
