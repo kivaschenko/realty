@@ -36,7 +36,7 @@
       <a href="{% url 'type_offer_district' object.type_offer object.district %}">
       <h5><span class="badge badge-info">{{object.get_district_display}}
       </span></h5></a>
-      {{object.street}}, {{object.house}}, Черкаси, Черкаська область, Україна
+      {{object.address}}
       </dd>
       <dt class="col-sm-3 text-right">Ціна </dt>
       <dd class="col-sm-9"><h4>
@@ -45,7 +45,7 @@
       </dd>
       <dt class="col-sm-3 text-right">Ріелтор </dt>
       <dd class="col-md-9">
-      <a href="{%url 'realtor' object.created_by.realtor.id%}"
+      <a href="{% url 'realtor' object.created_by.realtor.id %}"
       style="font-family: 'Lobster', cursive; font-size: 20px;">
       {{ object.created_by.first_name }} {{object.created_by.last_name}}</a>
       </dd>
