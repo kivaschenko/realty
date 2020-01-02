@@ -10,52 +10,15 @@
 {% block content %}
 <h2>Квартири та кімнати на продажу в Черкасах</h2>
 {% if user.is_authenticated%}
-  <div class="row">
-    <div class="col-8">
-      <p>Введіть що-небудь в поле нижче для пошуку по таблиці:</p>
-      <input id="myInput" type="text" placeholder="Пошук.."
-      class="form-control mb-4 mr-sm-4">
-    </div>
-
-    <div class="col-sm-3">
-      <a href="{% url 'post_offer'%}" type="button"
-      class="btn btn-outline-primary">Додати квартиру</a>
-    </div>
-  </div>
-
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th scope="col">Тип</th>
-    <th scope="col">Заголовок</th>
-    <th scope="col">Райони</th>
-    <th scope="col">Вулиця</th>
-    <th scope="col">Ціна</th>
-    <th scope="col">Поверх/ Поверхів</th>
-    <th scope="col">Площа/ Кухня</th>
-    <th scope="col">Ремонт</th>
-    <th scope="col">Дата</th>
-  </tr>
-  </thead>
-  <tbody id="myTable">
 {% if object_list %}
     {% for object in object_list %}
-  <tr>
-    <td scope="row"><a href="{% url 'type_offer' object.type_offer%}">
-      {{ object.get_type_offer_display}}</a></td>
-    <td scope="row"> <a href="{% url 'offer-detail' object.pk object.slug%}">
-      {{ object.title }}</a>
-    </td>
-    <td><a href="{%url 'type_offer_district' object.type_offer object.district%}">
-      {{ object.get_district_display }}</a>
-    </td>
-    <td>{{ object.street}}</a></td>
-    <td>{{ object.price }} {{ object.get_currency_display }}</td>
-    <td> {{ object.floor}} / {{ object.total_floor}}</td>
-    <td>{{ object.area }} / {{object.kitchen}}</td>
-    <td>{{ object.get_repair_display}}</td>
-    <td><em>{{ object.pub_date|date }}</em></td>
-  </tr>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          {% include 'include/card.html' %}
+        </div>
+      </div>
+    </div>
      {% endfor %}
 {% else %}
     <p>Тут поки немає оголошень. Ваше може бути першим.</p>
