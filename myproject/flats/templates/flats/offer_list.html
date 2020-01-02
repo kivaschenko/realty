@@ -10,13 +10,13 @@
 {% block content %}
 <h2>Квартири та кімнати на продажу в Черкасах</h2>
 {% if user.is_authenticated%}
-{% if object_list %}
-    {% for object in object_list %}
     <div class="container">
       <div class="row">
         <div class="col-sm-8">
-          {%include 'include/map.html'}
+          {%include 'include/map.html'%}
         </div>
+        {% if object_list %}
+        {% for object in object_list %}
         <div class="col-sm-3">
           {% include 'include/card.html' %}<br />
         </div>
