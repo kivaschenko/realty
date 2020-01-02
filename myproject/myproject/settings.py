@@ -25,7 +25,7 @@ SECRET_KEY = '60+xw_jdf0437y!b#4%xg+94@cj*2a!plydvlbm%^ie7byy(sa'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', '64.225.41.178',]
 
 
 # Application definition
@@ -132,24 +132,24 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGOUT_REDIRECT_URL = 'home'
 LOGIN_REDIRECT_URL = 'home'
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 
 # Add new email settings to send messages
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'elitflatcherkasy@gmail.com'
-EMAIL_HOST_PASSWORD = 'ElitFlatToSale102019'
-DEFAULT_FROM_EMAIL = "elitflatcherkasy@gmail.com"
-DEFAULT_TO_EMAIL = 'elitflatcherkasy@gmail.com'
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'elitflatcherkasy@gmail.com'
+# EMAIL_HOST_PASSWORD = 'ElitFlatToSale102019'
+# DEFAULT_FROM_EMAIL = "elitflatcherkasy@gmail.com"
+# DEFAULT_TO_EMAIL = 'elitflatcherkasy@gmail.com'
 
 # LEAFLET_CONFIG = {
 #     'SPATIAL_EXTENT': (31.44, 49.217, 32.47, 49.68), #<- xmin,ymin,xmax,ymax

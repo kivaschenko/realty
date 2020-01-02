@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 astroid==2.3.3
 branca==0.3.1
 certifi==2019.11.28
@@ -17,11 +18,20 @@ MarkupSafe==1.1.1
 mccabe==0.6.1
 numpy==1.17.4
 Pillow==6.2.1
+=======
+asgiref==3.2.3
+Django==3.0.1
+django-leaflet==0.26.0
+pkg-resources==0.0.0
+>>>>>>> e0c9f7c03dbfc60a88013ca54584204665c5937d
 psycopg2-binary==2.8.4
 pylint==2.4.4
 pytz==2019.3
+<<<<<<< HEAD
 requests==2.22.0
 six==1.13.0
+=======
+>>>>>>> e0c9f7c03dbfc60a88013ca54584204665c5937d
 sqlparse==0.3.0
 translitua==1.3.0
 typed-ast==1.4.0
