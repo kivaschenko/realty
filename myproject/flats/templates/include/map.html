@@ -14,7 +14,7 @@
 
   function onEachFeature(feature, layer) {
     var props = feature.properties;
-    var link = {% url 'offer-detail' props.pk props.slug %};
+    var link = http://64.225.41.178:8000/${props.pk}/${props.slug}/;
 		var content = <h4>${props.price} ${props.currency}</h4> <p><a href="${link}">${props.title}</a></p>;
     layer.bindPopup(content);    
   }
