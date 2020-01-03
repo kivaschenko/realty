@@ -293,8 +293,8 @@ class Offer(models.Model):
             help_text="<em>до 2000 знаків</em>")
 
     # ADDRESS
-    district = models.CharField(max_length=30,choices=DISTRICTS, null=False,
-             blank=False, verbose_name='Район')
+    # district = models.CharField(max_length=30,choices=DISTRICTS, null=False,
+    #          blank=False, verbose_name='Район')
     address = models.CharField(max_length=255, verbose_name='Адреса', null=True, blank=True)
     # INVISIBLE FIELDS IN FORM
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL,
@@ -341,8 +341,7 @@ class Offer(models.Model):
 
     notes = models.TextField(max_length=1000,
           verbose_name='Примітки для службового користування', blank=True,
-          help_text="""<em>Бачите тільки Ви та ріелтори, що додані в  друзі.
-          До 1000 символів.</em>""")
+          help_text="<em>Бачите тільки Ви. До 1000 символів.</em>")
     # GEOMETRY FIELD
     geometry = geomodels.PointField(extent=(31.44, 49.217, 32.47, 49.68))
     # create latitude and longitude coordinates for leaflet map:

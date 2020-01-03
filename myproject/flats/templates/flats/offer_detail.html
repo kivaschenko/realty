@@ -17,9 +17,6 @@
 <li class="breadcrumb-item active">
   <a href="{% url 'type_offer' object.type_offer%}">
   {{ object.get_type_offer_display}}</a>
-<li class="breadcrumb-item active">
-  <a href="{% url 'type_offer_district' object.type_offer object.district %}">
-  {{ object.get_district_display}}</a>
 <li class="breadcrumb-item">{{ object.title }}</a>
 {% endblock %}
 
@@ -33,9 +30,6 @@
     <dl class="row">
       <dt class="col-sm-3 text-right">Адреса</dt>
       <dd class="col-sm-9">
-      <a href="{% url 'type_offer_district' object.type_offer object.district %}">
-      <h5><span class="badge badge-info">{{object.get_district_display}}
-      </span></h5></a>
       {{object.address}}
       </dd>
       <dt class="col-sm-3 text-right">Ціна </dt>

@@ -76,14 +76,3 @@ def type_offer(request, type_offer):
         {'object_list':queryset, 'type':type})
 
 
-@login_required
-def type_offer_district(request, type_offer, district):
-    queryset = Offer.objects.filter(Q(type_offer=type_offer)&
-                Q(district=district)).all()
-    type = queryset[0].get_type_offer_display
-    district = queryset[0].get_district_display
-    # for link in breadcrumb menu
-    type_slug = queryset[0].type_offer
-    return render(request, 'flats/type_offer_district_list.html',
-        {'object_list':queryset, 'type':type, 'district':district,
-            'type_slug':type_slug})

@@ -11,8 +11,6 @@ urlpatterns = [
 # Add URLConf to view filtered by type offer list
 urlpatterns += [
     path('<type_offer>/offers/', type_offer, name='type_offer'),
-    path('offers/<type_offer>/<district>/', type_offer_district,
-        name='type_offer_district'),
 ]
 
 # Add map with all flats

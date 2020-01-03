@@ -12,7 +12,7 @@
         <th scope="col">Ім'я Прізвище</th>
         <th scope="col">Телефон</th>
         <th scope="col">Агенство</th>
-        <th scope="col">Офіс Район / адреса</th>
+        <th scope="col">Адреса офісу</th>
         <th scope="col">Об'єктів на продаж / перенесено в архів як проданих</th>
         <th scope="col">Рейтинг</th>
         <th scope="col">Відгуків</th>
@@ -26,8 +26,7 @@
           {{object.created_by.first_name}} {{object.created_by.last_name}}</a></td>
         <td>{{object.phone}}</td>
         <td>{{object.agensy}}</td>
-        <td><a href="#">{{object.get_district_display}}</a>
-          <em>{{object.address }}</em></td>
+        <td>{{object.address }}</td>
         <td>{{object.offers}} / {{object.in_archive}}</td>
         <td>{{object.rating}}</td>
         <td>
