@@ -90,17 +90,12 @@
     <br />
   </div>
   <div class="col-sm-8" style="background-color:lavenderblush;">
-    {% if object.image1%}
-    <img src="{{object.image1.url}}" alt="{{object.title}} - фото 1" class="img-thumbnail">
-    {%endif%}
+  <!-- here a map -->
+  <div class="row">
+  {% include 'include/flat_map.html' %}
   </div>
-</div>
-
-<!-- here a map -->
-<div class="row">
-{% include 'include/flat_map.html' %}
-</div>
-  
+  </div>
+</div> 
 <div class="row style="margin-left: 20px;"">
   <div class="col-md-4" style="background-color:lavender;">
     <h3>Основні характеристики об'єкта</h3>
@@ -527,7 +522,9 @@
     </div>
     <br />
     <div class="row">
-
+      {% if object.image1%}
+      <img src="{{object.image1.url}}" alt="{{object.title}} - фото 1" class="img-thumbnail">
+      {%endif%}
       {% if object.image2 %}
       <img src="{{object.image2.url}}" alt="{{object.title}} - фото 1" class="img-thumbnail">
       {%endif%}

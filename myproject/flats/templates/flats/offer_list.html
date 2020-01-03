@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% load leaflet_tags %} 
+ {% leaflet_css %}
+ {% leaflet_js %}	
 {% block title %}Список оголошень Квартири та кімнати в Черкасах.
 продаж і довгострокова оренда{% endblock %}
 
@@ -9,33 +12,33 @@
 
 {% block content %}
 <h2>Квартири та кімнати на продажу в Черкасах</h2>
-{% if user.is_authenticated%}
-    <div class="container">
-      <div class="row">
-        {% if object_list %}
-        {% for object in object_list %}
-        <div class="col-sm-3">
-          {% include 'include/card.html' %}<br />
+
+<div class="container">
+  {% if user.is_authenticated%}
+    <div class="row">
+    {% if object_list %}
+      {% for object in object_list %}
+        <div class="row">
+          <div class="col-sm-3">
+          {% include 'include/card.html' %}
+          </div>
         </div>
+      {%endfor%}            
+    {% else %}
+    <p>Тут поки немає оголошень. Ваше може бути першим.</p>
+    {% endif %}
+    </div>
+  {% else %}
+  <form>
+    <div class="row">
+      <div class="col-md-6">
+      <label for="formGroupExampleInput">
+  Пошук об'єкта нерухомості або ріелтора</label>
+      <input type="text" class="form-control" id="formGroupExampleInput"
+  placeholder="Введіть район, вулицю, назву агенства, ім'я ріелтора тощо...">
       </div>
     </div>
-     {% endfor %}
-{% else %}
-    <p>Тут поки немає оголошень. Ваше може бути першим.</p>
-{% endif %}
-  </tbody>
-</table>
-{% else %}
-<form>
-  <div class="row">
-    <div class="col-md-6"
-    <label for="formGroupExampleInput">
-Пошук об'єкта нерухомості або ріелтора</label>
-    <input type="text" class="form-control" id="formGroupExampleInput"
-placeholder="Введіть район, вулицю, назву агенства, ім'я ріелтора тощо...">
-  </div>
-  </div>
-</form>
-{% endif %}
-
+  </form>
+  {% endif %}
+</div>
 {% endblock content %}

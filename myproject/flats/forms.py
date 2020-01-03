@@ -11,7 +11,7 @@ LEAFLET_WIDGET_ATTRS = {
     'map_srid': 4326,
     'settings_overrides': {
                 'DEFAULT_CENTER': (49.448, 32.05),
-                'DEFAULT_ZOOM': 12,
+                'DEFAULT_ZOOM': 13,
                 'SPATIAL_EXTENT': (31.44, 49.217, 32.47, 49.68),
             }
 }
@@ -22,7 +22,7 @@ class OfferCreateForm(ModelForm):
     geometry = PointField()
     class Meta:
         model = Offer
-        exclude = ['created_by', 'num_visits']
+        exclude = ['address', 'created_by', 'num_visits']
         widgets = {
         'geometry': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS),
     }

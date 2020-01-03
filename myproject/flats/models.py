@@ -295,7 +295,7 @@ class Offer(models.Model):
     # ADDRESS
     district = models.CharField(max_length=30,choices=DISTRICTS, null=False,
              blank=False, verbose_name='Район')
-    address = models.CharField(max_length=255, verbose_name='Адреса')
+    address = models.CharField(max_length=255, verbose_name='Адреса', null=True, blank=True)
     # INVISIBLE FIELDS IN FORM
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL,
                related_name='flats', verbose_name='Власник оголошення',
@@ -359,8 +359,8 @@ class Offer(models.Model):
         self.address = address
 
     @property
-    def popupAddress(self):
-      return self.address
+    def popupCoords(self):
+        return (self.geometry.y, self.geometry.x)
 
     # META CLASS
     class Meta:

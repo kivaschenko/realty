@@ -154,7 +154,7 @@ EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 # LEAFLET_CONFIG = {
 #     'SPATIAL_EXTENT': (31.44, 49.217, 32.47, 49.68), #<- xmin,ymin,xmax,ymax
 #     'DEFAULT_CENTER': (49.448, 32.05),
-#     'DEFAULT_ZOOM': 12,
+#     'DEFAULT_ZOOM': 14,
 #     'MIN_ZOOM': 0,
 #     'MAX_ZOOM': 24,
 #     'TILES': 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',

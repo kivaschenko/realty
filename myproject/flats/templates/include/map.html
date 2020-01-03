@@ -3,48 +3,70 @@
     {% leaflet_js %}	
 
 
+    <style>
 
-<!-- The <div> where we're put the map -->
-<div id="map" style="width: 100%; height: 350px;"></div>
-<script type="text/javascript">
-  // Initialize the map object
-  var map = L.map('map').setView([49.448, 32.05], 12);
-  // Load the background tiles
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
+        .leaflet-container {  /* all maps */
+            /* width:  1300px; */
+            height: 600px;
+        }
+      
+        #specialbigmap {
+            height: 800px;
+        }
+      
+        /* Resize the "display_raw" textbox */
+        .django-leaflet-raw-textarea {
+            width: 1000px;
+        }
+      
+      </style>
+        <div class="col-sm-12">
+          {% leaflet_map "main" %}
+        </div>
 
-L.marker([49.448, 32.05]).addTo(map)
-    .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-    .openPopup();
-  // // Create an empty layer where we will load the features
-  // var featureLayer = new L.GeoJSON();
-  
-  // // Finally, add the layer to the map.
-  // map.addLayer(featureLayer);
-
-	// 	var popupContent = "<h4> " +
-  //     feature.properties.price + " " + feature.properties.currency + "</h4>" +
-  //     '<h5>' + '<a href="' +
-  //     feature.properties.pk + feature.properties.slug + '%}">' +
-  //     feature.properties.title +'</a>' + '</h5>';
+ <script type="text/javascript">
+  var map = L.map('main').setView([49.448, 32.05], 11);
+  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+     }).addTo(map);
+  function onEachFeature(feature, layer) {
+		var popupContent = "<h4> " +
+      feature.properties.price + " " + feature.properties.currency + "</h4>" +
+      '<h5>' + '<a href="http://127.0.0.1:8000/flats/' +
+      feature.properties.pk + '/' +
+      feature.properties.slug + '/">' +
+      feature.properties.title +'</a>' + '</h5>';
 		
-  //   layer.bindPopup(popupContent);    
-  // }
-  // var geojsonFeatures = {{ data | safe }};
-  // var featureLayer = L.geoJSON(geojsonFeatures, {
-  //     onEachFeature: onEachFeature,
-  //     pointToLayer: function (feature, latlng) {
-  //       return L.circleMarker(latlng, {
-  //         radius: 8,
-  //         fillColor: "#ff7800",
-  //         color: "#000",
-  //         weight: 1,
-  //         opacity: 1,
-  //         fillOpacity: 0.8
-  //       });
-  //     }
-  //   });
-    
-  // } 
+    layer.bindPopup(popupContent);    
+  }
+  var geojsonFeatures = {{ data | safe }};
+    L.geoJSON(geojsonFeatures, {
+
+      style: function (feature) {
+        return feature.properties && feature.properties.style;
+      },
+
+      onEachFeature: onEachFeature,
+
+      pointToLayer: function (feature, latlng) {
+        return L.circleMarker(latlng, {
+          radius: 8,
+          fillColor: "#ff7800",
+          color: "#000",
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.8
+        });
+      }
+    }).addTo(map);
  </script>
+
+<!-- L.geoJSON('{{ data | safe }}', {
+    style: function(feature) {
+        switch (feature.properties.type_offer) {
+            case 'sale': return {color: "#ff0000"};
+            case 'rent':   return {color: "#0000ff"};
+        }
+    }
+}).addTo(map);  -->
+

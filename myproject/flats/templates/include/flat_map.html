@@ -28,10 +28,10 @@
         // get point lat and lon
 
         // zoom to point & add it to map
-        map.setView({{object.lat_lng}}, 15);
+        map.setView({{object.lat_lng}}, 14);
         L.marker({{object.lat_lng}})
           .addTo(map)
-          .bindTooltip('{{object.popupAddress}}')
+          .bindTooltip('{{object.popupCoords}}')
           .openTooltip();
     }
   </script>
