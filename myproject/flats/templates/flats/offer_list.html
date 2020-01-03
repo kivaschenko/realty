@@ -12,9 +12,6 @@
 {% if user.is_authenticated%}
     <div class="container">
       <div class="row">
-        <div class="col-sm-8">
-          {%include 'include/map.html'%}
-        </div>
         {% if object_list %}
         {% for object in object_list %}
         <div class="col-sm-3">
