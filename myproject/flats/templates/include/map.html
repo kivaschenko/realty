@@ -13,8 +13,8 @@
  <script type="text/javascript">
 
   function onEachFeature(feature, layer) {
-    var props = feature.properties
-    var link = '{% url "offer-detail" ${props.pk} ${props.slug} %}'
+    var props = feature.properties;
+    var link = {% url 'offer-detail' pk=${props.pk} slug=${props.slug} %};
 		var content = <h4>${props.price} ${props.currency}</h4> <p><a href="${link}">${props.title}</a></p>;
     layer.bindPopup(content);    
   }
