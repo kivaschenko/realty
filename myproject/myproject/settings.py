@@ -151,14 +151,15 @@ EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 # DEFAULT_FROM_EMAIL = "elitflatcherkasy@gmail.com"
 # DEFAULT_TO_EMAIL = 'elitflatcherkasy@gmail.com'
 
-LEAFLET_CONFIG = {
-    'SPATIAL_EXTENT': (31.44, 49.217, 32.47, 49.68), #<- xmin,ymin,xmax,ymax
-    'DEFAULT_CENTER': (49.448, 32.05),
-    'DEFAULT_ZOOM': 14,
-    'MIN_ZOOM': 6,
-    'MAX_ZOOM': 24,
-    'TILES': 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    'MINIMAP': True,
-    'RESET_VIEW': False,
-    'NO_GLOBALS' : True,
-}
+# LEAFLET_CONFIG = {
+#     'SPATIAL_EXTENT': (31.44, 49.217, 32.47, 49.68), #<- xmin,ymin,xmax,ymax
+#     'DEFAULT_CENTER': (49.448, 32.05),
+#     'DEFAULT_ZOOM': 14,
+#     'MIN_ZOOM': 6,
+#     'MAX_ZOOM': 24,
+#     'TILES': 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+#     'MINIMAP': True,
+#     'RESET_VIEW': False,
+#     'NO_GLOBALS' : True,
+#     'DRAW_MARKER': True,
+# }

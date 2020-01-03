@@ -4,80 +4,9 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-DISTRICTS = (
-    ('Райони', (
-    ('700-richchia', '700-річчя'),
-    ('Vantazhnyi port', 'Вантажний порт'),
-    ('Vodokanal-Nevskoho', 'Водоканал-Невського'),
-    ('Dakhnivka', 'Дахнівка'),
-    ('Dniprovskyi', 'Дніпровський'),
-    ('Zaliznychnyi vokzal', 'Залізничний вокзал'),
-    ('Zelena', 'Зелена'),
-    ('k-t Myr', 'к-т Мир'),
-    ('Kazbet', 'Казбет'),
-    ('Litak', 'Літак'),
-    ('Lunacharskyi', 'Луначарський'),
-    ('Mytnytsia', 'Митниця'),
-    ('Mytnytsia-richport', 'Митниця-річпорт'),
-    ('Mytnytsia-tsentr', 'Митниця-центр'),
-    ('PZR', 'ПЗР'),
-    ('Prydniprovskyi', 'Придніпровський'),
-    ('Piatykhatky', 'Пятихатки'),
-    ('Raion D', 'Район Д'),
-    ('Siedova', 'Сєдова'),
-    ('Sosnivka', 'Соснівка'),
-    ('Sosnivskyi', 'Соснівський'),
-    ('Khimselyshche', 'Хімселище'),
-    ('Tsentr', 'Центр'),
-    ('Shkilna', 'Шкільна'),
-    ('Yabluchnyi', 'Яблучний'))
-    ),
-    ('Передмістя', (
-    ('Biloziria', "Білозір'я"),
-    ('Heronymivka', 'Геронимівка'),
-    ('Orshanets', 'Оршанець'),
-    ('Ruska Poliana', 'Руська Поляна'),
-    ('Chervona Sloboda', 'Червона Слобода'))
-    ),
-    ('Села', (
-    ('Yelyzavetovka', 'Єлизаветовка'),
-    ('Irdyn', 'Ірдинь'),
-    ('Baibuzy', 'Байбузи'),
-    ('Berezniaky', 'Березняки'),
-    ('Budyshche', 'Будище'),
-    ('Buzukiv', 'Бузуків'),
-    ('Verhuny', 'Вергуни'),
-    ('Dubiivka', 'Дубіївка'),
-    ('Dumantsi', 'Думанці'),
-    ('Kumeiky', 'Кумейки'),
-    ('Lesky', 'Леськи'),
-    ('Lozivok', 'Лозівок'),
-    ('Moshny', 'Мошни'),
-    ('Moshnohiria', "Мошногір'я"),
-    ('Nechaivka', 'Нечаївка'),
-    ('Novoselivka', 'Новоселівка'),
-    ('Pervomaiske', 'Первомайське'),
-    ('Sahunivka', 'Сагунівка'),
-    ('Svitanok', 'Світанок'),
-    ('Svydivok', 'Свидівок'),
-    ('Sokyrno', 'Сокирно'),
-    ('Sofiivka', 'Софіївка'),
-    ('Stepanky', 'Степанки'),
-    ('Tubiltsi', 'Тубільці'),
-    ('Khatsky', 'Хацьки'),
-    ('Khreshchatyk', 'Хрещатик'),
-    ('Khudiaky', 'Худяки'),
-    ('Khutory', 'Хутори'),
-    ('Chorniavka', 'Чорнявка'),
-    ('Shelepukhy', 'Шелепухи'),
-    ('Yasnoziria', "Яснозір'я"))
-    ),
-)
-
 # Create your models here.
 class Realtor(models.Model):
     """ Model represents all information about rieltor
-    fields = ['phone', 'phone2', "bio", 'start_year']
     """
     phone = models.CharField(max_length=13, verbose_name="Телефон основний",
         help_text="міжнародний формат, +38067XXXYYZZ",)
@@ -88,15 +17,11 @@ class Realtor(models.Model):
     bio = models.TextField(max_length=1000, blank=True, null=True,
         verbose_name="Подробиці про ріелтора",
         help_text="все, що вважаєте за потрібне про себе, свою фірму до 1000 знаків",)
-
     # ADDRESS
     address = models.CharField(max_length=155, verbose_name='Адреса офісу')
-    district = models.CharField(max_length=30,choices=DISTRICTS, null=False,
-             blank=False, verbose_name='Район офісу')
     created_by = models.OneToOneField(User, on_delete=models.CASCADE,
                verbose_name='Власник профілю',)
     num_visits = models.PositiveIntegerField(default=0)
-
     # RATING AND COUNTING OF OFFERS
     rating = models.DecimalField(verbose_name='Рейтинг', max_digits=3,
             decimal_places=2, default=0.00)
@@ -110,12 +35,6 @@ class Realtor(models.Model):
         img_path = 'user_{0}/{1}'.format(instance.created_by.id, filename)
         return img_path
 
-    image1 = models.ImageField(upload_to=user_directory_path,
-            verbose_name='Фoto сертифікату 1', null=True, blank=True)
-    image2 = models.ImageField(upload_to=user_directory_path,
-            verbose_name='Фото сертифікату 2', null=True, blank=True)
-    image3 = models.ImageField(upload_to=user_directory_path,
-            verbose_name='Фото сертифікату 3', null=True, blank=True)
 
     avatar = models.ImageField(upload_to=user_directory_path, null=True,
             blank=True, verbose_name='Фото ріелтора')

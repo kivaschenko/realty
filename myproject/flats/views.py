@@ -31,9 +31,7 @@ def post_offer(request):
             form.instance.created_by = request.user
             form.save()
             messages.success(request, "Об'єкт додано.")
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
+
             return HttpResponseRedirect('/')
 
     # if a GET (or any other method) we'll create a blank form
@@ -42,10 +40,6 @@ def post_offer(request):
 
     return render(request, 'flats/post_offer.html', {'form': form})
 
-
-@login_required
-def offer_edit(request, offer_id):
-    pass
 
 from django.views.generic import ListView
 class OfferList(ListView):

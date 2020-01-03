@@ -3,7 +3,6 @@
     <div class="card-body">
     <h5 class="card-title">{{object.title}}</h5>
     <p class="card-text">
-    <a href="{%url 'type_offer' object.type_offer%}">{{object.get_type_offer}}</a>
     {{object.get_building_display}}, {{object.floor}} / {{object.total_floor}} поверх,
     {{object.area}} / {{object.kitchen}} кв.м., {{object.get_walls_display}}, 
     {{object.rooms}} кімн., {{object.get_planning_display}}, {{object.get_repair_display}}.

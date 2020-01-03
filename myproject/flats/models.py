@@ -155,21 +155,22 @@ DISTRICTS = (
 class Offer(models.Model):
     """ Define a row of flat in database.
     """
+    # GEOMETRY FIELD
+    geometry = geomodels.PointField(extent=(31.44, 49.217, 32.47, 49.68))
+    # create latitude and longitude coordinates for leaflet map:
+    @property
+    def lat_lng(self):
+        return list(getattr(self.geometry, 'coords', [])[::-1])
+    # GENERAL FIELDS
     type_offer = models.CharField(max_length=5, verbose_name="Тип оголошення",
                choices=TYPE_OFFER,default='sale')
     title = models.CharField(max_length=70, verbose_name='Заголовок',
           help_text='70 знаків', blank=False)
     type_object = models.CharField(max_length=10, choices=TYPES_OBJECT,
                     verbose_name="Тип об'єкта", default='flat')
-
-    sold_true = models.CharField(verbose_name="ОБ'ЄКТ під ЗАДАТКОМ?", max_length=3,
-              choices=YESNO, default='no',
-              help_text="""Якщо об'єкт під задатком виберіть "Так".
-              Картка об'єкта буде знята з пошуку.""")
     price = models.PositiveIntegerField(verbose_name='Ціна')
     currency = models.CharField(verbose_name='Валюта', max_length=3,
-             choices=CURRENCY, blank=False, help_text="Виберіть валюту",
-             default='USD',)
+             choices=CURRENCY, blank=False, default='USD',)
 
     # COLLABORATION
     agree_price = models.BooleanField('Договірна')
@@ -207,8 +208,7 @@ class Offer(models.Model):
     dishwashers = models.BooleanField(verbose_name='Посудомийна машина')
     washing_machine = models.BooleanField(verbose_name='Пральна машина')
     dryer = models.BooleanField(verbose_name='Сушильна машина')
-    # without_appliances = models.BooleanField(
-    #                    verbose_name='Без побутової техніки')
+
     # Multimedia
     wi_fi = models.BooleanField(verbose_name='WI-FI')
     high_speed_internet = models.BooleanField(
@@ -216,7 +216,7 @@ class Offer(models.Model):
     tv = models.BooleanField(verbose_name='Телевізор')
     cable_digital_tv = models.BooleanField(verbose_name='Кабельнеб цифрове ТБ')
     satellite_tv = models.BooleanField(verbose_name='Супутникове ТБ')
-    # without_multimedia = models.BooleanField(verbose_name='Без мультимедіа')
+
     # Comfort
     air_conditioning = models.BooleanField(verbose_name='Кондиціонер')
     floor_heating = models.BooleanField(verbose_name='Підігрів підлоги')
@@ -256,7 +256,6 @@ class Offer(models.Model):
     septic_tank = models.BooleanField(verbose_name='Каналізація септик')
     removal_of_waste = models.BooleanField(verbose_name='Вивіз відходів')
     asphalt_road = models.BooleanField(verbose_name='Асфальтована дорога')
-    # no_communication = models.BooleanField(verbose_name='Без комунікацій')
 
     # Infrastructure (up to 500 meters)
     kindergarten = models.BooleanField(verbose_name='Дитячий садок')
@@ -287,14 +286,10 @@ class Offer(models.Model):
     mountains = models.BooleanField(verbose_name='Гори')
     park = models.BooleanField(verbose_name='Парк')
     forest = models.BooleanField(verbose_name='Ліс')
-
     # BODY TEXT
     body = models.TextField(max_length=2000, verbose_name='Опис',
             help_text="<em>до 2000 знаків</em>")
-
     # ADDRESS
-    # district = models.CharField(max_length=30,choices=DISTRICTS, null=False,
-    #          blank=False, verbose_name='Район')
     address = models.CharField(max_length=255, verbose_name='Адреса', null=True, blank=True)
     # INVISIBLE FIELDS IN FORM
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL,
@@ -331,23 +326,6 @@ class Offer(models.Model):
     def contract_path(instance, filename):
         contr_path = 'user_{0}/{1}'.format(instance.created_by.id, filename)
         return contr_path
-
-    contract = models.FileField(upload_to=contract_path, null=True, blank=True,
-                verbose_name='Файл договору на продаж',
-                help_text="""Підписаний договір на продаж або ексклюзивний
-                договір. Необов'язково. Але додає рейтинг як підтвердження,
-                що об'єкт дійсно існує та ріелтор уповноважений власником
-                його продавати .""")
-
-    notes = models.TextField(max_length=1000,
-          verbose_name='Примітки для службового користування', blank=True,
-          help_text="<em>Бачите тільки Ви. До 1000 символів.</em>")
-    # GEOMETRY FIELD
-    geometry = geomodels.PointField(extent=(31.44, 49.217, 32.47, 49.68))
-    # create latitude and longitude coordinates for leaflet map:
-    @property
-    def lat_lng(self):
-        return list(getattr(self.geometry, 'coords', [])[::-1])
 
     # PREPROCESSING ADDRESS
     def _generate_address(self):
