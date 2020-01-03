@@ -1,13 +1,13 @@
 <div class="card" style="width: 18rem;">
     <img class="card-img-top" src="{{object.image1.url}}" alt="{{object.title}} - фото 1">
     <div class="card-body">
-      <h5 class="card-title">{{object.title}}</h5>
-      <p class="card-text">
+    <h5 class="card-title">{{object.title}}</h5>
+    <p class="card-text">
         {{object.get_building_display}}, {{object.floor}} / {{object.total_floor}} поверх,
-        {{object.area}} / {{object.kitchen}} кв. м., {{object.get_walls_display}}, 
-        {{object.rooms}} кімн., {{object.get_planning_display}}, 
-        санвузол: {{object.get_bathroom_display}}, {{object.get_repair_display}} ремонт.</p>
+        {{object.area}} / {{object.kitchen}} кв.м., {{object.get_walls_display}}, 
+        {{object.rooms}} кімн., {{object.get_planning_display}}, {{object.get_repair_display}}.
+    </p>
       <a href="{%url 'offer-detail' object.pk object.slug%}" class="btn btn-primary">
-          {{ object.price}} {{object.get_currency_display}}</a>
+        {{ object.price}} {{object.get_currency_display}}</a>
     </div>
   </div>

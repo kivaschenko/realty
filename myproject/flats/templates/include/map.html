@@ -4,22 +4,8 @@
 
 
     <style>
-
-        .leaflet-container {  /* all maps */
-            /* width:  1300px; */
-            height: 600px;
-        }
-      
-        #specialbigmap {
-            height: 800px;
-        }
-      
-        /* Resize the "display_raw" textbox */
-        .django-leaflet-raw-textarea {
-            width: 1000px;
-        }
-      
-      </style>
+      .leaflet-container { height: 100%; }
+    </style>
         <div class="col-sm-12">
           {% leaflet_map "main" callback='window.map_init' %}
         </div>
@@ -27,13 +13,10 @@
  <script type="text/javascript">
 
   function onEachFeature(feature, layer) {
-		var popupContent = "<h4> " +
-      feature.properties.price + " " + feature.properties.currency + "</h4>" +
-      '<h5>' + '<a href="{% url "offer-detail" ' +
-      feature.properties.pk + feature.properties.slug + '%}">' +
-      feature.properties.title +'</a>' + '</h5>';
-		
-    layer.bindPopup(popupContent);    
+    var props = feature.properties
+    var link = '{% url "offer-detail" ${props.pk} ${props.slug} %}'
+		var content = <h4>${props.price} ${props.currency}</h4> <p><a href="${link}">${props.title}</a></p>;
+    layer.bindPopup(content);    
   }
   var geojsonFeatures = {{ data | safe }};
   function map_init(map, options) {
