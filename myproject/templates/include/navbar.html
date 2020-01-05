@@ -7,17 +7,30 @@
 
   <div class="collapse navbar-collapse" id="collapsibleNavbar">
     <ol class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'flats' %}">Квартири, кімнати</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Квартири, кімнати
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'flats' %}">Квартири список</a>
+          <a class="dropdown-item" href="{%url 'flats_map'%}">Мапа квартир</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{%url 'post_offer'%}">Додати квартиру</a>
+        </div>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Будинки</a>
-      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Будинки
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Будинки список</a>
+          <a class="dropdown-item" href="#">Мапа будинків</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{%url 'add_house'%}">Додати будинок</a>
+        </div>
+      </li>      
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'realtors' %}">Ріелтори</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'flats_map'%}">Мапа квартир</a>
       </li>
 
 {% if user.is_authenticated %}
