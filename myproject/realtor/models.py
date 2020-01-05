@@ -1,10 +1,82 @@
+from translitua import translit
 from django.db import models
-
-# Create your models here.
+from django.urls import reverse
+from django.utils.text import slugify
+from django.contrib.gis.db import models as geomodels
+from geopy.geocoders import Nominatim
 from django.contrib.auth.models import User
 
+geolocator = Nominatim(timeout=7, user_agent='agencys')
 
-# Create your models here.
+class Agency(models.Model):
+    geometry = geomodels.PointField(verbose_name='Місце на мапі', 
+             extent=(31.44, 49.217, 32.47, 49.68), 
+             help_text='<em>Просто поставте маркер на карту</em>')
+    name = models.CharField(verbose_name='Назва агенції', max_length=255)
+    phone1 = models.CharField(max_length=13, verbose_name="Телефон основний",
+        help_text="міжнародний формат, +38067XXXYYZZ",)
+    phone2 = models.CharField(max_length=13, verbose_name="Телефон додатковий",
+        help_text="міжнародний формат, +38067XXXYYZZ",)
+    body = models.TextField(verbose_name='Про агенство',max_length=2000,
+         help_text='<em>До 2000 символів</em>')
+    # ADDRESS
+    address = models.CharField(max_length=255, verbose_name='Адреса', null=True, blank=True)
+    # INVISIBLE FIELDS IN FORM
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL,
+               related_name='agencys', verbose_name='Редактор',
+               null=True,)
+    slug = models.SlugField(default='', editable=False, max_length=100)
+    pub_date = models.DateTimeField(auto_now_add=True)
+    num_visits = models.PositiveIntegerField(default=0)
+
+    logo = models.ImageField(upload_to='media',
+            verbose_name='Логотип', null=True, blank=True)
+
+    @property
+    def lat_lng(self):
+        return list(getattr(self.geometry, 'coords', [])[::-1])
+    
+    @property
+    def popupCoords(self):
+        return (self.geometry.y, self.geometry.x)
+
+    # META CLASS
+    class Meta:
+        ordering = ["-pub_date",]
+
+    # TO STRING METHOD
+    def __str__(self):
+        return self.name
+
+    # PREPROCESSING SLUGS
+    def _generate_slug(self):
+        value = translit(self.name)
+        self.slug = slugify(value, allow_unicode=True)
+        
+
+    # PREPROCESSING ADDRESS
+    def _generate_address(self):
+        location = geolocator.reverse((self.geometry.y, self.geometry.x))
+        addr = location.address
+        addr_split = addr.split(',')
+        address = ', '.join(addr_split[:-4])
+        self.address = address
+
+    # SAVE METHOD
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self._generate_slug()
+            self._generate_address()
+        super().save(*args, **kwargs)
+
+    # ABSOLUTE URL METHOD
+    def get_absolute_url(self):
+        """ Returns the url to access a detail record for the agency.
+        """
+        return reverse('agency',
+                        kwargs={'slug': self.slug})
+
+
 class Realtor(models.Model):
     """ Model represents all information about rieltor
     """
@@ -12,13 +84,11 @@ class Realtor(models.Model):
         help_text="міжнародний формат, +38067XXXYYZZ",)
     start_year = models.CharField(max_length=4,
         verbose_name='Рік початку роботи ріелтором')
-    agensy = models.CharField(max_length=50, blank=True, null=True,
-        verbose_name="Агенство, компанія", help_text="назва компанії, в якії працюєте",)
+    agensy = models.ForeignKey(Agency, on_delete=models.SET_NULL, related_name='realtors',
+            null=True,  blank=True, verbose_name="Агенство",)
     bio = models.TextField(max_length=1000, blank=True, null=True,
         verbose_name="Подробиці про ріелтора",
-        help_text="все, що вважаєте за потрібне про себе, свою фірму до 1000 знаків",)
-    # ADDRESS
-    address = models.CharField(max_length=155, verbose_name='Адреса офісу')
+        help_text="<em>все, що вважаєте за потрібне про себе, свою фірму до 1000 знаків</em>",)
     created_by = models.OneToOneField(User, on_delete=models.CASCADE,
                verbose_name='Власник профілю',)
     num_visits = models.PositiveIntegerField(default=0)

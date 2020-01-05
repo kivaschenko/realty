@@ -9,7 +9,9 @@ geolocator = Nominatim(timeout=7, user_agent='houses')
 
 class House(models.Model):
     address = models.CharField(max_length=255)
-    geometry = geomodels.PointField()
+    geometry = geomodels.PointField(verbose_name='Місце на мапі', 
+             extent=(31.44, 49.217, 32.47, 49.68), 
+             help_text='<em>Просто поставте маркер на карту</em>')
     @property
     def lat_lng(self):
         return list(getattr(self.geometry, 'coords', [])[::-1])

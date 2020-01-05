@@ -39,6 +39,27 @@
       </tbody>
     </table>
   </div>
+  <div class="col-md-6">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Ріелтор</th>
+          <th scope="col">Об'єктів на продаж / в архіві</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for object in object_list %}
+        <tr>
+          <th scope="row"><h3>
+          <a href="{%url 'realtor' object.pk%}">
+            {{object.created_by.first_name}} {{object.created_by.last_name}}</a> </h3>
+            <h6>{{object.agensy.name}}</h6></th>
+          <td>{{object.offers}} / {{object.in_archive}}</td>
+        </tr>
+        {%endfor%}
+      </tbody>
+    </table>
+  </div>
 </div>
 {% else %}
 <form>

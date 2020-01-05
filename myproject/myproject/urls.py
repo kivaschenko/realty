@@ -16,9 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
+from realtor import views as realtor_views
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name="home.html"), name='home'),
+    path('', realtor_views.top_realtor, name='home'),
     path('rules/', TemplateView.as_view(template_name='rules.html'), name='rules'),
     path('cookie_policy/',
 TemplateView.as_view(template_name='cookie_policy.html'), name='cookies'),
@@ -32,6 +33,7 @@ from django.contrib.auth import views as auth_views
 from accounts import views as accounts_views
 urlpatterns += [
     path('signup/', accounts_views.signup, name='signup'),
+    path('update/', accounts_views.update, name='update'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'),
         name='login' ),
@@ -57,7 +59,7 @@ urlpatterns += [
         auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'),
         name='password_reset_complete'),
 	path(
-        'settings/password/',
+        'password/',
         auth_views.PasswordChangeView.as_view(template_name='password_change.html'),
         name='password_change'),
 	path(

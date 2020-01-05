@@ -30,12 +30,12 @@
          attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
      }).addTo(map);
   function onEachFeature(feature, layer) {
-		var popupContent = "<h4> " +
-      feature.properties.price + " " + feature.properties.currency + "</h4>" +
-      '<h5>' + '<a href="http://127.0.0.1:8000/flats/' +
+		var popupContent = '<h5> ' +
+      feature.properties.price + " " + feature.properties.currency + "</h5>" +
+      '<h6>' + '<a href="http://127.0.0.1:8000/flats/' +
       feature.properties.pk + '/' +
       feature.properties.slug + '/">' +
-      feature.properties.title +'</a>' + '</h5>';
+      feature.properties.title +'</a>' + '</h6>';
 		
     layer.bindPopup(popupContent);    
   }

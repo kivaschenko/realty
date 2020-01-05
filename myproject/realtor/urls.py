@@ -7,3 +7,7 @@ urlpatterns = [
     path('<int:pk>/edit/', edit_realtor, name='edit_realtor'),
     path('list/', RealtorList.as_view(), name='realtors' ),
 ]
+
+urlpatterns += [
+    path('<slug>/', get_agensy, name='agensy'),
+]

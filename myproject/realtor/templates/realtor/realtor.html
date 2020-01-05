@@ -3,13 +3,8 @@
 
 {% block breadcrumb %}
 <li class="breadcrumb-item active"><a href="{% url 'home' %}">Головна</a>
-<li class="breadcrumb-item active"><a href="{% url 'realtors' %}">
-  Ріелтори</a>
 <li class="breadcrumb-item active">
-  <a href="#">
-  {{ object.get_district_display}}</a>
-<li class="breadcrumb-item active">
-  <a href="#">
+  <a href="{%url 'agensy' object.agensy.slug %}">
   {{ object.agensy}}</a>
 <li class="breadcrumb-item">Ріелтор {{ object.created_by.first_name }}
   {{object.created_by.last_name}}</a>
@@ -23,18 +18,14 @@
     <div class="col5">
     {% if object.avatar %}
       <img src="{{ object.avatar.url }}" class="img-thumbnail"
-<<<<<<< HEAD
-      alt="Фото " style="width:200px;">
-=======
       alt="Фото " style="width:250px;">
->>>>>>> ef49cc245be6583aaec15cec1a34e18d290ef6da
     {% else %}
       <img src="{% static 'img/user.png' %}" class="img-thumbnail">
     {% endif %}
       <br>
       <br>
     {% if object.created_by == request.user %}
-      <a href="{%url 'edit_realtor' object.pk%}" class="btn btn-info">
+      <a href="{%url 'edit_realtor' object.pk%}" class="btn btn-outline-secondary">
       Редагувати профіль</a>
       <br>
       <p><em>Переглядів профілю: {{object.num_visits}}</em></p>
@@ -58,13 +49,13 @@
 
         <dt class="col-sm-3 text-right">Агенство, компанія</dt>
         <dd class="col-sm-9">
-        {%if object.agensy%}<a href="#">{{object.agensy}}
+        {%if object.agensy%}<a href="{% url 'agensy' object.agensy.slug %}">{{object.agensy.name}}
         {%else%}Не вказано{%endif%}</a></dd>
 
         <dt class="col-sm-3 text-right">Адреса офісу</dt>
         <dd class="col-sm-9">
         <em style="font-family: 'Times New Roman', serif;">
-        {%if object.address%}{{object.address}}{%else%}Не вказано
+        {%if object.agensy.address%}{{object.agensy.address}}{%else%}Не вказано
         {%endif%}</em></dd>
         <dt class="col-sm-3 text-right">Професійна біографія</dt>
         <dd class="col-sm-9">{{object.bio|linebreaks}}</dd>

@@ -29,9 +29,6 @@
           <a class="dropdown-item" href="{%url 'add_house'%}">Додати будинок</a>
         </div>
       </li>      
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'realtors' %}">Ріелтори</a>
-      </li>
 
 {% if user.is_authenticated %}
       <li class="nav-item dropdown">
@@ -50,6 +47,7 @@
             Створити профіль ріелтора</a>
           {%endif%}
           <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'update' %}">Редагувати профіль</a>
           <a class="dropdown-item" href="{% url 'password_change'%}">Змінити пароль</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'logout' %}">Вийти</a>
@@ -63,8 +61,5 @@
       <a href="{% url 'signup' %}" class="btn btn-primary ml-2">Реєстрація</a>
     </form>
   {% endif %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'contact' %}">Контакт</a>
-        </li>
   </div>
 </nav>

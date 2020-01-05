@@ -2,8 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 
-from .forms import SignUpForm
+from .forms import SignUpForm, UpdateForm
 
 
 def signup(request):
@@ -17,3 +18,16 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
+
+@login_required
+def update(request):
+    if request.method == 'POST':
+        form = UpdateForm(data=request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Ви оновили інформацію профіля користувача.")
+            return HttpResponseRedirect('/')
+    else:
+        form = UpdateForm(instance=request.user)
+    
+    return render(request, 'update.html', {'form': form})

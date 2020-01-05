@@ -156,7 +156,9 @@ class Offer(models.Model):
     """ Define a row of flat in database.
     """
     # GEOMETRY FIELD
-    geometry = geomodels.PointField(extent=(31.44, 49.217, 32.47, 49.68))
+    geometry = geomodels.PointField(verbose_name='Місце на мапі', 
+             extent=(31.44, 49.217, 32.47, 49.68), 
+             help_text='<em>Просто поставте маркер на карту</em>')
     # create latitude and longitude coordinates for leaflet map:
     @property
     def lat_lng(self):
