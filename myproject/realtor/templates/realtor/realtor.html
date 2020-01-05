@@ -23,7 +23,7 @@
     <div class="col5">
     {% if object.avatar %}
       <img src="{{ object.avatar.url }}" class="img-thumbnail"
-      alt="Фото " height="200">
+      alt="Фото " style="height:200px;">
     {% else %}
       <img src="{% static 'img/user.png' %}" class="img-thumbnail">
     {% endif %}
