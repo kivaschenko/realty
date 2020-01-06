@@ -3,9 +3,11 @@
 
 {% block breadcrumb %}
 <li class="breadcrumb-item active"><a href="{% url 'home' %}">Головна</a>
+  {%if object.agensy%}
 <li class="breadcrumb-item active">
   <a href="{%url 'agensy' object.agensy.slug %}">
   {{ object.agensy}}</a>
+  {%endif%}
 <li class="breadcrumb-item">Ріелтор {{ object.created_by.first_name }}
   {{object.created_by.last_name}}</a>
 {% endblock %}
