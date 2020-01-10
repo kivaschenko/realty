@@ -1,11 +1,16 @@
+{% extends 'base.html'%}
 {% load leaflet_tags %}
+{% block title %}Додати новий будинок {% endblock title %}
+
+{% block leaflet %}
 {% leaflet_js plugins="forms" %}
 {% leaflet_css plugins="forms" %}
+{% endblock %}
 
-
-<form method="POST" enctype="multipart/form-data">
-{% csrf_token %}
-{{ form }}
-    <input type="submit" class="btn btn-success" value="Додати">
-</form>
-
+{% block content%}
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <p>{{ form.as_p }}</p>
+        <input type="submit" class="btn btn-success" value="Додати">
+    </form>
+{% endblock%}

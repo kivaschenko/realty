@@ -44,7 +44,7 @@
       <thead>
         <tr>
           <th scope="col">Ріелтор</th>
-          <th scope="col">Об'єктів на продаж / в архіві</th>
+          <th scope="col">Гарячі пропозиції</th>
         </tr>
       </thead>
       <tbody>
@@ -53,8 +53,8 @@
           <th scope="row"><h3>
           <a href="{%url 'realtor' object.pk%}">
             {{object.created_by.first_name}} {{object.created_by.last_name}}</a> </h3>
-            <h6>{{object.agensy.name}}</h6></th>
-          <td>{{object.offers}} / {{object.in_archive}}</td>
+            <h6><a href="#">Гаряча пропозиція!</a></h6></th>
+          <td></td>
         </tr>
         {%endfor%}
       </tbody>

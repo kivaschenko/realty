@@ -5,7 +5,6 @@ from django.contrib.gis.db import models as geomodels
 from django.urls import reverse
 from django.utils.text import slugify
 from django.contrib.auth.models import User
-
 from geopy.geocoders import Nominatim
 
 geolocator = Nominatim(timeout=7, user_agent='flats')
@@ -324,10 +323,6 @@ class Offer(models.Model):
             verbose_name='Фото 8', null=True, blank=True)
     image9 = models.ImageField(upload_to=user_directory_path,
             verbose_name='Фото 9', null=True, blank=True)
-    # CONTRACT AND INSIDE INFORMATION
-    def contract_path(instance, filename):
-        contr_path = 'user_{0}/{1}'.format(instance.created_by.id, filename)
-        return contr_path
 
     # PREPROCESSING ADDRESS
     def _generate_address(self):
