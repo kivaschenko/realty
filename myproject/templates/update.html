@@ -10,7 +10,7 @@
 <h2>Внести зміни до профілю користувача</h2>
 <div class="col-sm-6">
 	<div class="row">
-	<form method='get/post'>
+	<form method='POST' >
 		{% csrf_token %}
 		<table class="table">{{form.as_table}}</table>
 	<button type='submit' class="btn btn-primary">Додати зміни</button>

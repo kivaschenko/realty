@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load leaflet_tags %} 
+    {% leaflet_css %}
+    {% leaflet_js %}	
+
+
+{% block breadcrumb %}
+<li class="breadcrumb-item active"><a href="{% url 'home' %}">Головна</a>
+<li class="breadcrumb-item">Мапа будинків</a>
+{% endblock %}
+
+{% block content %}
+
+{% include 'include/map_houses.html' %}
+
+{% endblock content %}

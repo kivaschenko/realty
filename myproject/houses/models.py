@@ -80,21 +80,21 @@ class House(models.Model):
         return list(getattr(self.geometry, 'coords', [])[::-1])
 
     # GENERAL FIELDS
-    type_offer = models.CharField(max_length=5, verbose_name="Тип оголошення",
+    type_offer = models.CharField(max_length=50, verbose_name="Тип оголошення",
                choices=TYPE_OFFER,default='sale')
-    title = models.CharField(max_length=70, verbose_name='Заголовок',
+    title = models.CharField(max_length=100, verbose_name='Заголовок',
           help_text='70 знаків', blank=False)
-    type_object = models.CharField(max_length=10, choices=TYPES_OBJECT,
+    type_object = models.CharField(max_length=50, choices=TYPES_OBJECT,
                     verbose_name="Тип об'єкта", default='flat')
     price = models.PositiveIntegerField(verbose_name='Ціна')
     currency = models.CharField(verbose_name='Валюта', max_length=3,
              choices=CURRENCY, blank=False, default='USD',)
     architecture = models.CharField(verbose_name='Архітектурний стиль',
-                max_length=20, choices=ARCHITECTURE, default='classicism')
+                max_length=50, choices=ARCHITECTURE, default='classicism')
     total_floor = models.PositiveSmallIntegerField(verbose_name='Поверхів')
     building_area = models.PositiveSmallIntegerField(verbose_name='Загальна площа, кв.м')
     area_estate = models.DecimalField(verbose_name='Загальна площа земельної ділянки, га', max_digits=6, 
-                decimal_places=2)
+                decimal_places=2, help_text="наприклад, 0.06")
     # COLLABORATION
     agree_price = models.BooleanField('Договірна')
     no_commission = models.BooleanField(verbose_name='Без комісії')
@@ -107,12 +107,12 @@ class House(models.Model):
 
 
     kitchen = models.PositiveSmallIntegerField(verbose_name='Кухня площа, кв.м')
-    walls = models.CharField(max_length=10, verbose_name='Матеріал стін',
+    walls = models.CharField(max_length=50, verbose_name='Матеріал стін',
           choices=WALLS)
     rooms = models.PositiveSmallIntegerField(verbose_name='Кількість кімнат')
-    bathroom = models.CharField(max_length=14, verbose_name='Санвузол',
+    bathroom = models.CharField(max_length=50, verbose_name='Санвузол',
              choices=BATHROOM)
-    heating = models.CharField(max_length=24, verbose_name='Опалення',
+    heating = models.CharField(max_length=50, verbose_name='Опалення',
             choices=HEATING)
     furniture = models.CharField(max_length=3, verbose_name='Меблювання',
               choices=( ('yes', 'Так'), ('no', 'Ні')),)
@@ -151,6 +151,7 @@ class House(models.Model):
     protection_of_the_territory = models.BooleanField(
                                 verbose_name='Охорона території')
     elevator = models.BooleanField(verbose_name='Ліфт')
+    
     pantry = models.BooleanField(verbose_name='Госп. приміщення')
     smart_home_technology = models.BooleanField(
                           verbose_name='Технологія "розумний будинок"')
@@ -239,7 +240,7 @@ class House(models.Model):
         location = geolocator.reverse((self.geometry.y, self.geometry.x))
         addr = location.address
         addr_split = addr.split(',')
-        address = ', '.join(addr_split[:-4])
+        address = ', '.join(addr_split[:255])
         self.address = address
 
     @property
@@ -256,10 +257,10 @@ class House(models.Model):
 
     # PREPROCESSING SLUGS
     def _generate_slug(self):
-        value = translit(self.title)
+        value = translit(self.title[:70])
         slug_candidate = slugify(value, allow_unicode=True)
-        ctime = datetime.datetime.now().ctime()
-        self.slug = f'{slug_candidate}-{ctime}'
+        # ctime = datetime.datetime.now().ctime()
+        self.slug = f'{slug_candidate}'
 
     # SAVE METHOD
     def save(self, *args, **kwargs):

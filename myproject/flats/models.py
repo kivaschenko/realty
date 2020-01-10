@@ -334,7 +334,9 @@ class Offer(models.Model):
 
     @property
     def popupCoords(self):
-        return (self.geometry.y, self.geometry.x)
+        lat = round(self.geometry.y, 6)
+        lng = round(self.geometry.x, 6)
+        return f'{lat}, {lng}'
 
     # META CLASS
     class Meta:

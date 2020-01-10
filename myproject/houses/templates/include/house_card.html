@@ -1,0 +1,16 @@
+<div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="{{object.image1.url}}" alt="{{object.title}} - фото 1">
+    <div class="card-body">
+    <h5 class="card-title">{{object.title}}</h5>
+    <p class="card-text">
+     {{object.type_object}}, Архітектурний стиль - 
+    {{object.architecture}}, {{object.total_floor}} поверх., 
+    ділянка {{object.area_estate}} га,
+    {{object.building_area}} / {{object.kitchen}} кв.м., 
+    {{object.walls}}, 
+    {{object.rooms}} кімн., {{object.heating}}.
+    </p>
+      <a href="#" class="btn btn-primary">
+        {{ object.price}} {{object.get_currency_display}}</a>
+    </div>
+  </div>

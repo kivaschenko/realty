@@ -1,9 +1,17 @@
+from django.core.serializers import serialize
 from django.shortcuts import render
 from django.views import generic
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .models import *
+
+
+def get_map(request):
+    data = serialize('geojson', House.objects.all(), geometry_field='geometry', 
+                     fields=('pk', 'slug', 'title', 'price', 'currency', ))
+    return render(request, 'houses/map.html', context={'data':data})
 
 
 class HouseDetail(generic.DetailView):
@@ -13,7 +21,8 @@ class HouseDetail(generic.DetailView):
 
 from .forms import HouseForm
 
-def get_house(request):
+@login_required
+def create_house(request):
     if request.method == 'POST':
         form = HouseForm(request.POST)
         if form.is_valid():
@@ -25,3 +34,6 @@ def get_house(request):
     return render(request, 'houses/house_form.html', {'form': form})
 
 
+class HouseList(generic.ListView):
+    model = House
+    paginate = 10

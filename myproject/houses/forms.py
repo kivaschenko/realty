@@ -19,7 +19,7 @@ class HouseForm(forms.ModelForm):
 
     class Meta:
         model = House
-        fields = ('geometry',)
+        exclude = ['created_by', 'address', 'num_visits']
         widgets = {
         'geometry': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS),
     }

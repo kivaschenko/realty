@@ -41,13 +41,12 @@ def post_offer(request):
     return render(request, 'flats/post_offer.html', {'form': form})
 
 
-from django.views.generic import ListView
 class OfferList(ListView):
     """  Generic class-based view for a list of offers.
     Class represents all offers in list
     """
     model = Offer
-    paginate_by = 30
+    paginate_by = 10
 
 def map(request):
     queryset = Offer.objects.all()

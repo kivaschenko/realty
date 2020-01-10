@@ -12,7 +12,7 @@
           Квартири, кімнати
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{% url 'flats' %}">Квартири список</a>
+          <a class="dropdown-item" href="{% url 'flats' %}">Квартири</a>
           <a class="dropdown-item" href="{%url 'flats_map'%}">Мапа квартир</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{%url 'post_offer'%}">Додати квартиру</a>
@@ -23,10 +23,10 @@
           Будинки
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Будинки список</a>
-          <a class="dropdown-item" href="#">Мапа будинків</a>
+          <a class="dropdown-item" href="{% url 'house_list'%}">Будинки</a>
+          <a class="dropdown-item" href="{%url 'house_map'%}">Мапа будинків</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{%url 'add_house'%}">Додати будинок</a>
+          <a class="dropdown-item" href="{%url 'create_house'%}">Додати будинок</a>
         </div>
       </li>      
 
@@ -52,6 +52,9 @@
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'logout' %}">Вийти</a>
           </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'contact' %}">Контакт</a>
       </li>
     </ol>
 
