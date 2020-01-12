@@ -6,7 +6,7 @@
 
   .leaflet-container {  /* all maps */
       /* width:  1300px; */
-      height: 480px;
+      height: 100%;
   }
 
   #specialbigmap {
@@ -19,7 +19,7 @@
   }
 
 </style>
-  <div class="col-sm-12" style="height:480px;">
+  <div class="col-sm-12" style="height:600px;">
     {% leaflet_map "main" callback="map_init" %}
   </div>
 

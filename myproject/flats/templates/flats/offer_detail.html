@@ -37,11 +37,17 @@
       <span class="badge badge-warning">{{ object.price}}
       {{object.get_currency_display}}</span></h4>
       </dd>
-      <dt class="col-sm-3 text-right">Ріелтор </dt>
+      <dt class="col-sm-3 text-right">
+        {%if object.created_by.realtor%}Ріелтор {%else%}Продавець{%endif%}</dt>
       <dd class="col-md-9">
+        {%if object.created_by.realtor%}
       <a href="{% url 'realtor' object.created_by.realtor.id %}"
       style="font-family: 'Lobster', cursive; font-size: 20px;">
       {{ object.created_by.first_name }} {{object.created_by.last_name}}</a>
+      {%else%}
+      <p style="font-family: 'Lobster', cursive; font-size: 20px;">
+      {{ object.created_by.first_name }} {{object.created_by.last_name}} </p>
+      {%endif%}
       </dd>
       <dt class="col-sm-3 text-right">Телефон: </dt>
       <dd class="col-sm-9">
@@ -81,6 +87,12 @@
       </ul>
       </dd>
     </dl>
+    {%if form %}
+    <h4>Мене зацікавив цей об'єкт</h4>
+    <form method="POST">{% csrf_token %}<p>{{form.as_p}}</p>
+      <input type="submit" class="btn btn-warning" value="Зателефонуйте мені!">
+    </form>
+    {%endif%}
     <br />
   </div>
   <div class="col-sm-8" style="background-color:lavenderblush;">

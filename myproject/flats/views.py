@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from django.core.serializers import serialize
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -7,7 +8,7 @@ from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
 from django.db import transaction
 
-from flats.forms import OfferCreateForm
+from flats.forms import OfferCreateForm, ContactForm
 from flats.models import *
 
 def get_map(request):
@@ -58,8 +59,22 @@ def details(request, pk, slug):
     object = Offer.objects.filter(Q(pk=pk) & Q(slug=slug)).get()
     object.num_visits += 1
     object.save()
+    email = object.created_by.email
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            phone = form.cleaned_data['phone']
+            name = form.cleaned_data['name']
+            subject = "[CherkasyRealEstate.Org.ua] Мене зацікавив ваш об'єкт нерухомості"
+            message = f"Мене цікавить: {object.title} {object.price} {object.currency} - {object.address}. Зателефонуйте мені по номеру: {phone}. До мене можна звертатись:  {name}"
+            send_mail(subject=subject, message=message, from_email='elitflatcherkasy@gmail.com',
+                      recipient_list=[email,])
+            messages.success(request, "Ваше повідомлення відправлено!")
+            return render(request, template_name='flats/offer_detail.html', context={'object':object})
+    else:
+        form = ContactForm() 
 
-    return render(request, 'flats/offer_detail.html', {'object': object})
+    return render(request, template_name='flats/offer_detail.html',  context={'object': object, 'form':form})
 
 @login_required
 def type_offer(request, type_offer):

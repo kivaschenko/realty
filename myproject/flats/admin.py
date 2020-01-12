@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Offer
+from .models import Offer, District
 from django.contrib.gis.admin import OSMGeoAdmin
 
 @admin.register(Offer)
@@ -8,3 +8,7 @@ class OfferAdmin(OSMGeoAdmin):
     default_lat = 6350000
     default_zoom = 12
     # ...
+
+from leaflet.admin import LeafletGeoAdmin
+
+admin.site.register(District, LeafletGeoAdmin)

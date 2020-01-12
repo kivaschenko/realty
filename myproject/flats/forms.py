@@ -27,3 +27,6 @@ class OfferCreateForm(ModelForm):
     }
 
 
+class ContactForm(forms.Form):
+    name = forms.CharField(max_length=160, label="Ім'я")
+    phone = forms.CharField(max_length=14, label='Телефон')

@@ -151,6 +151,23 @@ DISTRICTS = (
     ('Yasnoziria', "Яснозір'я"))
     ),
 )
+
+class District(models.Model):
+    """ This model defines area as polygon and name of district.
+    """
+    name = models.CharField(verbose_name="Назва, Район, зона, територія", max_length=255,
+    choices=DISTRICTS)
+    geometry = geomodels.PolygonField(verbose_name='Площа на мапі', 
+             extent=(31.44, 49.217, 32.47, 49.68), 
+             help_text='окресліть фігуру на мапі, що відповідає потрібній площині')
+    
+    class Meta:
+        ordering = ['name',]
+    
+    def __str__(self):
+        return self.name
+
+
 class Offer(models.Model):
     """ Define a row of flat in database.
     """
@@ -200,6 +217,33 @@ class Offer(models.Model):
            choices=REPAIR)
     furniture = models.CharField(max_length=3, verbose_name='Меблювання',
               choices=( ('yes', 'Так'), ('no', 'Ні')),)
+    # BODY TEXT
+    body = models.TextField(max_length=2000, verbose_name='Опис',
+            help_text="<em>до 2000 знаків</em>")
+    # SAVING MEDIA FILES
+    def user_directory_path(instance, filename):
+        img_path = 'user_{0}/{1}'.format(instance.created_by.id, filename)
+        return img_path
+
+    image1 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Фото 1', null=True, blank=True)
+    image2 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Фото 2', null=True, blank=True)
+    image3 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Фото 3', null=True, blank=True)
+    image4 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Фото 4', null=True, blank=True)
+    image5 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Фото 5', null=True, blank=True)
+    image6 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Фото 6', null=True, blank=True)
+    image7 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Фото 7', null=True, blank=True)
+    image8 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Фото 8', null=True, blank=True)
+    image9 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Фото 9', null=True, blank=True)
+
     # Appliances
     plate = models.BooleanField(verbose_name='Плита')
     cooking_plate = models.BooleanField(verbose_name='Варочна поверхня')
@@ -287,9 +331,7 @@ class Offer(models.Model):
     mountains = models.BooleanField(verbose_name='Гори')
     park = models.BooleanField(verbose_name='Парк')
     forest = models.BooleanField(verbose_name='Ліс')
-    # BODY TEXT
-    body = models.TextField(max_length=2000, verbose_name='Опис',
-            help_text="<em>до 2000 знаків</em>")
+
     # ADDRESS
     address = models.CharField(max_length=255, verbose_name='Адреса', null=True, blank=True)
     # INVISIBLE FIELDS IN FORM
@@ -299,30 +341,6 @@ class Offer(models.Model):
     slug = models.SlugField(default='', editable=False, max_length=100)
     pub_date = models.DateTimeField(auto_now_add=True)
     num_visits = models.PositiveIntegerField(default=0)
-
-    # SAVING MEDIA FILES
-    def user_directory_path(instance, filename):
-        img_path = 'user_{0}/{1}'.format(instance.created_by.id, filename)
-        return img_path
-
-    image1 = models.ImageField(upload_to=user_directory_path,
-            verbose_name='Фото 1', null=True, blank=True)
-    image2 = models.ImageField(upload_to=user_directory_path,
-            verbose_name='Фото 2', null=True, blank=True)
-    image3 = models.ImageField(upload_to=user_directory_path,
-            verbose_name='Фото 3', null=True, blank=True)
-    image4 = models.ImageField(upload_to=user_directory_path,
-            verbose_name='Фото 4', null=True, blank=True)
-    image5 = models.ImageField(upload_to=user_directory_path,
-            verbose_name='Фото 5', null=True, blank=True)
-    image6 = models.ImageField(upload_to=user_directory_path,
-            verbose_name='Фото 6', null=True, blank=True)
-    image7 = models.ImageField(upload_to=user_directory_path,
-            verbose_name='Фото 7', null=True, blank=True)
-    image8 = models.ImageField(upload_to=user_directory_path,
-            verbose_name='Фото 8', null=True, blank=True)
-    image9 = models.ImageField(upload_to=user_directory_path,
-            verbose_name='Фото 9', null=True, blank=True)
 
     # PREPROCESSING ADDRESS
     def _generate_address(self):
