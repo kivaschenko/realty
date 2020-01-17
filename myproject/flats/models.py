@@ -73,7 +73,6 @@ HEATING = (
     ('other', 'Інше'),
 )
 REPAIR = (
-    ('None', 'Виберіть стан ремонту'),
     ('authors_project', 'Авторський проект'),
     ('european_repair', 'Євроремонт'),
     ('cosmetical_repair', 'Косметичний ремонт'),
@@ -86,7 +85,7 @@ DISTRICTS = (
     ('Райони', (
     ('700-richchia', '700-річчя'),
     ('Vantazhnyi port', 'Вантажний порт'),
-    ('Vodokanal-Nevskoho', 'Водоканал-Невського'),
+    ('Vodokanal', 'Водоканал'),
     ('Dakhnivka', 'Дахнівка'),
     ('Dniprovskyi', 'Дніпровський'),
     ('Zaliznychnyi vokzal', 'Залізничний вокзал'),
@@ -243,8 +242,8 @@ class Offer(models.Model):
             verbose_name='Фото 8', null=True, blank=True)
     image9 = models.ImageField(upload_to=user_directory_path,
             verbose_name='Фото 9', null=True, blank=True)
-
-    # Appliances
+ 
+     # Appliances
     plate = models.BooleanField(verbose_name='Плита')
     cooking_plate = models.BooleanField(verbose_name='Варочна поверхня')
     oven = models.BooleanField(verbose_name='Духова шафа')

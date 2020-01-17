@@ -7,9 +7,9 @@ from django.views.generic import CreateView, ListView, UpdateView, DetailView
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
 from django.db import transaction
-
+from django.db.models import Q
 from flats.forms import OfferCreateForm, ContactForm
-from flats.models import *
+from flats.models import Offer
 
 def get_map(request):
     data = serialize('geojson', Offer.objects.all(), geometry_field='geometry', 
@@ -53,7 +53,7 @@ def map(request):
     queryset = Offer.objects.all()
     return render(request, 'flats/map.html', context={'object_list':queryset})
 
-from django.db.models import Q
+
 def details(request, pk, slug):
     """ This function returns the selected offer and a list of the same offers."""
     object = Offer.objects.filter(Q(pk=pk) & Q(slug=slug)).get()

@@ -1,3 +1,4 @@
+
 from django.core.serializers import serialize
 from django.shortcuts import render
 from django.views import generic
@@ -5,7 +6,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from .models import *
+from django.db.models import Q
+from .models import House
+from .forms import HouseForm, ContactForm
 
 
 def get_map(request):
@@ -14,12 +17,27 @@ def get_map(request):
     return render(request, 'houses/map.html', context={'data':data})
 
 
-class HouseDetail(generic.DetailView):
-    model = House
+def details(request, pk, slug):
     template_name = 'houses/house_detail.html'
+    object = House.objects.filter(Q(pk=pk) & Q(slug=slug)).get()
+    object.num_visits += 1
+    object.save()
+    email = object.created_by.email
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            phone = form.cleaned_data['phone']
+            name = form.cleaned_data['name']
+            subject = "[CherkasyRealEstate.Org.ua] Мене зацікавив ваш об'єкт нерухомості"
+            message = f"Мене цікавить: {object.title} {object.price} {object.currency} - {object.address}. Зателефонуйте мені по номеру: {phone}. До мене можна звертатись:  {name}"
+            send_mail(subject=subject, message=message, from_email=elitflatcherkasy@gmail.com',
+                      recipient_list=[email,])
+            messages.success(request, "Ваше повідомлення відправлено!")
+            return render(request, template_name=template_name, context={'object':object})
+    else:
+        form = ContactForm()
+    return render(request, template_name=template_name, context={'object':object, 'form':form})
 
-
-from .forms import HouseForm
 
 @login_required
 def create_house(request):

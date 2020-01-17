@@ -1,5 +1,7 @@
 <div class="card" style="width: 18rem;">
+    {% if object.image1%}
     <img class="card-img-top" src="{{object.image1.url}}" alt="{{object.title}} - фото 1">
+    {%endif%}
     <div class="card-body">
     <h5 class="card-title">{{object.title}}</h5>
     <p class="card-text">
