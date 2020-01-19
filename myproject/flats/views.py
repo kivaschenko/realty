@@ -55,8 +55,8 @@ def update_offer(request, pk):
             if form.is_valid():
                 form.save()
                 return reverse('offer-detail', kwargs={'pk':self.pk, 'slug':self.slug})
-        else:
-            form = OfferUpdateForm(initial=query)
+        elif request.method == 'GET':
+            form = OfferUpdateForm(request.GET)
             return render(request, 'houses/update_offer.html', {'form':form})
 
 
