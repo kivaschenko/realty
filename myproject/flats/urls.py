@@ -6,14 +6,8 @@ urlpatterns = [
     path('list/', OfferList.as_view(), name='flats'),
     path('<int:pk>/<slug>/', details, name='offer-detail'),
     path('post_offer/', post_offer, name='post_offer'),
-]
-# Add URLConf to view filtered by type offer list
-urlpatterns += [
+    path('edit/,int:pk>/<slug>/', update_offer, name='update_offer'),
     path('<type_offer>/offers/', type_offer, name='type_offer_flat'),
-]
-
-# Add map with all flats
-urlpatterns += [
-    # path('map/<int:pk>/', OfferDetailMapView.as_view(), name="flat_map"),
     path('on/map/', get_map, name="flats_map"),
 ]
+

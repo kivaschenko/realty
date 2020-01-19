@@ -50,11 +50,14 @@ def update_offer(request, pk):
     except Offer.DoesNotExist:
         raise Http404("Такого оголошення не існує!")
     if request.user == query.created_by:
-        form = OfferUpdateForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            url = reverse(  )
-            return HttpResponseRedirect(url)
+        if request.method == 'POST':
+            form = OfferUpdateForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                return reverse('offer-detail', kwargs={'pk':self.pk, 'slug':self.slug})
+        else:
+            form = OfferUpdateForm(initial=query)
+            return render(request, 'houses/update_offer.html', {'form':form})
 
 
 class OfferList(generic.ListView):

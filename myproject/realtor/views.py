@@ -35,12 +35,19 @@ def realtor(request, pk):
         if request.user != q.created_by:
             q.num_visits += 1
             q.save()
-        offer_set = Offer.objects.filter(created_by=q.created_by).all()
+        try:
+            offer_set = Offer.objects.filter(created_by=q.created_by).all()
+        except:
+            pass
+        try:
+            house_list = House.objects.filter(created_by=q.created_by).all()
+        except:
+            pass
     except Realtor.DoesNotExist:
         raise Http404('Сторінка такого ріелтора не існує або була видалена.')
 
     return render(request, 'realtor/realtor.html',
-                  {'object':q, 'object_list':offer_set})
+                  {'object':q, 'flat_list':offer_set, 'house_list':house_list})
 
 @login_required
 def create_realtor(request):
