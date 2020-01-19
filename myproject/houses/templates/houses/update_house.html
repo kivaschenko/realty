@@ -7,6 +7,12 @@
 {% leaflet_css plugins="forms" %}
 {% endblock %}
 
+{% block breadcrumb %}
+<li class="breadcrumb-item active"><a href="{%url 'home'%}">Головна</a>
+<li class="breadcrumb-item active"><a href="{%url 'flats'%}">Будинки</a>
+<li class="breadcrumb-item">Додати новий будинок</a>
+{% endblock %}
+
 {% block content%}
     <form method="POST" enctype="multipart/form-data">
       {% csrf_token %}
