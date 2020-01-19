@@ -61,7 +61,6 @@ class OfferUpdate(LoginRequiredMixin, generic.UpdateView):
     model = Offer
     form_class = OfferUpdateForm
     template_name = 'flats/offer_update_form.html'
-    success_url = reverse_lazy('offer-detail' kwargs={'pk':self.object.pk, 'slug':self.object.slug})
     def test_func(self):
         obj = self.get_object()
         return obj.created_by == self.request.user

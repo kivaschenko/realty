@@ -10,6 +10,6 @@ urlpatterns = [
     path('<type_offer>/offers/', type_offer, name='type_offer_flat'),
     path('on/map/', get_map, name="flats_map"),
     path('offer/<int:pk>/delete/', delete_offer, name='offer_delete'),
-    path('<int:pk>/change_owner/<slug>/', OfferChangeOwner.as_view(), name='change_owner'),
+    path('<int:pk>/change_owner/', OfferChangeOwner.as_view(), name='change_owner'),
 ]
 
