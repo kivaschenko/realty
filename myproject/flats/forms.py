@@ -21,11 +21,22 @@ class OfferCreateForm(ModelForm):
     class Meta:
         model = Offer
         # fields = ('geometry', )
-        exclude = ['address', 'created_by', 'num_visits']
+        exclude = ['address', 'created_by', 'num_visits', 'slug']
         widgets = {
         'geometry': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS),
     }
 
+
+class OfferUpdateForm(ModelForm):
+    geometry = PointField
+
+    class Meta:
+        model = Offer
+        exclude = ['address', 'created_by', 'num_visits', 'slug']
+        widgets = {
+                'geometry': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS),
+        }
+        
 
 class ContactForm(forms.Form):
     name = forms.CharField(max_length=160, label="Ім'я")

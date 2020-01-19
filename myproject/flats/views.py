@@ -3,12 +3,13 @@ from django.core.serializers import serialize
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.views.generic import CreateView, ListView, UpdateView, DetailView
+from django.views import generic
+from django.urls import reverse
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.db import transaction
 from django.db.models import Q
-from flats.forms import OfferCreateForm, ContactForm
+from flats.forms import OfferCreateForm, OfferUpdateForm, ContactForm
 from flats.models import Offer
 
 def get_map(request):
@@ -17,10 +18,10 @@ def get_map(request):
     return render(request, 'flats/map.html', context={'data':data})
 
 
+# class OfferDetailMapView(DetailView):
+#     model = Offer
+#     template_name = 'flats/map.html'
 
-class OfferDetailMapView(DetailView):
-    model = Offer
-    template_name = 'flats/map.html'
 
 @login_required
 def post_offer(request):
@@ -42,7 +43,21 @@ def post_offer(request):
     return render(request, 'flats/post_offer.html', {'form': form})
 
 
-class OfferList(ListView):
+@login_required
+def update_offer(request, pk):
+    try:
+        query = Offer.objects.get(pk=pk)
+    except Offer.DoesNotExist:
+        raise Http404("Такого оголошення не існує!")
+    if request.user == query.created_by:
+        form = OfferUpdateForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            url = reverse(  )
+            return HttpResponseRedirect(url)
+
+
+class OfferList(generic.ListView):
     """  Generic class-based view for a list of offers.
     Class represents all offers in list
     """
@@ -85,3 +100,5 @@ def type_offer(request, type_offer):
         return HttpResponse("Поки що немає таких оголошень")
     return render(request, 'flats/type_offer_list.html',
         {'object_list':queryset, 'type':type})
+
+
