@@ -4,8 +4,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views import generic
-from django.urls import reverse
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.urls import reverse, reverse_lazy
+from django.http import Http404, HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render
 from django.db import transaction
 from django.db.models import Q
@@ -43,21 +43,28 @@ def post_offer(request):
     return render(request, 'flats/post_offer.html', {'form': form})
 
 
-@login_required
-def update_offer(request, pk):
-    try:
-        query = Offer.objects.get(pk=pk)
-    except Offer.DoesNotExist:
-        raise Http404("Такого оголошення не існує!")
-    if request.user == query.created_by:
-        if request.method == 'POST':
-            form = OfferUpdateForm(request.POST, request.FILES)
-            if form.is_valid():
-                form.save()
-                return reverse('offer-detail', kwargs={'pk':self.pk, 'slug':self.slug})
-        elif request.method == 'GET':
-            form = OfferUpdateForm(request.GET)
-            return render(request, 'houses/update_offer.html', {'form':form})
+
+# Class to Delete current offer
+class OfferDelete(LoginRequiredMixin, generic.DeleteView):
+    model = Offer
+    success_url = reverse_lazy('flats')
+    template_name_suffix = '_confirm_delete'
+    # override the get function to check for a user match
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.created_by == request.user:
+            context = self.get_context_data(object=self.object)
+            return self.render_to_response(context)
+        else:
+            return HttpResponseForbidden("У вас немає прав видалити це оголошення!")
+
+
+class OfferUpdate(LoginRequiredMixin, generic.UpdateView):
+    model = Offer
+    template_name = 'houses/update_offer.html'
+    def test_func(self):
+        obj = self.get_object()
+        return obj.created_by == self.request.user
 
 
 class OfferList(generic.ListView):

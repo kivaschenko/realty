@@ -81,7 +81,7 @@
         {{object.get_currency_display}}</span></h4>
         {%if object.created_by == request.user%}
           <a href="{%url 'update_offer' object.pk%}" class="btn btn-outline-secondary">Редагувати</a> 
-          <a href="#" class="btn btn-outline-warning">Видалити</a>  
+          <a href="{%url 'offer_delete' object.pk%}" class="btn btn-outline-warning">Видалити</a>  
           <a href="#" class="btn btn-info">Передати іншому право користувачеві</a>
         {%endif%}
         </li>
@@ -107,7 +107,7 @@
         {{object.get_currency_display}}</span></h4>
         {%if object.created_by == request.user%}
           <a href="{%url 'update_offer' object.pk%}" class="btn btn-outline-secondary">Редагувати</a> 
-          <a href="#" class="btn btn-outline-warning">Видалити</a>  
+          <a href="{%url 'offer_delete' object.pk%}" class="btn btn-outline-warning">Видалити</a>  
           <a href="#" class="btn btn-info">Передати іншому право користувачеві</a>
         {%endif%}
         </li>
