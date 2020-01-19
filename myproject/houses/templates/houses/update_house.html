@@ -1,6 +1,6 @@
 {% extends 'base.html'%}
 {% load leaflet_tags %}
-{% block title %}Додати новий будинок {% endblock title %}
+{% block title %}Редагувати будинок {% endblock title %}
 
 {% block leaflet %}
 {% leaflet_js plugins="forms" %}
@@ -9,8 +9,8 @@
 
 {% block breadcrumb %}
 <li class="breadcrumb-item active"><a href="{%url 'home'%}">Головна</a>
-<li class="breadcrumb-item active"><a href="{%url 'flats'%}">Будинки</a>
-<li class="breadcrumb-item">Додати новий будинок</a>
+<li class="breadcrumb-item active"><a href="{%url 'house_list'%}">Будинки</a>
+<li class="breadcrumb-item">Редагувати будинок</a>
 {% endblock %}
 
 {% block content%}

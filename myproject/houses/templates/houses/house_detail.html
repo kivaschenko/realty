@@ -647,6 +647,19 @@
       <img src="{{object.image9.url}}" alt="{{object.title}} - фото 1" class="img-thumbnail">
       {%endif%}
     </div>
+    {%if object.created_by == request.user%}
+    <div class="row">
+        <div class="col">
+            <a href="{%url 'update_offer' object.pk%}" class="btn btn-primary">Редагувати</a> 
+        </div>
+        <div class="col">
+            <a href="#" class="btn btn-secondary">Видалити</a>  
+        </div>
+        <div class="col">
+            <a href="#" class="btn btn-outline-secondary">Передати іншому користувачеві</a>
+        </div>
+    </div>
+    {%endif%}
   </div>
 </div>
 {% endblock content %}

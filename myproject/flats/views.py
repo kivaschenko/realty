@@ -43,30 +43,33 @@ def post_offer(request):
     return render(request, 'flats/post_offer.html', {'form': form})
 
 
-
-# Class to Delete current offer
-class OfferDelete(LoginRequiredMixin, generic.DeleteView):
-    model = Offer
-    success_url = reverse_lazy('flats')
-    template_name_suffix = '_confirm_delete'
-    # override the get function to check for a user match
-    def get(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        if self.object.created_by == request.user:
-            context = self.get_context_data(object=self.object)
-            return self.render_to_response(context)
-        else:
-            return HttpResponseForbidden("У вас немає прав видалити це оголошення!")
+@login_required
+def delete_offer(request, pk):
+    try:
+        offer = Offer.objects.get(pk=pk)
+    except:
+        raise Http404
+    if offer.created_by == request.user:
+        offer.delete()
+        messages.success(request, "Оголошення видалено!")
+    else:
+        return HttpResponseForbidden("У вас немає прав видалити це оголошення!")
 
 
 class OfferUpdate(LoginRequiredMixin, generic.UpdateView):
     model = Offer
     form_class = OfferUpdateForm
-    template_name = 'houses/update_offer.html'
+    template_name = 'flats/offer_update_form.html'
     def test_func(self):
         obj = self.get_object()
         return obj.created_by == self.request.user
 
+
+class OfferChangeOwner(LoginRequiredMixin, generic.UpdateView):
+    model = Offer 
+    template_name = 'flats/change_owner.html'
+    fields = ('created_by',)
+    
 
 class OfferList(generic.ListView):
     """  Generic class-based view for a list of offers.
@@ -75,9 +78,6 @@ class OfferList(generic.ListView):
     model = Offer
     paginate_by = 10
 
-def map(request):
-    queryset = Offer.objects.all()
-    return render(request, 'flats/map.html', context={'object_list':queryset})
 
 
 def details(request, pk, slug):
