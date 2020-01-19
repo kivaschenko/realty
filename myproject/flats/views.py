@@ -52,6 +52,7 @@ def delete_offer(request, pk):
     if offer.created_by == request.user:
         offer.delete()
         messages.success(request, "Оголошення видалено!")
+        return HttpResponseRedirect('/')
     else:
         return HttpResponseForbidden("У вас немає прав видалити це оголошення!")
 
@@ -69,7 +70,8 @@ class OfferChangeOwner(LoginRequiredMixin, generic.UpdateView):
     model = Offer 
     template_name = 'flats/change_owner.html'
     fields = ('created_by',)
-    
+    success_url = '/'
+
 
 class OfferList(generic.ListView):
     """  Generic class-based view for a list of offers.
