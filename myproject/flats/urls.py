@@ -6,7 +6,7 @@ urlpatterns = [
     path('list/', OfferList.as_view(), name='flats'),
     path('<int:pk>/<slug>/', details, name='offer-detail'),
     path('post_offer/', post_offer, name='post_offer'),
-    path('edit/,int:pk>/<slug>/', update_offer, name='update_offer'),
+    path('edit/<int:pk>/', update_offer, name='update_offer'),
     path('<type_offer>/offers/', type_offer, name='type_offer_flat'),
     path('on/map/', get_map, name="flats_map"),
 ]
