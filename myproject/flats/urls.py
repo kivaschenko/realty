@@ -9,6 +9,6 @@ urlpatterns = [
     path('edit/<int:pk>/', OfferUpdate.as_view(), name='update_offer'),
     path('<type_offer>/offers/', type_offer, name='type_offer_flat'),
     path('on/map/', get_map, name="flats_map"),
-    path('offer/<int:pk>/delete/', views.OfferDelete.as_view(), name='offer_delete'),
+    path('offer/<int:pk>/delete/', OfferDelete.as_view(), name='offer_delete'),
 ]
 
