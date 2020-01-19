@@ -15,7 +15,7 @@
 <li class="breadcrumb-item active"><a href="{% url 'flats' %}">
   Квартири, кімнати</a>
 <li class="breadcrumb-item active">
-  <a href="{% url 'type_offer' object.type_offer%}">
+  <a href="{% url 'type_offer_flat' object.type_offer%}">
   {{ object.get_type_offer_display}}</a>
 <li class="breadcrumb-item">{{ object.title }}</a>
 {% endblock %}
@@ -28,6 +28,12 @@
   <div class="col-sm-4" style="background-color:lavender;">
     <br>
     <dl class="row">
+      <dt class="col-sm-3 text-right">Тип</dt>
+      <dd class="col-sm-9">
+      <h4>
+        <span class="badge badge-info">
+          {{object.get_type_offer_display}}</span></h4>
+      </dd>
       <dt class="col-sm-3 text-right">Адреса</dt>
       <dd class="col-sm-9">
       <h4>{{object.address}}</h4>
@@ -51,8 +57,12 @@
       </dd>
       <dt class="col-sm-3 text-right">Телефон: </dt>
       <dd class="col-sm-9">
+        {%if object.created_by.realtor%}
       <a href="tel:{{object.created_by.realtor.phone}}">
       {{object.created_by.realtor.phone}}</a>
+        {% else %}
+        користувач немає профілю "Ріелтор"
+        {%endif%}
       </dd>
       <dt class="col-sm-3 text-right">Агенство: </dt>
       <dd class="col-sm-9">
@@ -101,7 +111,7 @@
   {% include 'include/flat_map.html' %}
   </div>
   </div>
-</div> 
+</div>
 <div class="row style="margin-left: 20px;"">
   <div class="col-md-4" style="background-color:lavender;">
     <h3>Основні характеристики об'єкта</h3>
@@ -565,4 +575,3 @@
 
 </div>
 {% endblock content %}
-

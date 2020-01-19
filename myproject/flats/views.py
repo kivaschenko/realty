@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.generic import CreateView, ListView, UpdateView, DetailView
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.db import transaction
 from django.db.models import Q
@@ -12,7 +12,7 @@ from flats.forms import OfferCreateForm, ContactForm
 from flats.models import Offer
 
 def get_map(request):
-    data = serialize('geojson', Offer.objects.all(), geometry_field='geometry', 
+    data = serialize('geojson', Offer.objects.all(), geometry_field='geometry',
                      fields=('pk', 'slug', 'title', 'price', 'currency', 'type_offer',))
     return render(request, 'flats/map.html', context={'data':data})
 
@@ -72,15 +72,16 @@ def details(request, pk, slug):
             messages.success(request, "Ваше повідомлення відправлено!")
             return render(request, template_name='flats/offer_detail.html', context={'object':object})
     else:
-        form = ContactForm() 
+        form = ContactForm()
 
     return render(request, template_name='flats/offer_detail.html',  context={'object': object, 'form':form})
 
 @login_required
 def type_offer(request, type_offer):
-    queryset = Offer.objects.filter(type_offer=type_offer).all()
-    type = queryset[0].get_type_offer_display
+    try:
+        queryset = Offer.objects.filter(type_offer=type_offer).all()
+        type = queryset[0].get_type_offer_display
+    except:
+        return HttpResponse("Поки що немає таких оголошень")
     return render(request, 'flats/type_offer_list.html',
         {'object_list':queryset, 'type':type})
-
-

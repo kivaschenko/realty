@@ -1,8 +1,8 @@
 import datetime
-from translitua import translit 
+from translitua import translit
 from django.db import models
 from django.contrib.gis.db import models as geomodels
-from django.urls import reverse 
+from django.urls import reverse
 from django.utils.text import slugify
 from django.contrib.auth.models import User
 from geopy.geocoders import Nominatim
@@ -12,8 +12,8 @@ geolocator = Nominatim(timeout=7, user_agent='houses')
 
 class House(models.Model):
     address = models.CharField(max_length=255)
-    geometry = geomodels.PointField(verbose_name='Місце на мапі', 
-             extent=(31.44, 49.217, 32.47, 49.68), 
+    geometry = geomodels.PointField(verbose_name='Місце на мапі',
+             extent=(31.44, 49.217, 32.47, 49.68),
              help_text='<em>Просто поставте маркер на карту</em>')
     @property
     def lat_lng(self):
@@ -21,16 +21,46 @@ class House(models.Model):
     # GENERAL FIELDS
     type_offer = models.CharField(max_length=50, verbose_name="Тип оголошення",
                 choices=(
-                    ('SALE', 'Продаж'),
-                    ('RENT', 'Оренда довгострокова')),
+                    ('sale', 'Продаж'),
+                    ('rent', 'Оренда довгострокова')),
                 default='SALE')
     title = models.CharField(max_length=70, verbose_name='Заголовок',
           help_text='70 знаків', blank=False)
     price = models.PositiveIntegerField(verbose_name='Ціна')
     currency = models.CharField(verbose_name='Валюта', max_length=3,
-             choices=(('UAH', 'грн.'), ('USD', 'USD')), blank=False, default='USD',)
-    # MSSubClass: Identifies the type of dwelling involved in the sale.	
-    MSSubClass = models.CharField(max_length=3, 
+             choices=(('UAH', 'грн.'), ('USD', 'USD')), blank=False,
+             default='USD',)
+
+    # COLLABORATION
+    agree_price = models.BooleanField('Договірна')
+    no_commission = models.BooleanField(verbose_name='Без комісії')
+    exchange = models.BooleanField(verbose_name='Можливість обміну')
+    collaboration = models.BooleanField(
+        verbose_name='Готовий співпрацювати з ріелторами')
+    # SAVING MEDIA FILES
+    def user_directory_path(instance, filename):
+        img_path = 'user_{0}/{1}'.format(instance.created_by.id, filename)
+        return img_path
+    image1 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Світлина 1', null=True, blank=True)
+    image2 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Світлина 2', null=True, blank=True)
+    image3 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Світлина 3', null=True, blank=True)
+    image4 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Світлина 4', null=True, blank=True)
+    image5 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Світлина 5', null=True, blank=True)
+    image6 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Світлина 6', null=True, blank=True)
+    image7 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Світлина 7', null=True, blank=True)
+    image8 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Світлина 8', null=True, blank=True)
+    image9 = models.ImageField(upload_to=user_directory_path,
+            verbose_name='Світлина 9', null=True, blank=True)
+    # MSSubClass: Identifies the type of dwelling involved in the sale.
+    MSSubClass = models.CharField(max_length=3,
                 choices=(
                     ('20',    '1-ПОВЕРХ 2000 І НОВІШИЙ ВСІ СТИЛІ'),
                     ('30',    '1-ПОВЕРХ 1999 І СТАРІШИЙ'),
@@ -44,13 +74,13 @@ class House(models.Model):
                     ('110',	'ДУПЛЕКС, ТАУНХАУС - УСІ СТИЛІ 2010 І НОВІШІ'),
                     ('120',	'1-ПОВЕРХ ТИПОВИЙ РАДЯНСЬКИЙ ПРОЕКТ - 1960 І НОВІШІ'),
                     ('150',	"НА 2 СІМ'Ї - ТИПОВИЙ РАДЯНСЬКИЙ ПРОЕКТ")),
-                verbose_name="Тип об'єкта", 
+                verbose_name="Тип об'єкта",
                 help_text='Визначає тип житла, що бере участь у продажу',
                 default='20')
     YearBuilt = models.CharField(max_length=4, verbose_name="Рік будівництва",
             null=True, blank=True)
-    YearRenovation = models.CharField(max_length=4, verbose_name="Рік останньої реновації",
-            null=True, blank=True)
+    YearRenovation = models.CharField(max_length=4,
+            verbose_name="Рік останньої реновації",  null=True, blank=True)
     Architecture = models.CharField(max_length=20, verbose_name="Архітектурний стиль",
             choices=(
                 ('empire', 'ампір'),
@@ -65,37 +95,18 @@ class House(models.Model):
             default='classicism')
     # MSZoning: Identifies the general zoning classification of the sale.
     MSZoning = models.CharField(verbose_name='Зонування', max_length=3,
-                    choices=(		
-                        ('A',	'СІЛЬСЬКЕ ГОСПОДАРСТВО'),
-                        ('C',	'КОМЕРЦІЙНА'),
-                        ('FV',	'ПРИМІСЬКА'),
-                        ('I',	'ПРОМИСЛОВА'),
-                        ('RH',	'ВИСОКА ЩІЛЬНІСТЬ ЗАБУДОВИ'),
-                        ('RL',	'НИЗЬКА ЩІЛЬНІСТЬ ЗАБУДОВИ'),
-                        ('RP',	'КОТЕДЖНЕ МІСТЕЧКО З НИЗЬКОЮ ЩІЛЬНІСТЮ ЗАБУДОВИ'), 
-                        ('RM',	'СЕРЕДНЯ ЩІЛЬНІСТЬ ЗАБУДОВИ')), 
-                    default='A',
-                    help_text="Визначає загальну класифікацію зонування продажу")
-    # LotFrontage: Linear feet of street connected to property
-    LotFrontage = models.PositiveIntegerField(verbose_name="Лицьова сторона власності, метрів",
-                help_text="Довжина вулиці в метрах, де приєднана власність", null=True, blank=True)
-    # LotShape: General shape of property
-    LotShape = models.CharField(max_length=3, verbose_name="Форма земельної ділянки",
             choices=(
-                ('Reg', 'Правильна форма'),
-                ('IR1', 'Майже правильна'),
-                ('IR2', 'Помірно неправильна'),
-                ('IR3', 'Дуже неправильна')),
-            default='Reg')
-    # LandContour: Flatness of the property
-    LandContour = models.CharField(max_length=3, verbose_name="Плоскість власності",
-                choices=(
-                    ('Lvl', 'Все в одному рівні, плоска ділянка'),
-                    ('Bnk', 'Швидкий і значний підйом з вулиці в будівлю'),
-                    ('HLS', 'Значний нахил ділянки з боку в бік'),
-                    ('Low', 'Нижче рівня вулиці, улоговина'),
-                    ('Slp', 'Помірний рівномірний схил')),
-                default='Lvl')
+                ('A',	'СІЛЬСЬКЕ ГОСПОДАРСТВО'),
+                ('C',	'КОМЕРЦІЙНА'),
+                ('FV',	'ПРИМІСЬКА'),
+                ('I',	'ПРОМИСЛОВА'),
+                ('RH',	'ВИСОКА ЩІЛЬНІСТЬ ЗАБУДОВИ'),
+                ('RL',	'НИЗЬКА ЩІЛЬНІСТЬ ЗАБУДОВИ'),
+                ('RP',	'КОТЕДЖНЕ МІСТЕЧКО З НИЗЬКОЮ ЩІЛЬНІСТЮ ЗАБУДОВИ'),
+                ('RM',	'СЕРЕДНЯ ЩІЛЬНІСТЬ ЗАБУДОВИ')),
+            default='A',
+            help_text="Визначає загальну класифікацію зонування продажу")
+
     # Walls
     Walls = models.CharField(max_length=20, verbose_name="Основний матеріал стін",
             choices=(
@@ -106,7 +117,7 @@ class House(models.Model):
                 ('CindBlock', 'Шлакоблочний'),
                 ('AirConcrete', 'Газоблок'),
                 ('SIP', 'СІП панель'),
-                ('Other', 'Інше'),), 
+                ('Other', 'Інше'),),
             default="Other")
     # RoofMatl: Roof material
     RoofMatl = models.CharField(max_length=20, verbose_name="Матеріал даху",
@@ -119,18 +130,8 @@ class House(models.Model):
                 ('Shale', 'Сланцеве покриття'),
                 ('Slate', 'Шифер'),
                 ('Other', 'Інше'),
-            ), 
+            ),
             default='Other')
-    Exterior = models.CharField(max_length=160, verbose_name="Матеріали фінішної обробки фасаду",
-            null=True, blank=True)
-    ExterCond = models.CharField(max_length=2, verbose_name="Загальний стан екстер'єру будинку",
-            choices=(
-                ('Ex', 'Преміум'),
-                ('Gd', 'Добрий'),
-                ('TA', 'Середній'),
-                ('Fa', 'Мінімально достатній'),
-                ('Po', 'Бідний')),
-                default='TA')
     Foundation = models.CharField(max_length=255, verbose_name="Матеріал, тип, глибина, стан фундаменту",
                 null=True, blank=True)
     FirstFloor = models.CharField(max_length=20, verbose_name="Загальна площа 1 поверху, кв.м",
@@ -182,6 +183,38 @@ class House(models.Model):
                 ('combination', 'Комбіноване'),
                 ('other', 'Інше'),),
             default='other')
+    # LAND CONTOUR
+    # LotFrontage: Linear feet of street connected to property
+    LotFrontage = models.PositiveIntegerField(verbose_name="Лицьова сторона власності, метрів",
+                help_text="Довжина вулиці в метрах, де приєднана власність", null=True, blank=True)
+    # LotShape: General shape of property
+    LotShape = models.CharField(max_length=3, verbose_name="Форма земельної ділянки",
+            choices=(
+                ('Reg', 'Правильна форма'),
+                ('IR1', 'Майже правильна'),
+                ('IR2', 'Помірно неправильна'),
+                ('IR3', 'Дуже неправильна')),
+            default='Reg')
+    # LandContour: Flatness of the property
+    LandContour = models.CharField(max_length=3, verbose_name="Плоскість власності",
+                choices=(
+                    ('Lvl', 'Все в одному рівні, плоска ділянка'),
+                    ('Bnk', 'Швидкий і значний підйом з вулиці в будівлю'),
+                    ('HLS', 'Значний нахил ділянки з боку в бік'),
+                    ('Low', 'Нижче рівня вулиці, улоговина'),
+                    ('Slp', 'Помірний рівномірний схил')),
+                default='Lvl')
+    # EXTERIOR
+    Exterior = models.CharField(max_length=160, verbose_name="Матеріали фінішної обробки фасаду",
+            null=True, blank=True)
+    ExterCond = models.CharField(max_length=2, verbose_name="Загальний стан екстер'єру будинку",
+            choices=(
+                ('Ex', 'Преміум'),
+                ('Gd', 'Добрий'),
+                ('TA', 'Середній'),
+                ('Fa', 'Мінімально достатній'),
+                ('Po', 'Бідний')),
+                default='TA')
     # GARAGE
     # GarageType: Garage location
     GarageType = models.CharField(max_length=20, verbose_name="Тип гаражу",
@@ -193,7 +226,7 @@ class House(models.Model):
                     ('CarPort', 'Навіс для машини'),
                     ('Detchd', 'Гараж окремо від будинку'),
                     ('NA', 'Немає гаражу'),),
-                default='NA')		
+                default='NA')
     GarageYrBlt = models.CharField(max_length=4, verbose_name='Рік побудови гаражу',
             null=True, blank=True)
     GarageFinish = models.CharField(max_length=3, verbose_name="Інтер'єр, обробка",
@@ -228,6 +261,7 @@ class House(models.Model):
                     ('Po', 'Бідно'),
                     ('NA', 'Немає басейну')),
                 default='NA')
+    # FENCE
     Fence = models.CharField(max_length=6, verbose_name="Якість паркану, огорожі",
             choices=(
                 ('GdPrv', 'Добре захищена приватність'),
@@ -235,40 +269,12 @@ class House(models.Model):
                 ('BadPrv', 'Погано захищена приватність'),
                 ('NA', 'Немає огорожі')),
             default='NA')
+    # FIREPLACE
     Fireplace = models.CharField(max_length=160, verbose_name="Камін, тип, якість, стан",
                 null=True, blank=True)
     # BODY TEXT
     body = models.TextField(max_length=4000, verbose_name='Опис',
             help_text="<em>до 4000 знаків</em>")
-    # COLLABORATION
-    agree_price = models.BooleanField('Договірна')
-    no_commission = models.BooleanField(verbose_name='Без комісії')
-    exchange = models.BooleanField(verbose_name='Можливість обміну')
-    collaboration = models.BooleanField(
-        verbose_name='Готовий співпрацювати з ріелторами')
-    # SAVING MEDIA FILES
-    def user_directory_path(instance, filename):
-        img_path = 'user_{0}/{1}'.format(instance.created_by.id, filename)
-        return img_path
-    image1 = models.ImageField(upload_to=user_directory_path,
-            verbose_name='Світлина 1', null=True, blank=True)
-    image2 = models.ImageField(upload_to=user_directory_path,
-            verbose_name='Світлина 2', null=True, blank=True)
-    image3 = models.ImageField(upload_to=user_directory_path,
-            verbose_name='Світлина 3', null=True, blank=True)
-    image4 = models.ImageField(upload_to=user_directory_path,
-            verbose_name='Світлина 4', null=True, blank=True)
-    image5 = models.ImageField(upload_to=user_directory_path,
-            verbose_name='Світлина 5', null=True, blank=True)
-    image6 = models.ImageField(upload_to=user_directory_path,
-            verbose_name='Світлина 6', null=True, blank=True)
-    image7 = models.ImageField(upload_to=user_directory_path,
-            verbose_name='Світлина 7', null=True, blank=True)
-    image8 = models.ImageField(upload_to=user_directory_path,
-            verbose_name='Світлина 8', null=True, blank=True)
-    image9 = models.ImageField(upload_to=user_directory_path,
-            verbose_name='Світлина 9', null=True, blank=True)
-
     # Appliances
     plate = models.BooleanField(verbose_name='Плита')
     cooking_plate = models.BooleanField(verbose_name='Варочна поверхня')
@@ -290,11 +296,12 @@ class House(models.Model):
     # Comfort
     air_conditioning = models.BooleanField(verbose_name='Кондиціонер')
     floor_heating = models.BooleanField(verbose_name='Підігрів підлоги')
+    cleaner = models.BooleanField(verbose_name='Центральний пилосос')
     bath = models.BooleanField(verbose_name='Ванна')
     shower  = models.BooleanField(verbose_name='Душ')
     kitchen_furniture = models.BooleanField(verbose_name='Меблі на кухні')
     wardrobe = models.BooleanField(verbose_name='Гардероб')
-    balcony = models.BooleanField(verbose_name='Балкон, лоджія')
+    balcony = models.BooleanField(verbose_name='Балкон')
     terrace = models.BooleanField(verbose_name='Тераса')
     panoramic_windows = models.BooleanField(verbose_name='Панорамні вікна')
     grid_on_the_windows = models.BooleanField(verbose_name='Грати на вікнах')
@@ -305,6 +312,7 @@ class House(models.Model):
                                 verbose_name='Охорона території')
     elevator = models.BooleanField(verbose_name='Ліфт')
     tennis_court = models.BooleanField(verbose_name="Тенісний корт", default=False)
+    bbarbecue = models.BooleanField(verbose_name="Бесідка, мангал, барбекю", default=False)
     pantry = models.BooleanField(verbose_name='Сарай більше 50 кв.м')
     smart_home_technology = models.BooleanField(
                           verbose_name='Технологія "розумний будинок"')
@@ -367,12 +375,14 @@ class House(models.Model):
         location = geolocator.reverse((self.geometry.y, self.geometry.x))
         addr = location.address
         addr_split = addr.split(',')
-        address = ', '.join(addr_split[:255])
+        address = ', '.join(addr_split[:-4])
         self.address = address
 
     @property
     def popupCoords(self):
-        return (self.geometry.y, self.geometry.x)
+        lat = round(self.geometry.y, 6)
+        lng = round(self.geometry.x, 6)
+        return f'{lat}, {lng}'
 
     # META CLASS
     class Meta:

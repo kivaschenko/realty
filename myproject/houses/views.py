@@ -1,10 +1,10 @@
-
+from django.core.mail import send_mail
 from django.core.serializers import serialize
 from django.shortcuts import render
 from django.views import generic
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.db.models import Q
 from .models import House
@@ -12,7 +12,7 @@ from .forms import HouseForm, ContactForm
 
 
 def get_map(request):
-    data = serialize('geojson', House.objects.all(), geometry_field='geometry', 
+    data = serialize('geojson', House.objects.all(), geometry_field='geometry',
                      fields=('pk', 'slug', 'title', 'price', 'currency', ))
     return render(request, 'houses/map.html', context={'data':data})
 
@@ -30,7 +30,7 @@ def details(request, pk, slug):
             name = form.cleaned_data['name']
             subject = "[CherkasyRealEstate.Org.ua] Мене зацікавив ваш об'єкт нерухомості"
             message = f"Мене цікавить: {object.title} {object.price} {object.currency} - {object.address}. Зателефонуйте мені по номеру: {phone}. До мене можна звертатись:  {name}"
-            send_mail(subject=subject, message=message, from_email=elitflatcherkasy@gmail.com',
+            send_mail(subject=subject, message=message, from_email='elitflatcherkasy@gmail.com',
                       recipient_list=[email,])
             messages.success(request, "Ваше повідомлення відправлено!")
             return render(request, template_name=template_name, context={'object':object})
@@ -55,3 +55,14 @@ def create_house(request):
 class HouseList(generic.ListView):
     model = House
     paginate = 10
+
+
+@login_required
+def type_offer(request, type_offer):
+    try:
+        queryset = House.objects.filter(type_offer=type_offer).all()
+        type = queryset[0].get_type_offer_display
+    except:
+        return HttpResponse("Поки що немає таких оголошень")
+    return render(request, 'houses/type_house_list.html',
+            {'object_list':queryset, 'type':type})

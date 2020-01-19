@@ -1,12 +1,12 @@
 
-{% load leaflet_tags %} 
+{% load leaflet_tags %}
  {% leaflet_css %}
- {% leaflet_js %}	
+ {% leaflet_js %}
  <style>
 
   .leaflet-container {  /* all maps */
       /* width:  1300px; */
-      height: 480px;
+      height: 600px;
   }
 
   #specialbigmap {
@@ -19,7 +19,7 @@
   }
 
 </style>
-  <div class="col-sm-12" style="height:480px;">
+  <div style="height:600px;">
     {% leaflet_map "main" callback="map_init" %}
   </div>
 
@@ -31,7 +31,7 @@
         map.setView({{object.lat_lng}}, 15);
         L.marker({{object.lat_lng}})
           .addTo(map)
-          .bindTooltip('{{object.address}}')
+          .bindTooltip('{{object.popupCoords}}')
           .openTooltip();
     }
   </script>

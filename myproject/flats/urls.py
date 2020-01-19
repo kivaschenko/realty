@@ -9,7 +9,7 @@ urlpatterns = [
 ]
 # Add URLConf to view filtered by type offer list
 urlpatterns += [
-    path('<type_offer>/offers/', type_offer, name='type_offer'),
+    path('<type_offer>/offers/', type_offer, name='type_offer_flat'),
 ]
 
 # Add map with all flats

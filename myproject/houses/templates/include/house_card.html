@@ -5,14 +5,12 @@
     <div class="card-body">
     <h5 class="card-title">{{object.title}}</h5>
     <p class="card-text">
-     {{object.type_object}}, Архітектурний стиль - 
-    {{object.architecture}}, {{object.total_floor}} поверх., 
-    ділянка {{object.area_estate}} га,
-    {{object.building_area}} / {{object.kitchen}} кв.м., 
-    {{object.walls}}, 
-    {{object.rooms}} кімн., {{object.heating}}.
-    </p>
-      <a href="#" class="btn btn-primary">
+     {{object.get_type_offer_display}}, {{object.get_MSSubClass_display}},
+     {{object.address}}, {{object.get_Architecture_display}},
+     {{object.get_Walls_display}}, {{object.get_RoofMatl_display}},
+     {{object.GrLivArea}} кв.м, {{object.TotRmsAbvGrd}} кімнат,
+     {{object.get_Repair_display}} </p>
+      <a href="{%url 'house' object.pk object.slug%}" class="btn btn-primary">
         {{ object.price}} {{object.get_currency_display}}</a>
     </div>
   </div>

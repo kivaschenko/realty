@@ -3,13 +3,12 @@
 
 {% block breadcrumb %}
 <li class="breadcrumb-item active"><a href="{% url 'home' %}">Головна</a>
-<li class="breadcrumb-item active"><a href="{% url 'flats' %}">
-  Квартири, кімнати</a>
+<li class="breadcrumb-item active"><a href="{% url 'house_list' %}">Будинки</a>
 <li class="breadcrumb-item">{{ type}}</li>
 {% endblock %}
 
 {% block content %}
-<h2>Квартири та кімнати {{type}} в Черкасах</h2>
+<h2>Будинки {{type}} в Черкасах</h2>
 {% if user.is_authenticated%}
   <div class="row">
     <div class="col-7">
@@ -19,27 +18,28 @@
     </div>
 
     <div class="col-sm-3">
-      <a href="{% url 'post_offer'%}" type="button"
-      class="btn btn-outline-primary">Додати квартиру</a>
+      <a href="{% url 'create_house'%}" type="button"
+      class="btn btn-outline-primary">Додати </a>
     </div>
   </div>
 
 <table class="table table-striped">
   <thead>
   <tr>
-    <th scope="col">Квартира</th>
+    <th scope="col">Будинок</th>
   </tr>
   </thead>
   <tbody id="myTable">
 {% if object_list %}
     {% for object in object_list %}
   <tr>
-    <td scope="row"><h4><a href="{% url 'offer-detail' object.pk object.slug%}">{{ object.title }}</a></h4>
+    <td scope="row"><h4><a href="{% url 'house' object.pk object.slug%}">{{ object.title }}</a></h4>
       {{ object.address}},
       <strong>{{ object.price }} {{ object.get_currency_display }}</strong>,
-      {{ object.floor}}/{{ object.total_floor}} поверх,
-      {{ object.area }}/{{object.kitchen}} кв.м,
-      {{ object.get_repair_display}},
+        {{object.get_Architecture_display}},
+        {{object.get_Walls_display}}, {{object.get_RoofMatl_display}},
+        {{object.GrLivArea}} кв.м, {{object.TotRmsAbvGrd}} кімнат,
+        {{object.get_Repair_display}},
       <em>(
         {% if object.agree_price is True%}
         Ціна договірна, {% else %}Без торгу, {% endif %}

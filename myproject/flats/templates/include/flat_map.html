@@ -1,7 +1,7 @@
 
-{% load leaflet_tags %} 
+{% load leaflet_tags %}
  {% leaflet_css %}
- {% leaflet_js %}	
+ {% leaflet_js %}
  <style>
 
   .leaflet-container {  /* all maps */
@@ -28,7 +28,7 @@
         // get point lat and lon
 
         // zoom to point & add it to map
-        map.setView({{object.lat_lng}}, 14);
+        map.setView({{object.lat_lng}}, 16);
         L.marker({{object.lat_lng}})
           .addTo(map)
           .bindTooltip('{{object.popupCoords}}')
