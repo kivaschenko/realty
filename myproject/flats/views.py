@@ -61,6 +61,7 @@ class OfferDelete(LoginRequiredMixin, generic.DeleteView):
 
 class OfferUpdate(LoginRequiredMixin, generic.UpdateView):
     model = Offer
+    form_class = OfferUpdateForm
     template_name = 'houses/update_offer.html'
     def test_func(self):
         obj = self.get_object()
