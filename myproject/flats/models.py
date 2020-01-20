@@ -150,6 +150,8 @@ DISTRICTS = (
     ('Yasnoziria', "Яснозір'я"))
     ),
 )
+# EXTEND = ( , 51.26, , 48.42)
+
 
 class District(models.Model):
     """ This model defines area as polygon and name of district.
