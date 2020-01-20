@@ -61,10 +61,29 @@ class OfferUpdate(LoginRequiredMixin, generic.UpdateView):
     model = Offer
     form_class = OfferUpdateForm
     template_name = 'flats/offer_update_form.html'
-    success_url = reverse('offer-detail', pk=obj.pk, slug=obj.slug)
     def test_func(self):
         obj = self.get_object()
         return obj.created_by == self.request.user
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.created_by == request.user:
+            return super().get(request, *args, **kwargs)
+        else:
+            return HttpResponseForbidden("У вас немає прав редагувати це оголошення!")
+
+
+class OfferDelete(LoginRequiredMixin, DeleteView):
+    model = Offer
+    success_url = reverse_lazy('flats')
+    template_name_suffix = '_confirm_delete'
+    # override the get function to check for a user match
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.created_by == request.user:
+            context = self.get_context_data(object=self.object)
+            return self.render_to_response(context)
+        else:
+            return HttpResponseForbidden("У вас немає прав видалити це оголошення!")
 
 
 class OfferChangeOwner(LoginRequiredMixin, generic.UpdateView):
