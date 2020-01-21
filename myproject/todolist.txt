@@ -7,3 +7,5 @@
 8. extend map to whole center of Ukraine.
 9. Home page. Last 3 offers from each categories
 10. переклад на англійську, польську, турецьку
+11. не працює передати будинок іншому
+12. не працю редагувати будинок
