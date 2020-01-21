@@ -21,6 +21,8 @@
     <p>{{ form.as_p }}</p>
     <input type="submit" class="btn btn-sm btn-success" value=" Змінити ">
     </form>
+    <br>
+    <a href="{%url 'offer_delete' object.pk%}" class="btn btn-sm btn-danger"> Видалити </a>  
   </div>
 </div>
 {% endblock%}
