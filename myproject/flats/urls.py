@@ -2,7 +2,6 @@ from django.urls import path
 from flats.views import *
 
 urlpatterns = [
-    # path('create/', OfferCreate.as_view(), name='create_flat'),
     path('list/', OfferList.as_view(), name='flats'),
     path('<int:pk>/<slug>/', details, name='offer-detail'),
     path('post_offer/', post_offer, name='post_offer'),

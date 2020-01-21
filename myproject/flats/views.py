@@ -57,8 +57,6 @@ def delete_offer(request, pk):
         raise Http404
 
 
-
-
 class OfferUpdate(LoginRequiredMixin, generic.UpdateView):
     model = Offer
     form_class = OfferUpdateForm
@@ -78,7 +76,7 @@ class OfferChangeOwner(LoginRequiredMixin, generic.UpdateView):
     model = Offer 
     template_name = 'flats/change_owner.html'
     fields = ('created_by',)
-    success_url = reverse('flats')
+    success_url = reverse('home')
 
 
 class OfferList(generic.ListView):
