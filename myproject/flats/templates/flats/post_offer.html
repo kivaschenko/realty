@@ -7,6 +7,12 @@
 {% leaflet_css plugins="forms" %}
 {% endblock %}
 
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'home'%}">Головна</a></li>
+<li class="breadcrumb-item"><a href="{% url 'flats' %}">Квартири, кімнати</a></li>
+<li class="breadcrumb-item active">Додати нову квартиру </li>
+{% endblock %}
+
 {% block content%}
     <form method="POST" enctype="multipart/form-data">
       {% csrf_token %}
