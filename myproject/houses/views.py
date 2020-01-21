@@ -1,12 +1,11 @@
 from django.core.mail import send_mail
 from django.core.serializers import serialize
-from django.shortcuts import render
+from django.shortcuts import render, reverse_lazy
 from django.views import generic
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
-from django.shortcuts import render
 from django.db.models import Q
 from .models import House
 from .forms import HouseForm, ContactForm
