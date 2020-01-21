@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views import generic
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.http import Http404, HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render
 from django.db import transaction
@@ -76,7 +76,7 @@ class OfferChangeOwner(LoginRequiredMixin, generic.UpdateView):
     model = Offer 
     template_name = 'flats/change_owner.html'
     fields = ('created_by',)
-    success_url = reverse('home')
+    success_url = reverse_lazy('home')
 
 
 class OfferList(generic.ListView):
