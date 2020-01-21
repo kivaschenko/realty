@@ -1,6 +1,7 @@
 from django.core.mail import send_mail
 from django.core.serializers import serialize
-from django.shortcuts import render, reverse_lazy
+from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
