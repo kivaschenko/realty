@@ -72,9 +72,9 @@ class OfferUpdate(LoginRequiredMixin, generic.UpdateView):
             return HttpResponseForbidden("У вас немає прав редагувати це оголошення!")
 
 
-class OfferDelete(LoginRequiredMixin, DeleteView):
+class OfferDelete(LoginRequiredMixin,generic.DeleteView):
     model = Offer
-    success_url = reverse_lazy('flats')
+    success_url = reverse('home')
     template_name_suffix = '_confirm_delete'
     # override the get function to check for a user match
     def get(self, request, *args, **kwargs):
