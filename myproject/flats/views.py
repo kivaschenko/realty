@@ -47,14 +47,16 @@ def post_offer(request):
 def delete_offer(request, pk):
     try:
         offer = Offer.objects.get(pk=pk)
+        if offer.created_by == request.user:
+            offer.delete()
+            messages.success(request, "Оголошення видалено!")
+            return HttpResponseRedirect('/')
+        else:
+            return HttpResponseForbidden("У вас немає прав видалити це оголошення!")
     except:
         raise Http404
-    if offer.created_by == request.user:
-        offer.delete()
-        messages.success(request, "Оголошення видалено!")
-        return HttpResponseRedirect('/')
-    else:
-        return HttpResponseForbidden("У вас немає прав видалити це оголошення!")
+
+
 
 
 class OfferUpdate(LoginRequiredMixin, generic.UpdateView):
@@ -70,20 +72,6 @@ class OfferUpdate(LoginRequiredMixin, generic.UpdateView):
             return super().get(request, *args, **kwargs)
         else:
             return HttpResponseForbidden("У вас немає прав редагувати це оголошення!")
-
-
-class OfferDelete(LoginRequiredMixin,generic.DeleteView):
-    model = Offer
-    success_url = reverse('home')
-    template_name_suffix = '_confirm_delete'
-    # override the get function to check for a user match
-    def get(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        if self.object.created_by == request.user:
-            context = self.get_context_data(object=self.object)
-            return self.render_to_response(context)
-        else:
-            return HttpResponseForbidden("У вас немає прав видалити це оголошення!")
 
 
 class OfferChangeOwner(LoginRequiredMixin, generic.UpdateView):

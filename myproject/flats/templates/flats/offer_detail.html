@@ -573,17 +573,5 @@
     </div>
   </div>
 </div>
-{%if object.created_by == request.user%}
-<div class="row">
-    <div class="col">
-        <a href="{%url 'update_offer' object.pk%}" class="btn btn-primary">Редагувати</a> 
-    </div>
-    <div class="col">
-        <a href="{%url 'offer_delete' object.pk%}" class="btn btn-danger">Видалити</a>  
-    </div>
-    <div class="col">
-        <a href="{%url 'change_owner' object.pk%}" class="btn btn-secondary">Передати іншому користувачеві</a>
-    </div>
-</div>
-{%endif%}
+
 {% endblock content %}

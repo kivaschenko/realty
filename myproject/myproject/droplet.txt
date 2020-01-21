@@ -1,3 +1,5 @@
+IP:  64.225.41.178
+
 Success. You can now start the database server using:
 
     pg_ctlcluster 12 main start
