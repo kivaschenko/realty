@@ -18,7 +18,6 @@ def get_map(request):
 
 
 def details(request, pk, slug):
-    template_name = 'houses/house_detail.html'
     object = House.objects.filter(Q(pk=pk) & Q(slug=slug)).get()
     object.num_visits += 1
     object.save()
@@ -33,10 +32,10 @@ def details(request, pk, slug):
             send_mail(subject=subject, message=message, from_email='elitflatcherkasy@gmail.com',
                       recipient_list=[email,])
             messages.success(request, "Ваше повідомлення відправлено!")
-            return render(request, template_name=template_name, context={'object':object})
+            return render(request, template_name='houses/house_detail.html', context={'object':object})
     else:
         form = ContactForm()
-    return render(request, template_name=template_name, context={'object':object, 'form':form})
+    return render(request, template_name='houses/house_detail.html', context={'object':object, 'form':form})
 
 
 @login_required
