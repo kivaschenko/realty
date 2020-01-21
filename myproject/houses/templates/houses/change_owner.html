@@ -1,0 +1,22 @@
+{% extends 'base.html'%}
+{% load leaflet_tags %}
+{% block title %}Передати оголошення іншому ріелтору{% endblock title %}
+
+
+{% block breadcrumb %}
+<li class="breadcrumb-item active"><a href="{% url 'home' %}">Головна</a>
+<li class="breadcrumb-item active"><a href="{% url 'house_list' %}">
+  Квартири, кімнати</a>
+<li class="breadcrumb-item active">
+  <a href="{% url 'type_offer_house' object.type_offer%}">
+  {{ object.get_type_offer_display}}</a>
+<li class="breadcrumb-item">{{ object.title }} - Передати оголошення іншому ріелтору</a>
+{% endblock %}
+
+{% block content %}
+    <form method="POST">
+      {% csrf_token %}
+      <p>{{ form.as_p }}</p>
+        <input type="submit" class="btn btn-success" value="Підтвердити нового власника">
+    </form>
+{% endblock%}

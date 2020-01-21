@@ -106,9 +106,9 @@
                 <span class="badge badge-primary">{{object.price}}
                 {{object.get_currency_display}}</span></h4>  
                 {%if object.created_by == request.user%}
-                  <a href="#" class="btn btn-sm btn-primary"> Редагувати </a>  
-                  <a href="#" class="btn btn-sm btn-danger"> Видалити </a>  
-                  <a href="#%}" class="btn btn-sm btn-secondary"> Передати іншому користувачеві </a>
+                  <a href="{%url 'house_update' object.pk%}" class="btn btn-sm btn-primary"> Редагувати </a>  
+                  <a href="{%url 'delete_house' object.pk%}" class="btn btn-sm btn-danger"> Видалити </a>  
+                  <a href="{%url 'change_rieltor' object.pk%}%}" class="btn btn-sm btn-secondary"> Передати іншому користувачеві </a>
                 {%endif%}                
               </li>
             </ul>

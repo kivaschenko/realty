@@ -3,8 +3,9 @@ from django.core.serializers import serialize
 from django.shortcuts import render
 from django.views import generic
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render
 from django.db.models import Q
 from .models import House
@@ -50,6 +51,40 @@ def create_house(request):
         form = HouseForm
     return render(request, 'houses/house_form.html', {'form': form})
 
+
+@login_required
+def delete_house(request, pk):
+    try:
+        house = House.objects.get(pk=pk)
+        if house.created_by == request.user:
+            house.delete()
+            messages.success(request, "Оголошення видалено!")
+            return HttpResponseRedirect('/')
+        else:
+            return HttpResponseForbidden("У вас немає прав видалити це оголошення!")
+    except:
+        raise Http404
+
+
+class HouseUpdate(LoginRequiredMixin, generic.UpdateView):
+    model = House
+    form_class = HouseForm
+    def test_func(self):
+        obj = self.get_object()
+        return obj.created_by == self.request.user
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.created_by == request.user:
+            return super().get(request, *args, **kwargs)
+        else:
+            return HttpResponseForbidden("Ви не маєте прав редагувати це оголошення!")
+
+
+class HouseChangeOwner(LoginRequiredMixin, generic.UpdateView):
+    model = House 
+    template_name = 'houses/change_owner.html'
+    fields = ('created_by',)
+    success_url = reverse_lazy('home')
 
 
 class HouseList(generic.ListView):

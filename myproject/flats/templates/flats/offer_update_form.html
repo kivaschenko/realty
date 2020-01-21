@@ -17,9 +17,7 @@
 <div class="container" align='center'>
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    <table>
-      {{ form.as_table }}
-    </table>
+    <p>{{ form.as_table }}</p>
     <input type="submit" class="btn btn-sm btn-success" value=" Змінити ">
   </form>
 </div>

@@ -7,4 +7,7 @@ urlpatterns = [
     path('add_house/', create_house, name='create_house'),
     path('map/', get_map, name='house_map'),
     path('<type_offer>/all/', type_offer, name='type_offer_house'),
+    path('update/<int:pk>/', HouseUpdate.as_view(), name='house_update'),
+    path('delete/<int:pk>/', delete_house, name='delete_house'),
+    path('change_rieltor/<int:pk>/', HouseChangeOwner.as_view(), name='change_rieltor'),
 ]

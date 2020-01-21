@@ -64,7 +64,7 @@ class OfferUpdate(LoginRequiredMixin, generic.UpdateView):
         if self.object.created_by == request.user:
             return super().get(request, *args, **kwargs)
         else:
-            return HttpResponseForbidden("У вас немає прав редагувати це оголошення!")
+            return HttpResponseForbidden("Ви не маєте прав редагувати це оголошення!")
 
 
 class OfferChangeOwner(LoginRequiredMixin, generic.UpdateView):
