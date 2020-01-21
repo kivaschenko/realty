@@ -172,7 +172,7 @@ class House(models.Model):
                 ('for_clean_processing', 'під чистову обробку'),
                 ('emergency_condition', 'Аварійний стан'),),
             default='life_condition')
-    Heating = models.CharField(max_length=20, verbose_name="Опалення",
+    Heating = models.CharField(max_length=25, verbose_name="Опалення",
             choices=(
                 ('centralize', 'Централізоване'),
                 ('own_boiler_room', 'Власна котельня'),

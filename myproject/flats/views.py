@@ -18,11 +18,6 @@ def get_map(request):
     return render(request, 'flats/map.html', context={'data':data})
 
 
-# class OfferDetailMapView(DetailView):
-#     model = Offer
-#     template_name = 'flats/map.html'
-
-
 @login_required
 def post_offer(request):
     # if this is a POST request we need to process the form data
