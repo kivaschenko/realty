@@ -409,5 +409,4 @@ class House(models.Model):
     # ABSOLUTE URL METHOD
     def get_absolute_url(self):
         """ Returns the url to access a detail record for this offer."""
-        return reverse('offer-detail',
-                        kwargs={'pk': self.pk, 'slug': self.slug})
+        return reverse('house', kwargs={'pk': self.pk, 'slug': self.slug})

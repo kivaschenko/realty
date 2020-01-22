@@ -82,6 +82,7 @@ class HouseUpdate(LoginRequiredMixin, generic.UpdateView):
             return HttpResponseForbidden("Ви не маєте прав редагувати це оголошення!")
 
 
+
 class HouseChangeOwner(LoginRequiredMixin, generic.UpdateView):
     model = House 
     template_name = 'houses/change_owner.html'
