@@ -248,59 +248,56 @@
           <th scope="row">Загальний стан екстер'єру будинку</th>
           <td>{{object.get_ExterCond_display}}</td>
         </tr>
-      
+      </tbody>
+    </table>
 
 
     <h3>Побутова техніка</h3>
     <table class="table table-striped">
-    <thead>
-    <tr>
-    <th scope="col">Прилад</th>
-    <th scope="col">Наявність</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-    <th scope="row">Плита</th>
-    <td>{% if object.plate is True%}Так{%else%}-{%endif%}</td>
-    </tr>
-    <tr>
-    <th scope="row">Варочна поверхня</th>
-    <td>{%if object.cooking_plate is True%}Так{%else%}-{%endif%}</td>
-    </tr>
-    <tr>
-    <th scope="row">Духова шафа</th>
-    <td>{%if object.oven is True%}Так{%else%}-{%endif%}</td>
-    </tr>
-    <tr>
-    <th scope="row">Мікрохвильова піч</th>
-    <td>{%if object.microwave is True%}Так{%else%}-{%endif%}</td>
-    </tr>
-    <tr>
-    <th scope="row">Холодильник</th>
-    <td>{%if object.refrigerator is True%}Так{%else%}-{%endif%}</td>
-    </tr>
-    <tr>
-    <th scope="row">Посудомийна машина</th>
-    <td>{%if object.dishwashers is True%}Так{%else%}-{%endif%}</td>
-    </tr>
-    <tr>
-    <th scope="row">Пральна машина</th>
-    <td>{%if object.washing_machine is True%}Так{%else%}-{%endif%}</td>
-    </tr>
-    <tr>
-    <th scope="row">Сушильна машина</th>
-    <td>{%if object.dryer is True%}Так{%else%}-{%endif%}</td>
-    </tr>
-    <tr>
-    <th scope="row">Без побутової техніки</th>
-    <td>{%if object.without_appliances is True%}Так{%else%}-{%endif%}</td>
-    </tr>
-    <tr>
-    <th scope="row"></th>
-    <td></td>
-    </tr>
-    </tbody>
+      <thead>
+        <tr>
+          <th scope="col">Прилад</th>
+          <th scope="col">Наявність</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Плита</th>
+          <td>{% if object.plate is True%}Так{%else%}-{%endif%}</td>
+        </tr>
+      <tr>
+      <th scope="row">Варочна поверхня</th>
+      <td>{%if object.cooking_plate is True%}Так{%else%}-{%endif%}</td>
+      </tr>
+      <tr>
+      <th scope="row">Духова шафа</th>
+      <td>{%if object.oven is True%}Так{%else%}-{%endif%}</td>
+      </tr>
+      <tr>
+      <th scope="row">Мікрохвильова піч</th>
+      <td>{%if object.microwave is True%}Так{%else%}-{%endif%}</td>
+      </tr>
+      <tr>
+      <th scope="row">Холодильник</th>
+      <td>{%if object.refrigerator is True%}Так{%else%}-{%endif%}</td>
+      </tr>
+      <tr>
+      <th scope="row">Посудомийна машина</th>
+      <td>{%if object.dishwashers is True%}Так{%else%}-{%endif%}</td>
+      </tr>
+      <tr>
+      <th scope="row">Пральна машина</th>
+      <td>{%if object.washing_machine is True%}Так{%else%}-{%endif%}</td>
+      </tr>
+      <tr>
+      <th scope="row">Сушильна машина</th>
+      <td>{%if object.dryer is True%}Так{%else%}-{%endif%}</td>
+      </tr>
+      <tr>
+      <th scope="row">Без побутової техніки</th>
+      <td>{%if object.without_appliances is True%}Так{%else%}-{%endif%}</td>
+      </tr>
+      </tbody>
     </table>
     <br />
     <h3>Мультимедіа</h3>
@@ -620,46 +617,33 @@
       <br />
     <div class="row">
       {% if object.image1%}
-      <img src="{{object.image1.url}}" alt="{{object.title}} - фото 1" class="img-thumbnail">
+      <img src="{{object.image1.url}}" alt="{{object.title}} - світлина 1" class="img-thumbnail">
       {%endif%}
       {% if object.image2 %}
-      <img src="{{object.image2.url}}" alt="{{object.title}} - фото 1" class="img-thumbnail">
+      <img src="{{object.image2.url}}" alt="{{object.title}} - світлина 2" class="img-thumbnail">
       {%endif%}
       {% if object.image3 %}
-      <img src="{{object.image3.url}}" alt="{{object.title}} - фото 1" class="img-thumbnail">
+      <img src="{{object.image3.url}}" alt="{{object.title}} - світлина 3" class="img-thumbnail">
       {%endif%}
       {% if object.image4 %}
-      <img src="{{object.image4.url}}" alt="{{object.title}} - фото 1" class="img-thumbnail">
+      <img src="{{object.image4.url}}" alt="{{object.title}} - світлина 4" class="img-thumbnail">
       {%endif%}
       {% if object.image5 %}
-      <img src="{{object.image5.url}}" alt="{{object.title}} - фото 1" class="img-thumbnail">
+      <img src="{{object.image5.url}}" alt="{{object.title}} - світлина 5" class="img-thumbnail">
       {%endif%}
       {% if object.image6 %}
-      <img src="{{object.image6.url}}" alt="{{object.title}} - фото 1" class="img-thumbnail">
+      <img src="{{object.image6.url}}" alt="{{object.title}} - світлина 6" class="img-thumbnail">
       {%endif%}
       {% if object.image7 %}
-      <img src="{{object.image7.url}}" alt="{{object.title}} - фото 1" class="img-thumbnail">
+      <img src="{{object.image7.url}}" alt="{{object.title}} - світлина 7" class="img-thumbnail">
       {%endif%}
       {% if object.image8 %}
-      <img src="{{object.image8.url}}" alt="{{object.title}} - фото 1" class="img-thumbnail">
+      <img src="{{object.image8.url}}" alt="{{object.title}} - світлина 8" class="img-thumbnail">
       {%endif%}
       {% if object.image9 %}
-      <img src="{{object.image9.url}}" alt="{{object.title}} - фото 1" class="img-thumbnail">
+      <img src="{{object.image9.url}}" alt="{{object.title}} - світлина 9" class="img-thumbnail">
       {%endif%}
     </div>
-    {%if object.created_by == request.user%}
-    <div class="row">
-        <div class="col">
-            <a href="{%url 'update_offer' object.pk%}" class="btn btn-primary">Редагувати</a> 
-        </div>
-        <div class="col">
-            <a href="#" class="btn btn-secondary">Видалити</a>  
-        </div>
-        <div class="col">
-            <a href="#" class="btn btn-outline-secondary">Передати іншому користувачеві</a>
-        </div>
-    </div>
-    {%endif%}
   </div>
 </div>
 {% endblock content %}
