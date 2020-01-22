@@ -32,7 +32,7 @@
   function onEachFeature(feature, layer) {
 		var popupContent = '<h5> ' +
       feature.properties.price + " " + feature.properties.currency + "</h5>" +
-      '<h6>' + '<a href="http://64.225.41.178:8000/houses/' +
+      '<h6>' + '<a href="http://64.225.41.178:8000/houses/house/' +
       feature.properties.pk + '/' +
       feature.properties.slug + '/">' +
       feature.properties.title +'</a>' + '</h6>';

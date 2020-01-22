@@ -87,7 +87,15 @@ class HouseChangeOwner(LoginRequiredMixin, generic.UpdateView):
     template_name = 'houses/change_owner.html'
     fields = ('created_by',)
     success_url = reverse_lazy('home')
-
+    def test_func(self):
+        obj = self.get_object()
+        return obj.created_by == self.request.user
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.created_by == request.user:
+            return super().get(request, *args, **kwargs)
+        else:
+            return HttpResponseForbidden("Ви не маєте прав редагувати це оголошення!")
 
 class HouseList(generic.ListView):
     model = House
