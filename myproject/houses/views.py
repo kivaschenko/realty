@@ -70,7 +70,7 @@ class HouseUpdate(LoginRequiredMixin, generic.UpdateView):
     model = House
     form_class = HouseForm
     template_name = 'houses/house_update_form.html'
-    success_url = reverse_lazy('house', kwargs={'pk':obj.pk, 'slug':obj.slug})
+    success_url = reverse_lazy('house', kwargs={'pk':pk, 'slug':slug})
     def test_func(self):
         obj = self.get_object()
         return obj.created_by == self.request.user
