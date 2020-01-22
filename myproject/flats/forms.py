@@ -20,7 +20,6 @@ class OfferCreateForm(ModelForm):
 
     class Meta:
         model = Offer
-        # fields = ('geometry', )
         exclude = ['address', 'created_by', 'num_visits', 'slug']
         widgets = {
         'geometry': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS),

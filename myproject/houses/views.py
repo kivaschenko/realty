@@ -69,6 +69,7 @@ def delete_house(request, pk):
 class HouseUpdate(LoginRequiredMixin, generic.UpdateView):
     model = House
     form_class = HouseForm
+    template_name = 'houses/house_update_form.html'
     def test_func(self):
         obj = self.get_object()
         return obj.created_by == self.request.user
