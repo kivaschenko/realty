@@ -17,7 +17,7 @@ from django.db.models import Q
 class AgencyCreate(generic.CreateView):
     model = Agency
     form_class = AgencyForm
-    template_name = 'rialtor/create_agency.html'
+    template_name = 'realtor/create_agency.html'
 
 
 def get_agensy(request, slug):
@@ -33,8 +33,8 @@ def get_agensy(request, slug):
 
 
 @login_required
-def edit_agensy(request, pk):
-    object = Agency.objects.get(pk=pk)
+def edit_agensy(request, slug):
+    object = Agency.objects.get(slug=slug)
     if request.method == 'POST':
         form = AgencyForm(request.POST, request.FILES or None, instance=object)
         form.save()
