@@ -29,7 +29,7 @@ def get_agensy(request, slug):
     return render(
         request, 
         template_name='realtor/agensy.html',
-        context={'object':object, 'realtor_list':realtor_list)
+        context={'object':object, 'realtor_list':realtor_list})
 
 
 @login_required
