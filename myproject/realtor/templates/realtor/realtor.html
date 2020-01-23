@@ -7,6 +7,10 @@
 <li class="breadcrumb-item active">
   <a href="{%url 'agensy' object.agensy.slug %}">
   {{ object.agensy}}</a>
+  {% elif object.created_by == request.user %}
+  У вас не вибрано Агенство нерухомості. Ви можете вибрати із 
+  списка існуючих на сторінці "Редагувати профіль" або
+  <a href="{%url 'create_agensy'%}" class="btn btn-sm btn-info">Створити свое агенство</a>
   {%else%}Індивідуальний продавець{%endif%}
 <li class="breadcrumb-item">Ріелтор {{ object.created_by.first_name }}
   {{object.created_by.last_name}}</a>

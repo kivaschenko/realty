@@ -94,8 +94,9 @@ class OfferList(generic.ListView):
 def details(request, pk, slug):
     """ This function returns the selected offer and a list of the same offers."""
     object = Offer.objects.filter(Q(pk=pk) & Q(slug=slug)).get()
-    object.num_visits += 1
-    object.save()
+    if request.user != object.created_by:
+        object.num_visits += 1
+        object.save()
     email = object.created_by.email
     if request.method == 'POST':
         form = ContactForm(request.POST)

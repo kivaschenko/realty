@@ -1,11 +1,12 @@
 import random
 from django.shortcuts import render
 from django.urls import reverse
+from django.views import generic
 from django.http import HttpResponseRedirect, Http404
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from .forms import RealtorForm
+from .forms import RealtorForm, AgencyForm
 from .models import Realtor, Review, Agency
 from flats.models import Offer
 from houses.models import House
@@ -13,20 +14,35 @@ from django.views.generic import ListView
 from django.db.models import Q
 
 
+class AgencyCreate(generic.CreateView):
+    model = Agency
+    form_class = AgencyForm
+    template_name = 'rialtor/create_agency.html'
+
+
 def get_agensy(request, slug):
     object = Agency.objects.filter(slug=slug).get()
-    object.num_visits += 1
-    object.save()
-    # try:
-    #     flat_list = Offer.objects.filter(created_by)
-    flat_list = []
-    house_list = []
-
+    if request.user != object.created_by:
+        object.num_visits += 1
+        object.save()
+    realtor_list = Realtor.objects.filter(agency=object.name)
     return render(
         request, 
         template_name='realtor/agensy.html',
-        context={'object':object, 'flat_list':flat_list, 
-                 'house_list':house_list})
+        context={'object':object, 'realtor_list':realtor_list)
+
+
+@login_required
+def edit_agensy(request, pk):
+    object = Agency.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = AgencyForm(request.POST, request.FILES or None, instance=object)
+        form.save()
+        messages.success(request, 'Зміни до сторінки агенства внесені!')
+        return HttpResponseRedirect('/')
+    else:
+        form = AgencyForm(instance=object)
+        return render(request, 'realtor/edit_agensy.html', {'form':form})
 
 
 def realtor(request, pk):
@@ -62,6 +78,7 @@ def create_realtor(request):
         form = RealtorForm()
     return render(request, 'create_realtor.html', {'form':form})
 
+
 @login_required
 def edit_realtor(request, pk):
     object = Realtor.objects.get(pk=pk)
@@ -74,12 +91,6 @@ def edit_realtor(request, pk):
         form = RealtorForm(instance=object)
         return render(request, 'realtor/edit_realtor.html', {'form':form})
 
-
-class RealtorList(ListView):
-    """  Generic class-based view for a list of realtors.
-    """
-    model = Realtor
-    paginate_by = 10
 
 
 def top_realtor(request):

@@ -19,11 +19,10 @@ class Agency(models.Model):
         help_text="міжнародний формат, +38067XXXYYZZ",)
     body = models.TextField(verbose_name='Про агенство',max_length=2000,
          help_text='<em>До 2000 символів</em>')
-    # ADDRESS
-    address = models.CharField(max_length=255, verbose_name='Адреса', null=True, blank=True)
     # INVISIBLE FIELDS IN FORM
+    address = models.CharField(max_length=255, verbose_name='Адреса', null=True, blank=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL,
-               related_name='agencys', verbose_name='Редактор',
+               related_name='agencys', verbose_name='Редактор сторінки',
                null=True,)
     slug = models.SlugField(default='', editable=False, max_length=100)
     pub_date = models.DateTimeField(auto_now_add=True)
@@ -38,11 +37,13 @@ class Agency(models.Model):
     
     @property
     def popupCoords(self):
-        return (self.geometry.y, self.geometry.x)
+        lat = round(self.geometry.y, 6)
+        lng = round(self.geometry.x, 6)
+        return f'{lat}, {lng}'
 
     # META CLASS
     class Meta:
-        ordering = ["-pub_date",]
+        ordering = ["-name",]
 
     # TO STRING METHOD
     def __str__(self):
@@ -73,8 +74,7 @@ class Agency(models.Model):
     def get_absolute_url(self):
         """ Returns the url to access a detail record for the agency.
         """
-        return reverse('agency',
-                        kwargs={'slug': self.slug})
+        return reverse('agency', kwargs={'slug': self.slug})
 
 
 class Realtor(models.Model):
