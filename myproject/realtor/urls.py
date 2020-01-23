@@ -10,5 +10,5 @@ urlpatterns = [
 urlpatterns += [
     path('<slug>/', get_agensy, name='agensy'),
     path('create_agensy/', create_agensy, name='create_agensy'),
-    path('<slug>/edit/' edit_agensy, name='edit_agensy'),
+    path('<slug>/edit/', edit_agensy, name='edit_agensy'),
 ]
