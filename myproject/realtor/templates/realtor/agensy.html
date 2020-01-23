@@ -27,7 +27,7 @@
       <br>
       <br>
     {% if object.created_by == request.user %}
-      <a href="#" class="btn btn-primary">
+      <a href="{%url 'edit_agensy' object.slug%}" class="btn btn-primary">
       Редагувати сторінку</a>
       <br>
       <p><em>Переглядів сторінки: {{object.num_visits}}</em></p>
@@ -76,9 +76,13 @@
         {% if realtor_list%}
         {% for object in realtor_list%}
         <ol>
-        <li>
-        <h2 style="font-family: 'Lobster', cursive; font-size: 26px;">
-          {{ object.created_by.first_name }} {{object.created_by.last_name}}</h2></li>
+          <li>
+            <h2 style="font-family: 'Lobster', cursive; font-size: 26px;">
+              <a href="{%url 'realtor' object.pk%}">
+              {{ object.created_by.first_name }} {{object.created_by.last_name}}
+              </a>
+            </h2>
+          </li>
         </ol>
         {%endfor%}
         {%else%}
