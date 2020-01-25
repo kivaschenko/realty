@@ -41,9 +41,7 @@
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
         role="button" data-toggle="dropdown" aria-haspopup="true"
         aria-expanded="false">
-      {{user.username}}
-    {%endif%}
-        </a>
+        {{user.username}}</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           {%if user.realtor %}
           <a class="dropdown-item" href="{% url 'realtor' user.realtor.pk %}">
@@ -53,9 +51,10 @@
             Створити профіль ріелтора</a>
           {%endif%}
           {% if user.agency %}
-          <a class="dropdown-item" href="#">Редагувати агенство</a>
-          {%else%}
           <a class="dropdown-item" href="{%url 'agensy' user.agency.slug %}">Моє агенство</a>
+          {%else%}
+          <a class="dropdown-item" href="{%url 'create_agensy'%}">Створити агенство</a>
+          {%endif%}
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'update' %}">Редагувати профіль</a>
           <a class="dropdown-item" href="{% url 'password_change'%}">Змінити пароль</a>
