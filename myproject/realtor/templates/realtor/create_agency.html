@@ -14,6 +14,10 @@
 
 {% block content%}
 <div class="container">
+  {%if user.agency%}
+  <h2>Ви вже маєте агенство. Можна мати тільки одне!</h2>
+  <p>Ви можете передати це агенство іншому ріелтору або видалити це.</p>
+  {%else%}
   <div class="col">
     <form method="POST" enctype="multipart/form-data">
       {% csrf_token %}
@@ -21,5 +25,6 @@
       <input type="submit" class="btn btn-success" value=" Додати ">
     </form>
   </div>
+  {%endif%}
 </div>
 {% endblock%}

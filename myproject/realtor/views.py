@@ -14,10 +14,32 @@ from django.views.generic import ListView
 from django.db.models import Q
 
 
-class AgencyCreate(generic.CreateView):
-    model = Agency
-    form_class = AgencyForm
-    template_name = 'realtor/create_agency.html'
+@login_required
+def create_realtor(request):
+    if request.method == 'POST':
+        form = RealtorForm(request.POST)
+        if form.is_valid():
+            form.instance.created_by = request.user
+            form.save()
+            messages.success(request, 'Зміни до профілю ріелтора внесені!')
+            return HttpResponseRedirect('/')
+    else:
+        form = RealtorForm()
+    return render(request, 'create_realtor.html', {'form':form})
+
+
+@login_required
+def create_agency(request):
+    if request.method == 'POST':
+        form = AgencyForm()
+        if form.is_valid():
+            form.instance.created_by = request.user 
+            form.save()
+            messages.success(request, "Ви успішно створили нове агенство. Доступ в вашому меню.")
+            return HttpResponseRedirect('/')
+    else:
+        form = AgencyForm()
+    return render(request, 'create_agensy.html', {'form':form})
 
 
 def get_agensy(request, slug):
@@ -65,18 +87,6 @@ def realtor(request, pk):
     return render(request, 'realtor/realtor.html',
                   {'object':q, 'flat_list':offer_set, 'house_list':house_list})
 
-@login_required
-def create_realtor(request):
-    if request.method == 'POST':
-        form = RealtorForm(request.POST)
-        if form.is_valid():
-            form.instance.created_by = request.user
-            form.save()
-            messages.success(request, 'Зміни до профілю ріелтора внесені!')
-            return HttpResponseRedirect('/')
-    else:
-        form = RealtorForm()
-    return render(request, 'create_realtor.html', {'form':form})
 
 
 @login_required
