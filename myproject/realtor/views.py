@@ -25,7 +25,7 @@ def create_realtor(request):
             return HttpResponseRedirect('/')
     else:
         form = RealtorForm()
-    return render(request, 'create_realtor.html', {'form':form})
+    return render(request, 'realtor/create_realtor.html', {'form':form})
 
 
 @login_required
@@ -39,7 +39,7 @@ def create_agency(request):
             return HttpResponseRedirect('/')
     else:
         form = AgencyForm()
-    return render(request, 'create_agency.html', {'form':form})
+    return render(request, 'realtor/create_agency.html', {'form':form})
 
 
 def get_agensy(request, slug):
