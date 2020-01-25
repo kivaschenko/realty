@@ -39,22 +39,20 @@
       </tbody>
     </table>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-4">
+    <h2>Наші спонсори</h2>
     <table class="table">
       <thead>
         <tr>
           <th scope="col">Ріелтор</th>
-          <th scope="col">Гарячі пропозиції</th>
         </tr>
       </thead>
       <tbody>
         {% for object in object_list %}
         <tr>
-          <th scope="row"><h3>
+          <th scope="row"><h4>
           <a href="{%url 'realtor' object.pk%}">
-            {{object.created_by.first_name}} {{object.created_by.last_name}}</a> </h3>
-            <h6><a href="#">Гаряча пропозиція!</a></h6></th>
-          <td></td>
+            {{object.created_by.first_name}} {{object.created_by.last_name}}</a> </h4>
         </tr>
         {%endfor%}
       </tbody>
@@ -63,13 +61,13 @@
 </div>
 {% else %}
 <form>
-  <div class="row">
+  <div class="row" <body style="background-color:lightgray;">
     <div class="col-md-6"
-    <label for="formGroupExampleInput">
-Пошук об'єкта нерухомості або ріелтора</label>
-    <input type="text" class="form-control" id="formGroupExampleInput"
-placeholder="Введіть район, вулицю, назву агенства, ім'я ріелтора тощо...">
-  </div>
+        <label for="formGroupExampleInput">
+    Пошук об'єкта нерухомості або ріелтора</label>
+        <input type="text" class="form-control" id="formGroupExampleInput"
+    placeholder="Введіть район, вулицю, назву агенства, ім'я ріелтора тощо...">
+    </div>
   </div>
 </form>
 {% endif %}

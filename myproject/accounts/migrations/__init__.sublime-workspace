@@ -1,0 +1,370 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Htt",
+				"HttpResponseRedirect"
+			],
+			[
+				"Offer",
+				"OfferUpdateForm"
+			],
+			[
+				"reverse",
+				"reverse_lazy"
+			],
+			[
+				"btn",
+				"btn-outline-secondary"
+			],
+			[
+				"house",
+				"house_list"
+			],
+			[
+				"H",
+				"HttpResponseRedirect"
+			],
+			[
+				"is",
+				"is_valid"
+			],
+			[
+				"crea",
+				"created_by"
+			],
+			[
+				"fi",
+				"fields"
+			],
+			[
+				"next",
+				"next_page_url"
+			],
+			[
+				"ht",
+				"html"
+			],
+			[
+				"nex",
+				"next_page"
+			],
+			[
+				"de",
+				"description"
+			],
+			[
+				"get",
+				"get_btc"
+			],
+			[
+				"chat",
+				"chat_id"
+			],
+			[
+				"me",
+				"message_text"
+			],
+			[
+				"cha",
+				"chat_id"
+			],
+			[
+				"fit",
+				"fit_transform"
+			],
+			[
+				"im",
+				"imputor"
+			],
+			[
+				"cla",
+				"clasters"
+			],
+			[
+				"fare",
+				"fare_clusters"
+			],
+			[
+				"name_",
+				"name_length"
+			],
+			[
+				"as",
+				"astype"
+			],
+			[
+				"name",
+				"name_column"
+			],
+			[
+				"age",
+				"age_clusters"
+			],
+			[
+				"X",
+				"X_pred_scaled"
+			],
+			[
+				"fam",
+				"family_size"
+			],
+			[
+				"X_",
+				"X_scaled"
+			],
+			[
+				"feature",
+				"feature_val"
+			],
+			[
+				"su",
+				"submission_file"
+			],
+			[
+				"test",
+				"test_file"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 485.0
+	},
+	"console":
+	{
+		"height": 146.0,
+		"history":
+		[
+			"sys.path",
+			"sys.path()",
+			"import sys",
+			"import os",
+			"python"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/user/realty/myproject/houses/views.py",
+		"/home/user/realty/myproject/houses/urls.py",
+		"/home/user/realty/myproject/houses/templates/houses/update_house.html",
+		"/home/user/realty/myproject/flats/templates/flats/offer_update_form.html",
+		"/home/user/realty/myproject/houses/templates/houses/house_detail.html",
+		"/home/user/realty/myproject/flats/templates/flats/offer_detail.html",
+		"/home/user/realty/myproject/realtor/templates/realtor/realtor.html",
+		"/home/user/realty/myproject/houses/templates/houses/house_form.html",
+		"/home/user/realty/myproject/realtor/views.py",
+		"/home/user/realty/myproject/flats/forms.py",
+		"/home/user/realty/myproject/todolist.txt",
+		"/home/user/realty/myproject/flats/urls.py",
+		"/home/user/realty/myproject/flats/models.py",
+		"/home/user/dev/tests_classes.py",
+		"/home/user/dev/titanic/titanic_1.ipynb",
+		"/home/user/dev/web-scrape_veloelectr_shops/veloscrape.py",
+		"/home/user/dev/quotes/authors.py",
+		"/home/user/dev/web-scrape_veloelectr_shops/citycly.py",
+		"/home/user/dev/quotes/authors.json",
+		"/home/user/dev/quotes/quotes.json",
+		"/home/user/dev/quotes/quotes.py",
+		"/home/user/dev/quotes/athors.py",
+		"/home/user/dev/quotes/authors_py.py",
+		"/home/user/dev/quotes/item.json",
+		"/home/user/dev/web-scrape_veloelectr_shops/veloelectric/veloelectric/spiders/citycle.py",
+		"/home/user/dev/web_scrapy_quotes/tutorial/tutorial/spiders/quotes_spider.py",
+		"/home/user/dev/web_scrapy_quotes/tutorial/tutorial/spiders/author_spider.py",
+		"/home/user/dev/web-scrape_veloelectr_shops/veloelectric/veloelectric/spiders/__init__.py",
+		"/home/user/dev/web-scrape_veloelectr_shops/veloelectric/veloelectric/pipelines.py",
+		"/home/user/dev/web-scrape_veloelectr_shops/veloelectric/veloelectric/middlewares.py",
+		"/home/user/dev/web_scrapy_quotes/tutorial/tutorial/pipelines.py",
+		"/home/user/dev/web_scrapy_quotes/tutorial/tutorial/items.py",
+		"/home/user/dev/web_scrapy_quotes/tutorial/tutorial/middlewares.py",
+		"/home/user/dev/web_scrapy_quotes/tutorial/author.json",
+		"/home/user/dev/web_scrapy_quotes/tutorial/quotes.jl",
+		"/home/user/dev/web_scrapy_quotes/tutorial/author.jl",
+		"/home/user/dev/web_scrapy_quotes/tutorial/tutorial/settings.py",
+		"/home/user/dev/web_scrapy_quotes/tutorial/tutorial/__init__.py",
+		"/home/user/dev/web_scrapy_quotes/tutorial/quotes-1.html",
+		"/home/user/dev/web_scrapy_quotes/tutorial/quotes.json",
+		"/home/user/dev/IntroducingPython/report.py",
+		"/home/user/dev/IntroducingPython/zoo.py",
+		"/home/user/dev/IntroducingPython/weather.py",
+		"/home/user/dev/IntroducingPython/weatherman.py",
+		"/home/user/dev/Introducing Python/test.py",
+		"/home/user/dev/IntroducingPython/daily.py",
+		"/home/user/dev/IntroducingPython/weekly.py",
+		"/home/user/dev/IntroducingPython/test2.py",
+		"/home/user/dev/titanic/titanic.py",
+		"/home/user/Downloads/Ubit_peresmeshnika_Dushnoi_nochyu_v_Karoline_Begi_negr_begi/Harper_Li_Ubit_peresmeshnika.fb2",
+		"/home/user/Downloads/Ubit_peresmeshnika_Dushnoi_nochyu_v_Karoline_Begi_negr_begi/Harper_Li_Ubit_peresmeshnika.rtf",
+		"/home/user/dev/telegram_bot/yobit.py",
+		"/home/user/dev/telegram_bot/bot.py",
+		"/home/user/misc.py",
+		"/home/user/update.json",
+		"/home/user/dev/telegram_bot/update.json",
+		"/home/user/dev/telegram_bot/telegram_bot.py",
+		"/home/user/dev/telegram_bot/misc.pyc",
+		"/home/user/dev/telegram_bot/misc.py",
+		"/home/user/random_forest_clf_titanic_subm.csv",
+		"/home/user/Downloads/gptest_another.csv",
+		"/home/user/Downloads/random_forest_clf_titanic_subm(1).csv",
+		"/home/user/Downloads/script.py",
+		"/home/user/dev/subl_licen",
+		"/home/user/dev/titanic/gender_submission.csv"
+	],
+	"find":
+	{
+		"height": 26.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"data_dir",
+			"dataset",
+			"DATA_DIR",
+			"Title",
+			"data",
+			"dataset"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"DATA_DIR",
+			"df",
+			"data_dir",
+			"title",
+			"df",
+			"data"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "__init__.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 284.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

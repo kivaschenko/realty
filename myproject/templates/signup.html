@@ -8,11 +8,11 @@
 
 {% block content %}
 <h2>Реєстрація</h2>
-<div class="col-sm-6">
+<div class="col">
 	<div class="row">
 	<form method='post' novalidate>
 		{% csrf_token %}
-		<table class="table">{{form.as_table}}</table>
+		<p>{{form.as_p}}</p>
 	<button type='submit' class="btn btn-primary">Створити акаунт</button>
 	</form>
 	</div>
