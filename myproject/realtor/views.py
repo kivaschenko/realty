@@ -39,7 +39,7 @@ def create_agency(request):
             return HttpResponseRedirect('/')
     else:
         form = AgencyForm()
-    return render(request, 'create_agensy.html', {'form':form})
+    return render(request, 'create_agency.html', {'form':form})
 
 
 def get_agensy(request, slug):
