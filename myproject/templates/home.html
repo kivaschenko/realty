@@ -18,24 +18,24 @@
       <tbody>
         <tr>
           <td>
-            <h2><a href="{% url 'flats' %}">Квартири, кімнати</a></h2>
-            <small class="text-muted d-block"><br>
-            <a  href="{% url 'type_offer_flat' 'sale' %}">
-            Продаж квартир, кімнат</a><br>
-          <a class="dropdown-item" href="{% url 'type_offer_flat' 'rent' %}">Довгострокова оренда квартир, кімнат</a>              
-              </small>
+          <h2>Квартири:</h2>
+<h2><a  href="{% url 'type_offer_flat' 'sale' %}">Продаж квартир, кімнат</a></h2>
+<h2><a href="{% url 'type_offer_flat' 'rent' %}">Довгострокова оренда квартир, кімнат</a></h2>          </td>
+        </tr>
+        <tr>
+          <td>
+          <h2>Будинки:</h2>
+<h2><a href="{% url 'type_offer_house' 'sale'%}">Продаж будинків</a></h2>
+<h2><a href="{% url 'type_offer_house' 'rent'%}">Довгострокова оренда будинків</a></h2>
           </td>
         </tr>
         <tr>
           <td>
-            <h2><a href="{%url 'house_list'%}">Будинки</a></h2>
-            <small class="text-muted d-block"><br>
-          <a href="{% url 'type_offer_house' 'sale'%}">Продаж будинків</a><br>
-          <a href="{% url 'type_offer_house' 'rent'%}">Довгострокова оренда будинків</a>
-            
-            </small>
+          <h2>Земельні ділянки:</h2>
+<h2><a href="#">Продаж землі</a></h2>
+<h2><a href="#">Довгострокова оренда землі</a></h2>
           </td>
-        </tr>
+        </tr>       
       </tbody>
     </table>
   </div>
