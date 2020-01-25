@@ -107,10 +107,12 @@ def top_realtor(request):
     queryset = Realtor.objects.all()
     pk_gen = (item.id for item in queryset)
     pk_list = list(pk_gen)  
+    realtor_list = []
     if len(pk_list) <= 3:
         realtor_list = queryset
     else:
         top_3 = random.sample(pk_list, 3)
-        realtor_list = [Realtor.objects.filter(pk=i) for i in top_3]
+        for i in top_3:
+            realtor_list.append(Realtor.objects.get(pk=i))
 
     return render(request, 'home.html', {'object_list':realtor_list})
