@@ -54,8 +54,15 @@
 
         <dt class="col-sm-3 text-right">Агенство, компанія</dt>
         <dd class="col-sm-9">
-        {%if object.agensy%}<a href="{% url 'agensy' object.agensy.slug %}">{{object.agensy.name}}
-        {%else%}Не вказано{%endif%}</a></dd>
+          {%if object.agensy%}
+            <a href="{% url 'agensy' object.agensy.slug %}">
+            <h2 style="font-family: 'Lobster', cursive; font-size: 26px;">
+            {{object.agensy.name}}</h2>
+            </a>
+          {%else%}
+            Не вказано
+          {%endif%}
+        </dd>
 
         <dt class="col-sm-3 text-right">Адреса офісу</dt>
         <dd class="col-sm-9">
