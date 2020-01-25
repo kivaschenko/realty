@@ -8,33 +8,33 @@
 {% block content %}
 {% if user.is_authenticated%}
 <div class="row">
-  <div class="col-sm-6">
+  <div class="col-sm-4">
     <table class="table">
       <thead class="thead-inverse">
         <tr>
           <th>Рубрики</th>
-          <th>Об'єктів на продаж</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>
             <h2><a href="{% url 'flats' %}">Квартири, кімнати</a></h2>
-            <small class="text-muted d-block">
-              Довгострокова оренда квартир, кімнат
-              Продаж квартир, кімнат
-              Новобудови</small>
+            <small class="text-muted d-block"><br>
+            <a  href="{% url 'type_offer_flat' 'sale' %}">
+            Продаж квартир, кімнат</a><br>
+          <a class="dropdown-item" href="{% url 'type_offer_flat' 'rent' %}">Довгострокова оренда квартир, кімнат</a>              
+              </small>
           </td>
-          <td class="align-middle">0</td>
         </tr>
         <tr>
           <td>
             <h2><a href="{%url 'house_list'%}">Будинки</a></h2>
-            <small class="text-muted d-block">
-            Довгострокова оренда будинків
-            Продаж будинків</small>
+            <small class="text-muted d-block"><br>
+          <a href="{% url 'type_offer_house' 'sale'%}">Продаж будинків</a><br>
+          <a href="{% url 'type_offer_house' 'rent'%}">Довгострокова оренда будинків</a>
+            
+            </small>
           </td>
-          <td class="align-middle">0</td>
         </tr>
       </tbody>
     </table>

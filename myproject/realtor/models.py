@@ -47,7 +47,7 @@ class Agency(models.Model):
 
     # TO STRING METHOD
     def __str__(self):
-        return f'{self.pk} {self.name} {self.created_by}'
+        return self.name
 
     # PREPROCESSING SLUGS
     def _generate_slug(self):
