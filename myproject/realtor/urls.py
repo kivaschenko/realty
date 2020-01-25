@@ -9,6 +9,6 @@ urlpatterns = [
 
 urlpatterns += [
     path('<slug>/', get_agensy, name='agensy'),
-    path('create_agensy/', AgencyCreate.as_view(), name='create_agensy'),
+    path('create/new/agensy/', AgencyCreate.as_view(), name='create_agensy'),
     path('<slug>/edit/', edit_agensy, name='edit_agensy'),
 ]
