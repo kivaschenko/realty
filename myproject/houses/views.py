@@ -107,8 +107,9 @@ class HouseList(generic.ListView):
 def type_offer(request, type_offer):
     try:
         queryset = House.objects.filter(type_offer=type_offer).all()
+        type = queryset[0].get_type_offer_display
     except:
         return HttpResponse("Поки що немає таких оголошень")
-    type = queryset[0].get_type_offer_display
+    
     return render(request, 'houses/type_house_list.html',
             {'object_list':queryset, 'type':type})

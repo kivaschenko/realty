@@ -30,6 +30,14 @@ def create_realtor(request):
 
 @login_required
 def create_agency(request):
+    try:
+        q = Agency.object.get(created_by=request.user)
+        messages.warning(request, "Ви вже маєте агенство! \
+Щоб створити нове, видаліть його або передайте іншому користувачеві!")
+        return HttpResponseRedirect('/')
+    except Agency.DoesNotExist:
+        pass
+
     if request.method == 'POST':
         form = AgencyForm()
         if form.is_valid():
