@@ -47,7 +47,7 @@ class Agency(models.Model):
 
     # TO STRING METHOD
     def __str__(self):
-        return self.name
+        return f'{self.pk} {self.name} {self.created_by}'
 
     # PREPROCESSING SLUGS
     def _generate_slug(self):
@@ -115,7 +115,7 @@ class Realtor(models.Model):
 
     # TO STRING METHOD
     def __str__(self):
-        return f'{self.created_by.first_name} {self.created_by.last_name} - {self.agensy}'
+        return f'{self.pk} {self.created_by.first_name} {self.created_by.last_name} - {self.agensy}'
 
     # ABSOLUTE URL METHOD
     def get_absolute_url(self):
