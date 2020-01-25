@@ -1,0 +1,30 @@
+astroid==2.3.3
+branca==0.3.1
+certifi==2019.11.28
+chardet==3.0.4
+Django==2.2.7
+django-leaflet==0.26.0
+geographiclib==1.50
+geopy==1.20.0
+idna==2.8
+isort==4.3.21
+Jinja2==2.10.3
+jsonfield==2.0.2
+lazy-object-proxy==1.4.3
+MarkupSafe==1.1.1
+mccabe==0.6.1
+numpy==1.17.4
+Pillow==6.2.1
+opg2-binary==2.8.4
+pylint==2.4.4
+pytz==2019.3
+<<<<<<< HEAD
+requests==2.22.0
+six==1.13.0
+=======
+>>>>>>> e0c9f7c03dbfc60a88013ca54584204665c5937d
+sqlparse==0.3.0
+translitua==1.3.0
+typed-ast==1.4.0
+urllib3==1.25.7
+wrapt==1.11.2
