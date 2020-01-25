@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-sm navbar-light justify-content-between" style="background-color:orange;">
+<nav class="navbar navbar-expand-sm navbar-dark justify-content-between" style="background-color:darkslateblue;">
   <a class="navbar-brand" style="font-family: 'Lobster', cursive; font-size: 26px;"
   href="{% url 'home' %}">CherkasyRealEstate.Org.ua</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -73,11 +73,8 @@
 
   {% else %}
     <form class="form-inline ml-auto">
-      <span>
-        <a href="{% url 'login' %}" class="btn btn-warning">Зайти</a>
-      </span>
-      <span>
-        <a href="{% url 'rules' %}" class="btn btn-success">Реєстрація</a>
+      <button href="{% url 'login' %}" class="btn btn-warning">Зайти</button>
+      <button href="{% url 'rules' %}" class="btn btn-success">Реєстрація</button>
       </span>
     </form>
   {% endif %}

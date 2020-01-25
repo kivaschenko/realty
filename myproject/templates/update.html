@@ -12,7 +12,7 @@
 	<div class="row">
 	<form method='POST' >
 		{% csrf_token %}
-		<table class="table">{{form.as_table}}</table>
+		<p>{{form.as_p}}</p>
 	<button type='submit' class="btn btn-primary">Додати зміни</button>
 	</form>
 	</div>
