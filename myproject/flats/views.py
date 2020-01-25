@@ -93,7 +93,10 @@ class OfferList(generic.ListView):
 
 def details(request, pk, slug):
     """ This function returns the selected offer and a list of the same offers."""
-    object = Offer.objects.filter(Q(pk=pk) & Q(slug=slug)).get()
+    try:
+        object = Offer.objects.filter(Q(pk=pk) & Q(slug=slug)).get()
+    except Offer.DoesNotExist:
+        raise Http404("Об'єкт не знайдено в базі.")
     if request.user != object.created_by:
         object.num_visits += 1
         object.save()
@@ -113,6 +116,7 @@ def details(request, pk, slug):
         form = ContactForm()
 
     return render(request, template_name='flats/offer_detail.html',  context={'object': object, 'form':form})
+
 
 @login_required
 def type_offer(request, type_offer):

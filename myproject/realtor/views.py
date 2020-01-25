@@ -99,7 +99,11 @@ def realtor(request, pk):
 
 @login_required
 def edit_realtor(request, pk):
-    object = Realtor.objects.get(pk=pk)
+    try:
+        object = Realtor.objects.get(pk=pk)
+    except Realtor.DoesNotExist:
+        raise Http404('Сторінка такого ріелтора не існує або була видалена.')
+
     if request.method == 'POST':
         form = RealtorForm(request.POST, request.FILES or None, instance=object)
         form.save()
