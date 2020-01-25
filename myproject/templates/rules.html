@@ -83,14 +83,8 @@
  здійснення «CherkasyRealEstate.Org.ua» господарської діяльності.</p>
   </div>
   <div class='row'>
-    <form method="GET" active="{%url 'signup'%}">
-      <input type="submit" value="Погоджуюсь з правилами" class="btn btn-success">
-    </form>
-  </div>
-  <div class='row'>
-    <form method="GET" active="{%url 'home'%}">
-      <input type="submit" value="Мені це не підходить" class="btn btn-outline-secondary">
-    </form>
+    <a href="{%url 'signup'%}" class="btn btn-success btn-lg btn-block">
+      Погоджуюсь з правилами</a>
   </div>
 </div>
 {% endblock content%}
