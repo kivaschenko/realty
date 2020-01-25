@@ -401,9 +401,9 @@ class House(models.Model):
 
     # SAVE METHOD
     def save(self, *args, **kwargs):
-        if not self.pk:
-            self._generate_slug()
-            self._generate_address()
+        # if not self.pk:
+        self._generate_slug()
+        self._generate_address()
         super().save(*args, **kwargs)
 
     # ABSOLUTE URL METHOD
