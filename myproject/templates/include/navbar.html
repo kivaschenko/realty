@@ -73,9 +73,10 @@
 
   {% else %}
     <form class="form-inline ml-auto">
-      <button href="{% url 'login' %}" class="btn btn-warning">Зайти</button>
-      <button href="{% url 'rules' %}" class="btn btn-success">Реєстрація</button>
-      </span>
+      <a href="{% url 'login' %}" class="btn btn-warning">Зайти</a>
+    </form>
+    <form class="form-inline ml-auto">
+      <a href="{% url 'rules' %}" class="btn btn-success">Реєстрація</a>
     </form>
   {% endif %}
   </div>
