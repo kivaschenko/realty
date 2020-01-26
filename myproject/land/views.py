@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from .models import Land
-from .forms import LandForm, LandUpdateForm
+from .forms import LandForm, LandUpdateForm, ContactForm
 
 
 @login_required
