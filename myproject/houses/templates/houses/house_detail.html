@@ -216,12 +216,14 @@
         </tr>
       </thead>
       <tbody>
-        {%if object.LotFrontage%}
+        <tr>
+          <th scope="row">Загальна площа земельної ділянки, га</th>
+          <td>{%if object.LandArea%}{{object.LandArea}}{%else%}не вказано{%endif%}</td>
+        </tr>       
         <tr>
           <th scope="row">Лицьова сторона власності, метрів</th>
-          <td>{{object.LotFrontage}}</td>
-        </tr>
-        {%endif%}
+          <td>{%if object.LotFrontage%}{{object.LotFrontage}}{%else%}не вказано{%endif%}</td>
+        </tr>       
         <tr>
           <th scope="row">Форма земельної ділянки</th>
           <td>{{object.get_LotShape_display}}</td>

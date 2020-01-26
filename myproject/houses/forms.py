@@ -19,11 +19,21 @@ class HouseForm(forms.ModelForm):
 
     class Meta:
         model = House
-        exclude = ['created_by', 'address', 'num_visits']
+        exclude = ['created_by', 'address', 'num_visits', 'slug', 'pub_date']
         widgets = {
         'geometry': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS),
     }
 
+class HouseUpdateForm(forms.ModelForm):
+    geometry = PointField
+
+    class Meta:
+        model = House
+        exclude = ['title', 'geometry', 'type_offer', 'slug', 'created_by', 
+                'address', 'num_visits', 'pub_date']
+        widgets = {
+        'geometry': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS),
+    }
 
 class ContactForm(forms.Form):
     name = forms.CharField(max_length=160, label="Ім'я")

@@ -7,4 +7,4 @@ from .models import House
 class HouseAdmin(OSMGeoAdmin):
     default_lat = 6350000
     default_lon = 3570000
-    default_zoom = 12
+    default_zoom = 10

@@ -11,7 +11,6 @@ geolocator = Nominatim(timeout=7, user_agent='houses')
 
 
 class House(models.Model):
-    address = models.CharField(max_length=255)
     geometry = geomodels.PointField(verbose_name='Місце на мапі',
              extent=(31.44, 49.217, 32.47, 49.68),
              help_text='<em>Просто поставте маркер на карту</em>')
@@ -184,6 +183,9 @@ class House(models.Model):
                 ('other', 'Інше'),),
             default='other')
     # LAND CONTOUR
+    # LandArea: Total square meter of land
+    LandArea = models.DecimalField(verbose_name='Загальна площа земельної ділянки, га',
+             max_digits=10, decimal_places=2, null=True, blank=True)
     # LotFrontage: Linear feet of street connected to property
     LotFrontage = models.PositiveIntegerField(verbose_name="Лицьова сторона власності, метрів",
                 help_text="Довжина вулиці в метрах, де приєднана власність", null=True, blank=True)
@@ -396,14 +398,14 @@ class House(models.Model):
     def _generate_slug(self):
         value = translit(self.title[:70])
         slug_candidate = slugify(value, allow_unicode=True)
-        # ctime = datetime.datetime.now().ctime()
-        self.slug = f'{slug_candidate}'
+        ctime = datetime.datetime.now().ctime()
+        self.slug = f'{slug_candidate}-{ctime}'
 
     # SAVE METHOD
     def save(self, *args, **kwargs):
-        # if not self.pk:
-        self._generate_slug()
-        self._generate_address()
+        if not self.pk:
+            self._generate_slug()
+            self._generate_address()
         super().save(*args, **kwargs)
 
     # ABSOLUTE URL METHOD

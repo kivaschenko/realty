@@ -7,7 +7,6 @@ from django.views import generic
 from django.urls import reverse, reverse_lazy
 from django.http import Http404, HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render
-from django.db import transaction
 from django.db.models import Q
 from flats.forms import OfferCreateForm, OfferUpdateForm, ContactForm
 from flats.models import Offer
@@ -113,7 +112,7 @@ def details(request, pk, slug):
             send_mail(
                 subject=subject, 
                 message=message, 
-                from_email=settings.EMAIL_HOST_USER,
+                from_email='info@cherkasyrealestate.org.ua',
                 recipient_list=[email,])
             messages.success(request, "Ваше повідомлення відправлено!")
             return render(request, template_name='flats/offer_detail.html', 

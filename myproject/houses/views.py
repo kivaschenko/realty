@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.db.models import Q
 from .models import House
-from .forms import HouseForm, ContactForm
+from .forms import HouseForm, HouseUpdateForm, ContactForm
 
 
 def get_map(request):
@@ -76,7 +76,7 @@ def delete_house(request, pk):
 
 class HouseUpdate(LoginRequiredMixin, generic.UpdateView):
     model = House
-    form_class = HouseForm
+    form_class = HouseUpdateForm
     template_name = 'houses/house_update_form.html'
     def test_func(self):
         obj = self.get_object()
