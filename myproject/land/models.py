@@ -16,7 +16,7 @@ class Land(models.Model):
                     ('sale', 'Продаж'),
                     ('rent', 'Оренда довгострокова')),
                 default='SALE')
-	title = models.CharField(max_length=70, verbose_name='Заголовок оголошення', help_text='до 70 знаків')
+    title = models.CharField(max_length=70, verbose_name='Заголовок оголошення', help_text='до 70 знаків')
 	geometry = geomodels.PolygonField(verbose_name='Площа на мапі',  extent=(31.44, 49.217, 32.47, 49.68), 
 			 help_text='<em>обведіть багатокутник по формі земельної ділянки</em>')
 	price = models.PositiveIntegerField(verbose_name='Ціна')
