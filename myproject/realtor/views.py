@@ -93,6 +93,8 @@ def realtor(request, pk):
             pass
         try:
             land_list = Land.objects.filter(created_by=q.created_by).all()
+        except:
+            pass
     except Realtor.DoesNotExist:
         raise Http404('Сторінка такого ріелтора не існує або була видалена.')
 
