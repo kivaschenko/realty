@@ -27,7 +27,7 @@
     function map_init(map, options) {
         map.setView({{object.lat_lng}}, 16);
         L.polygon({{object.polygon}})
-        .addTo(mymap).
+        .addTo(map).
         bindTooltip('{{object.title}}')
         .openTooltip();
       }
