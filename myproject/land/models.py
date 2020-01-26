@@ -122,12 +122,13 @@ class Land(models.Model):
     @property
     def polygon(self):
         coords = self.geometry.coords[0]
-        return coords
+        polygon = [list(item) for item in coords]
+        return polygon
     @property
     def lat_lng(self):
         lat = getattr(self.geometry, 'coords')[0][0][1]
         lng = getattr(self.geometry, 'coords')[0][0][0]
-        return lat, lng
+        return [lat, lng]
 
     # PREPROCESSING SLUGS
     def _generate_slug(self):
