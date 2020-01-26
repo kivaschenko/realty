@@ -31,7 +31,7 @@ def details(request, pk, slug):
             name = form.cleaned_data['name']
             subject = "[CherkasyRealEstate.Org.ua] Мене зацікавив ваш об'єкт нерухомості"
             message = f"Мене цікавить: {object.title} {object.price} {object.currency} - {object.address}. Зателефонуйте мені по номеру: {phone}. До мене можна звертатись:  {name}"
-            send_mail(subject=subject, message=message, from_email='elitflatcherkasy@gmail.com',
+            send_mail(subject=subject, message=message, from_email='konstantin.ivaschenko238@gmail.com',
                       recipient_list=[email,])
             messages.success(request, "Ваше повідомлення відправлено!")
             return render(request, template_name='houses/house_detail.html', context={'object':object})
