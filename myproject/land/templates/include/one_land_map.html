@@ -1,0 +1,63 @@
+{% load leaflet_tags %} 
+    {% leaflet_css %}
+    {% leaflet_js %}	
+
+
+    <style>
+
+        .leaflet-container {  /* all maps */
+            /* width:  1300px; */
+            height: 600px;
+        }
+      
+        #specialbigmap {
+            height: 800px;
+        }
+      
+        /* Resize the "display_raw" textbox */
+        .django-leaflet-raw-textarea {
+            width: 1000px;
+        }
+      
+      </style>
+        <div class="col-sm-12">
+          {% leaflet_map "main" %}
+        </div>
+
+ <script type="text/javascript">
+  var map = L.map('main').setView([49.448, 32.05], 10);
+  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+     }).addTo(map);
+  function onEachFeature(feature, layer) {
+		var popupContent = '<h5> ' +
+      feature.properties.price + " " + feature.properties.currency + "</h5>" +
+      '<h6>' + '<a href="http://64.225.41.178:8000/houses/house/' +
+      feature.properties.pk + '/' +
+      feature.properties.slug + '/">' +
+      feature.properties.title +'</a>' + '</h6>';
+		
+    layer.bindPopup(popupContent);    
+  }
+  var geojsonFeatures = {{ data | safe }};
+    L.geoJSON(geojsonFeatures, {
+
+      style: function (feature) {
+        return feature.properties && feature.properties.style;
+      },
+
+      onEachFeature: onEachFeature,
+
+      pointToLayer: function (feature, latlng) {
+        return L.circleMarker(latlng, {
+          radius: 8,
+          fillColor: "#00ff00",
+          color: "#000",
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.8
+        });
+      }
+    }).addTo(map);
+ </script>
+
