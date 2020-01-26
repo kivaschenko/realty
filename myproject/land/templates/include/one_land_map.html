@@ -25,7 +25,10 @@
 
   <script type="text/javascript">
     function map_init(map, options) {
-        map.setView({{object.lat_lng}}, 15);
-        L.polygon({{object.polygon}}).addTo(mymap).bindPopup({{object.title}});
+        map.setView({{object.lat_lng}}, 16);
+        L.polygon({{object.polygon}})
+        .addTo(mymap).
+        bindTooltip('{{object.title}}')
+        .openTooltip();
       }
   </script>
