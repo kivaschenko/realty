@@ -27,7 +27,7 @@ class LandForm(ModelForm):
 
 
 class LandUpdateForm(ModelForm):
-    geometry = PointField
+    geometry = PolygonField
 
     class Meta:
         model = Land
