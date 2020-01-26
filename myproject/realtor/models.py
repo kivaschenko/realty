@@ -22,8 +22,7 @@ class Agency(models.Model):
     # INVISIBLE FIELDS IN FORM
     address = models.CharField(max_length=255, verbose_name='Адреса', null=True, blank=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL,
-               related_name='agencys', verbose_name='Редактор сторінки',
-               null=True,)
+               related_name='agency', verbose_name='Редактор сторінки')
     slug = models.SlugField(default='', editable=False, max_length=100)
     pub_date = models.DateTimeField(auto_now_add=True)
     num_visits = models.PositiveIntegerField(default=0)
