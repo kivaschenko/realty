@@ -27,7 +27,7 @@
       <br>
       <br>
     {% if object.created_by == request.user %}
-      <a href="{%url 'edit_agensy' object.slug%}" class="btn btn-primary">
+      <a href="{%url 'edit_agensy' object.pk object.slug%}" class="btn btn-primary">
       Редагувати сторінку</a>
       <br>
       <p><em>Переглядів сторінки: {{object.num_visits}}</em></p>

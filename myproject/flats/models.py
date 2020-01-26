@@ -153,20 +153,20 @@ DISTRICTS = (
 # EXTEND = ( , 51.26, , 48.42)
 
 
-class District(models.Model):
-    """ This model defines area as polygon and name of district.
-    """
-    name = models.CharField(verbose_name="Назва, Район, зона, територія", max_length=255,
-    choices=DISTRICTS)
-    geometry = geomodels.PolygonField(verbose_name='Площа на мапі', 
-             extent=(31.44, 49.217, 32.47, 49.68), 
-             help_text='окресліть фігуру на мапі, що відповідає потрібній площині')
+# class District(models.Model):
+#     """ This model defines area as polygon and name of district.
+#     """
+#     name = models.CharField(verbose_name="Назва, Район, зона, територія", max_length=255,
+#     choices=DISTRICTS)
+#     geometry = geomodels.PolygonField(verbose_name='Площа на мапі', 
+#              extent=(31.44, 49.217, 32.47, 49.68), 
+#              help_text='окресліть фігуру на мапі, що відповідає потрібній площині')
     
-    class Meta:
-        ordering = ['name',]
+#     class Meta:
+#         ordering = ['name',]
     
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
 
 class Offer(models.Model):

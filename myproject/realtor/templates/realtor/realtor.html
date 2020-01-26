@@ -5,7 +5,7 @@
 <li class="breadcrumb-item active"><a href="{% url 'home' %}">Головна</a>
   {%if object.agency%}
 <li class="breadcrumb-item active">
-  <a href="{%url 'agency' object.agency.slug %}">
+  <a href="{%url 'agency' object.agency.pk object.agency.slug %}">
   {{ object.agency}}</a>
   {%else%}Індивідуальний продавець{%endif%}
 <li class="breadcrumb-item">Ріелтор {{ object.created_by.first_name }}
@@ -51,7 +51,7 @@
         <dt class="col-sm-3 text-right">Агенство, компанія</dt>
         <dd class="col-sm-9">
           {%if object.agency%}
-            <a href="{% url 'agency' object.agency.slug %}">
+            <a href="{% url 'agency' object.agency.pk object.agency.slug %}">
             <h2 style="font-family: 'Lobster', cursive; font-size: 26px;">
             {{object.agency.name}}</h2>
             </a>

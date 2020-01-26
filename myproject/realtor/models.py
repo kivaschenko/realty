@@ -73,7 +73,7 @@ class Agency(models.Model):
     def get_absolute_url(self):
         """ Returns the url to access a detail record for the agency.
         """
-        return reverse('agency', kwargs={'slug': self.slug})
+        return reverse('agency', kwargs={"pk":self.pk, 'slug': self.slug})
 
 
 class Realtor(models.Model):
@@ -121,40 +121,42 @@ class Realtor(models.Model):
         """ Returns the url to access a detail record for this offer."""
         return reverse('realtor',  kwargs={'pk': self.pk})
 
-CHOICE_SET = (
-    ('5', '5- відмінно, Щиро рекомендую'),
-    ('4', '4- добре, Рекомендую'),
-    ('3', '3- задовільно, Утримуюсь від рекомендацій'),
-    ('2', '2- погано, Не рекомендую'),
-    ('1', '1- жахливо, Категорично не рекомендую'),
-)
-class Review(models.Model):
-    """ Model represents the user's reviews about realtors
-    """
-    choice = models.CharField(max_length=1,
-            verbose_name="Загальне враження від співпраці")
-    rating = models.PositiveSmallIntegerField(default=0)
-    message = models.TextField(max_length=2000, verbose_name="Відгук",
-            help_text='до 2000 знаків')
-    realtor = models.ForeignKey(Realtor, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-
-    def __str__(self):
-        return f'{self.created_at} - {self.created_by} оцінка: {self.choice} \
-для {self.realtor}'
 
 
-class Answer(models.Model):
-    """Realtor says to the review only one time
-    """
-    title = models.CharField(max_length=50, verbose_name='Заголовок',
-            default='Дякую за відгук')
-    message = models.TextField(max_length=2000, verbose_name="Відповідь",
-            help_text='до 2000 знаків')
-    review = models.OneToOneField(Review, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+# CHOICE_SET = (
+#     ('5', '5- відмінно, Щиро рекомендую'),
+#     ('4', '4- добре, Рекомендую'),
+#     ('3', '3- задовільно, Утримуюсь від рекомендацій'),
+#     ('2', '2- погано, Не рекомендую'),
+#     ('1', '1- жахливо, Категорично не рекомендую'),
+# )
+# class Review(models.Model):
+#     """ Model represents the user's reviews about realtors
+#     """
+#     choice = models.CharField(max_length=1,
+#             verbose_name="Загальне враження від співпраці")
+#     rating = models.PositiveSmallIntegerField(default=0)
+#     message = models.TextField(max_length=2000, verbose_name="Відгук",
+#             help_text='до 2000 знаків')
+#     realtor = models.ForeignKey(Realtor, on_delete=models.CASCADE)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
-    def __str__(self):
-        return f'{self.created_at} - {self.title} - {self.review}'
+#     def __str__(self):
+#         return f'{self.created_at} - {self.created_by} оцінка: {self.choice} \
+# для {self.realtor}'
+
+
+# class Answer(models.Model):
+#     """Realtor says to the review only one time
+#     """
+#     title = models.CharField(max_length=50, verbose_name='Заголовок',
+#             default='Дякую за відгук')
+#     message = models.TextField(max_length=2000, verbose_name="Відповідь",
+#             help_text='до 2000 знаків')
+#     review = models.OneToOneField(Review, on_delete=models.CASCADE)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+
+#     def __str__(self):
+#         return f'{self.created_at} - {self.title} - {self.review}'

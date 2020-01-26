@@ -52,7 +52,7 @@ def create_agency(request):
     return render(request, 'realtor/create_agency.html', {'form':form})
 
 
-def get_agency(request, slug):
+def get_agency(request, pk, slug):
     object = Agency.objects.get(slug=slug)
     if request.user != object.created_by:
         object.num_visits += 1
@@ -65,7 +65,7 @@ def get_agency(request, slug):
 
 
 @login_required
-def edit_agency(request, slug):
+def edit_agency(request, pk, slug):
     object = Agency.objects.get(slug=slug)
     if request.method == 'POST':
         form = AgencyForm(request.POST, request.FILES or None, instance=object)
@@ -127,15 +127,18 @@ def edit_realtor(request, pk):
 
 
 def top_realtor(request):
-    queryset = Realtor.objects.all()
-    pk_gen = (item.id for item in queryset)
-    pk_list = list(pk_gen)  
-    realtor_list = []
-    if len(pk_list) <= 3:
-        realtor_list = queryset
-    else:
-        top_3 = random.sample(pk_list, 3)
-        for i in top_3:
-            realtor_list.append(Realtor.objects.get(pk=i))
+    try:
+        queryset = Realtor.objects.all()
+        pk_gen = (item.id for item in queryset)
+        pk_list = list(pk_gen) 
+        realtor_list = []
+        if len(pk_list) <= 3:
+            realtor_list = queryset
+        else:
+            top_3 = random.sample(pk_list, 3)
+            for i in top_3:
+                realtor_list.append(Realtor.objects.get(pk=i))
+    except:
+        realtor_list = []
 
     return render(request, 'home.html', {'object_list':realtor_list})
