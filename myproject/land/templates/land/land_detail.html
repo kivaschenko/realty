@@ -1,0 +1,251 @@
+{% extends 'base.html' %}
+{% load leaflet_tags %}
+{% block title %}{{object.title}} {% endblock title %}
+
+{% block leaflet %}
+{% leaflet_js %}
+{% leaflet_css %}
+<style>
+  .leaflet-container { height: 100%; }
+</style>
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item active"><a href="{%url 'home'%}">Головна</a>
+<li class="breadcrumb-item active"><a href="#">Земельні ділянки</a>
+<li class="breadcrumb-item">{{object.title}}</a>
+{% endblock %}
+
+{% block content %}
+
+<h3>{{ object.title }}</h3>
+<div class="row style="margin-left: 20px;"">
+  <!-- First column -->
+  <div class="col-sm-4" style="background-color:lavender;">
+    <br>
+    <dl class="row">
+      <dt class="col-sm-3 text-right">Тип</dt>
+      <dd class="col-sm-9"><h4><span class="badge badge-info">
+          {{object.get_type_offer_display}}</span></h4></dd>
+      <dt class="col-sm-3 text-right">Адреса</dt>
+      <dd class="col-sm-9"><h5>{%if object.address%}{{object.address}}{%endif%}</h5></dd>
+      <dt class="col-sm-3 text-right">Ціна </dt>
+      <dd class="col-sm-9"><h4><span class="badge badge-warning">
+        {{ object.price}} {{object.get_currency_display}}</span></h4></dd>
+      <dt class="col-sm-3 text-right">
+        {%if object.created_by.realtor%}Ріелтор {%else%}Продавець{%endif%}</dt>
+      <dd class="col-md-9">{%if object.created_by.realtor%}
+      <a href="{% url 'realtor' object.created_by.realtor.id %}"
+      style="font-family: 'Lobster', cursive; font-size: 20px;">
+      {{ object.created_by.first_name }} {{object.created_by.last_name}}</a>
+      {%else%}
+      <p style="font-family: 'Lobster', cursive; font-size: 20px;">
+      {{ object.created_by.first_name }} {{object.created_by.last_name}} </p>
+      {%endif%}</dd>
+      <dt class="col-sm-3 text-right">Телефон: </dt>
+      <dd class="col-sm-9">
+        {%if object.created_by.realtor%}
+      <a href="tel:{{object.created_by.realtor.phone}}">
+      {{object.created_by.realtor.phone}}</a>
+        {%else%}користувач немає профілю "Ріелтор"{%endif%}</dd>
+      <dt class="col-sm-3 text-right">Агенство: </dt>
+      <dd class="col-sm-9">
+      <a href="#">{{object.created_by.realtor.agensy}}</a></dd>
+      <dt class="col-sm-3 text-right">Додаткові умови: </dt>
+      <dd class="col-sm-9">
+      <ul>
+      {% if object.agree_price is True%}
+      <li>Ціна договірна</li>
+      {% else %}
+      <li>Без торгу</li>
+      {% endif %}
+      {% if object.without_commission is True%}
+      <li>Без комісійних</li>
+      {% else %}
+      <li>Додатково є коміссійні</li>
+      {% endif%}
+      {% if object.exchange is True%}
+      <li>Можливість обміну</li>
+      {% else %}
+      <li>Немає можливості обміну</li>
+      {% endif %}
+      {% if object.collaboration is True%}
+      <li>Можу співпрацювати з ріелторами</li>
+      {% else %}
+      <li>Продаємо самостійно</li>
+      {% endif%}
+      </ul>
+      </dd>
+    </dl>
+    {%if form %}
+    <h4>Мене зацікавив цей об'єкт</h4>
+    <form method="POST">{% csrf_token %}<p>{{form.as_p}}</p>
+      <input type="submit" class="btn btn-warning" value="Зателефонуйте мені!">
+    </form>
+    {%endif%}
+    <br />
+
+
+  </div>
+  <!-- Second column -->
+  <div class="col-sm-8" style="background-color:lavenderblush;">
+    <!-- here a map -->
+    {% include 'include/one_land_map.html' %}
+
+  </div>
+</div>
+
+<div class="row style="margin-left: 20px;"">
+  <div class="col-md-4" style="background-color:lavender;">
+    <h3>Основні характеристики об'єкта</h3>
+    <table class="table table-striped">
+    <thead>
+    <tr>
+    <th scope="col">Характеристика</th>
+    <th scope="col">Значення</th>
+    </tr>
+    </thead>
+      <tbody>
+        <tr>
+        <th scope="row">Зонування</th>
+        <td>{{object.get_MSZoning_display}}</td>
+        </tr>
+        <tr>
+        <th scope="row">Загальна площа земельної ділянки, га</th>
+        <td>{%if object.LandArea%}{{object.LandArea}}{%endif%}</td>
+        </tr>
+        <tr>
+        <th scope="row">Форма земельної ділянки</th>
+        <td>{{object.get_LotShape_display}}</td>
+        </tr>
+        <tr>
+        <th scope="row">Плоскість власності</th>
+        <td>{{object.get_LandContour_display}}
+        </tr>
+        <tr>
+        <th scope="row">Якість паркану, огорожі</th>
+        <td>{{object.get_Fence_display}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <h3>Комунікації</h3>
+    <table class="table table-striped">
+    <thead>
+    <tr>
+    <th scope="col">Опція</th>
+    <th scope="col">Наявність</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <th scope="row">Газ</th>
+    <td>{% if object.gas is True%}Так{%else%}-{%endif%}</td>
+    </tr>
+    <tr>
+    <th scope="row">Центральний водопровід</th>
+    <td>{%if object.central_water_supply is True%}Так{%else%}-{%endif%}</td>
+    </tr>
+    <tr>
+    <th scope="row">Каналізація септик</th>
+    <td>{%if object.septic_tank is True%}Так{%else%}-{%endif%}</td>
+    </tr>
+    <tr>
+    <th scope="row">Вивіз відходів</th>
+    <td>{%if object.removal_of_waste is True%}Так{%else%}-{%endif%}</td>
+    </tr>
+    <tr>
+    <th scope="row">Асфальтована дорога</th>
+    <td>{%if object.asphalt_road is True%}Так{%else%}-{%endif%}</td>
+    </tr>
+    <tr>
+    <th scope="row">Без комунікацій</th>
+    <td>{%if object.no_communication is True%}Так{%else%}-{%endif%}</td>
+    </tr>
+    </tbody>
+    </table>
+    <br>
+
+    <h3>Ландшафт (в радіусі 1 км)</h3>
+    <table class="table table-striped">
+    <thead>
+    <tr>
+    <th scope="col">Опція</th>
+    <th scope="col">Наявність</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <th scope="row">Річка</th>
+    <td>{% if object.river is True%}Так{%else%}-{%endif%}</td>
+    </tr>
+    <tr>
+    <th scope="row">Водосховище</th>
+    <td>{% if object.reservoir is True%}Так{%else%}-{%endif%}</td>
+    </tr>
+    <tr>
+    <th scope="row">Озеро</th>
+    <td>{% if object.lake is True%}Так{%else%}-{%endif%}</td>
+    </tr>
+    <tr>
+    <th scope="row">Пагорби</th>
+    <td>{% if object.hills is True%}Так{%else%}-{%endif%}</td>
+    </tr>
+    <tr>
+    <th scope="row">Гори</th>
+    <td>{% if object.mountains is True%}Так{%else%}-{%endif%}</td>
+    </tr>
+    <tr>
+    <th scope="row">Парк</th>
+    <td>{% if object.park is True%}Так{%else%}-{%endif%}</td>
+    </tr>
+    <tr>
+    <th scope="row">Ліс</th>
+    <td>{% if object.forest is True%}Так{%else%}-{%endif%}</td>
+    </tr>
+    </tbody>
+    </table>
+    <br />
+    {% if user.is_authenticated %}
+    <p><em>Дата публікації оголошення: {{ object.pub_date|date}}</em></p>
+    <p><em>Кількість переглядів оголошення: {{ object.num_visits }} </em></p>
+    {% endif %}
+  </div>
+  <div class="col-sm-8" style="background-color:lavenderblush;">
+    <h2>Опис об'єкту</h2>
+    <div class="col">
+      {{ object.body |linebreaks }}
+    </div>
+      <br />
+    <div class="row">
+      {% if object.image1%}
+      <img src="{{object.image1.url}}" alt="{{object.title}} - світлина 1" class="img-thumbnail">
+      {%endif%}
+      {% if object.image2 %}
+      <img src="{{object.image2.url}}" alt="{{object.title}} - світлина 2" class="img-thumbnail">
+      {%endif%}
+      {% if object.image3 %}
+      <img src="{{object.image3.url}}" alt="{{object.title}} - світлина 3" class="img-thumbnail">
+      {%endif%}
+      {% if object.image4 %}
+      <img src="{{object.image4.url}}" alt="{{object.title}} - світлина 4" class="img-thumbnail">
+      {%endif%}
+      {% if object.image5 %}
+      <img src="{{object.image5.url}}" alt="{{object.title}} - світлина 5" class="img-thumbnail">
+      {%endif%}
+      {% if object.image6 %}
+      <img src="{{object.image6.url}}" alt="{{object.title}} - світлина 6" class="img-thumbnail">
+      {%endif%}
+      {% if object.image7 %}
+      <img src="{{object.image7.url}}" alt="{{object.title}} - світлина 7" class="img-thumbnail">
+      {%endif%}
+      {% if object.image8 %}
+      <img src="{{object.image8.url}}" alt="{{object.title}} - світлина 8" class="img-thumbnail">
+      {%endif%}
+      {% if object.image9 %}
+      <img src="{{object.image9.url}}" alt="{{object.title}} - світлина 9" class="img-thumbnail">
+      {%endif%}
+    </div>
+  </div>
+</div>
+{% endblock content %}

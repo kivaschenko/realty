@@ -93,35 +93,36 @@ class OfferList(generic.ListView):
 def details(request, pk, slug):
     """ This function returns the selected offer and a list of the same offers."""
     try:
-        object = Offer.objects.filter(Q(pk=pk) & Q(slug=slug)).get()
+        offer = Offer.objects.filter(Q(pk=pk) & Q(slug=slug)).get()
+        if request.user != offer.created_by:
+            offer.num_visits += 1
+            offer.save()        
     except Offer.DoesNotExist:
         raise Http404("Об'єкт не знайдено в базі.")
-    if request.user != object.created_by:
-        object.num_visits += 1
-        object.save()
-    email = object.created_by.email
+
+    email = offer.created_by.email
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
             phone = form.cleaned_data['phone']
             name = form.cleaned_data['name']
             subject = "[CherkasyRealEstate.Org.ua] Мене зацікавив ваш об'єкт нерухомості"
-            message = f"Мене цікавить: {object.title} {object.price} {object.currency} - \
-                    {object.address}. Зателефонуйте мені по номеру: {phone}. \
+            message = f"Мене цікавить: {offer.title} {offer.price} {offer.currency} - \
+                    {offer.address}. Зателефонуйте мені по номеру: {phone}. \
                     До мене можна звертатись:  {name}"
             send_mail(
                 subject=subject, 
                 message=message, 
                 from_email='info@cherkasyrealestate.org.ua',
                 recipient_list=[email,])
-            messages.success(request, "Ваше повідомлення відправлено!")
+            messages.success(request, "Ваше повідомлення відправлено власнику оголошення на email.")
             return render(request, template_name='flats/offer_detail.html', 
-                          context={'object':object})
+                          context={'object':offer})
     else:
         form = ContactForm()
 
     return render(request, template_name='flats/offer_detail.html',  
-                  context={'object': object, 'form':form})
+                  context={'object':offer, 'form':form})
 
 
 @login_required
