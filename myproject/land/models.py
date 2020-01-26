@@ -109,7 +109,15 @@ class Land(models.Model):
     slug = models.SlugField(default='', editable=False, max_length=200)
     pub_date = models.DateTimeField(auto_now_add=True)
     num_visits = models.PositiveIntegerField(default=0)
-
+    address = models.CharField(max_length=255, verbose_name='Адреса', blank=True, null=True)
+    # PREPROCESSING ADDRESS
+    def _generate_address(self):
+        location = geolocator.reverse(self.lat_lng)
+        addr = location.address
+        # addr_split = addr.split(',')
+        # address = ', '.join(addr_split[:-4])
+        # self.address = address
+        self.address = addr
     # META CLASS
     class Meta:
         ordering = ["-pub_date",]
@@ -141,7 +149,7 @@ class Land(models.Model):
     def save(self, *args, **kwargs):
         if not self.pk:
             self._generate_slug()
-            # self._generate_address()
+            self._generate_address()
         super().save(*args, **kwargs)
 
     # ABSOLUTE URL METHOD
