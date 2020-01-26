@@ -139,17 +139,17 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGOUT_REDIRECT_URL = 'home'
 LOGIN_REDIRECT_URL = 'home'
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 
 # Add new email settings to send messages
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'konstantin.ivaschenko238@gmail.com'
-EMAIL_HOST_PASSWORD = 'Ki150797'
-DEFAULT_FROM_EMAIL = "konstantin.ivaschenko238@gmail.com"
-DEFAULT_TO_EMAIL = 'konstantin.ivaschenko238@gmail.com'
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'konstantin.ivaschenko238@gmail.com'
+# EMAIL_HOST_PASSWORD = 'Ki150797'
+# DEFAULT_FROM_EMAIL = "konstantin.ivaschenko238@gmail.com"
+# DEFAULT_TO_EMAIL = 'konstantin.ivaschenko238@gmail.com'
 
 # LEAFLET_CONFIG = {
 #     'SPATIAL_EXTENT': (31.44, 49.217, 32.47, 49.68), #<- xmin,ymin,xmax,ymax
