@@ -118,6 +118,17 @@ class Land(models.Model):
     def __str__(self):
         return self.title
 
+    # POLYGON AND CENTER COORDINATES TO MAP
+    @property
+    def polygon(self):
+        coords = self.geometry.coords[0]
+        return coords
+    @property
+    def lat_lng(self):
+        lat = getattr(self.geometry, 'coords')[0][0][1]
+        lng = getattr(self.geometry, 'coords')[0][0][0]
+        return list(lat, lng)
+
     # PREPROCESSING SLUGS
     def _generate_slug(self):
         value = translit(self.title[:70])

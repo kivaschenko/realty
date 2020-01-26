@@ -11,6 +11,7 @@ from .forms import RealtorForm, AgencyForm
 from .models import Realtor, Review, Agency
 from flats.models import Offer
 from houses.models import House
+from land.models import Land
 from django.views.generic import ListView
 from django.db.models import Q
 
@@ -90,11 +91,18 @@ def realtor(request, pk):
             house_list = House.objects.filter(created_by=q.created_by).all()
         except:
             pass
+        try:
+            land_list = Land.objects.filter(created_by=q.created_by).all()
     except Realtor.DoesNotExist:
         raise Http404('Сторінка такого ріелтора не існує або була видалена.')
 
     return render(request, 'realtor/realtor.html',
-                  {'object':q, 'flat_list':offer_set, 'house_list':house_list})
+                  {
+                  'object':q, 
+                  'flat_list':offer_set, 
+                  'house_list':house_list,
+                  'land_list':land_list
+                  })
 
 
 
