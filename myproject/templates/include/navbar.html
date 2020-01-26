@@ -47,7 +47,7 @@
             Створити профіль ріелтора</a>
           {%endif%}
           {%if user.agency%}
-          <a class="dropdown-item" href="{% url 'agency' user.agency.slug%}">Моє агенство</a>
+          <a class="dropdown-item" href="{% url 'agency' user.agency.slug %}">Моє агенство</a>
           {%else%}
           <a class="dropdown-item" href="{%url 'create_agency'%}">Створити агенство</a>
           {%endif%}

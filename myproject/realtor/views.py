@@ -53,7 +53,7 @@ def create_agency(request):
 
 
 def get_agency(request, slug):
-    object = Agency.objects.filter(slug=slug).get()
+    object = Agency.objects.get(slug=slug)
     if request.user != object.created_by:
         object.num_visits += 1
         object.save()
