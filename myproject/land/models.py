@@ -127,7 +127,7 @@ class Land(models.Model):
     def lat_lng(self):
         lat = getattr(self.geometry, 'coords')[0][0][1]
         lng = getattr(self.geometry, 'coords')[0][0][0]
-        return list(lat, lng)
+        return lat, lng
 
     # PREPROCESSING SLUGS
     def _generate_slug(self):
