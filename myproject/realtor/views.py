@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from .forms import RealtorForm, AgencyForm
-from .models import Realtor, Review, Agency
+from .models import Realtor Agency
 from flats.models import Offer
 from houses.models import House
 from land.models import Land
