@@ -52,7 +52,7 @@ def create_agency(request):
     return render(request, 'realtor/create_agency.html', {'form':form})
 
 
-def get_agensy(request, slug):
+def get_agency(request, slug):
     object = Agency.objects.filter(slug=slug).get()
     if request.user != object.created_by:
         object.num_visits += 1
@@ -65,7 +65,7 @@ def get_agensy(request, slug):
 
 
 @login_required
-def edit_agensy(request, slug):
+def edit_agency(request, slug):
     object = Agency.objects.get(slug=slug)
     if request.method == 'POST':
         form = AgencyForm(request.POST, request.FILES or None, instance=object)
