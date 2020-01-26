@@ -1,4 +1,4 @@
-from django.config import settings
+from myproject import settings
 from django.core.mail import send_mail
 from django.core.serializers import serialize
 from django.contrib.auth.mixins import LoginRequiredMixin
