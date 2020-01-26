@@ -3,10 +3,10 @@
 
 {% block breadcrumb %}
 <li class="breadcrumb-item active"><a href="{% url 'home' %}">Головна</a>
-  {%if object.agensy%}
+  {%if object.agency%}
 <li class="breadcrumb-item active">
   <a href="{%url 'agency' object.agency.slug %}">
-  {{ object.agensy}}</a>
+  {{ object.agency}}</a>
   {%else%}Індивідуальний продавець{%endif%}
 <li class="breadcrumb-item">Ріелтор {{ object.created_by.first_name }}
   {{object.created_by.last_name}}</a>
@@ -50,15 +50,15 @@
 
         <dt class="col-sm-3 text-right">Агенство, компанія</dt>
         <dd class="col-sm-9">
-          {%if object.agensy%}
-            <a href="{% url 'agensy' object.agensy.slug %}">
+          {%if object.agency%}
+            <a href="{% url 'agency' object.agency.slug %}">
             <h2 style="font-family: 'Lobster', cursive; font-size: 26px;">
-            {{object.agensy.name}}</h2>
+            {{object.agency.name}}</h2>
             </a>
             {% elif object.created_by == request.user %}
             <p>У вас не вибрано Агенство нерухомості. Ви можете вибрати із 
             списка існуючих на сторінці "Редагувати профіль" або:</p><br>
-            <a href="{%url 'create_agensy'%}" class="btn btn-sm btn-info">Створити свое агенство</a>
+            <a href="{%url 'create_agency'%}" class="btn btn-sm btn-info">Створити свое агенство</a>
           {%else%}
             Не вказано
           {%endif%}
@@ -67,7 +67,7 @@
         <dt class="col-sm-3 text-right">Адреса офісу</dt>
         <dd class="col-sm-9">
         <em style="font-family: 'Times New Roman', serif;">
-        {%if object.agensy.address%}{{object.agensy.address}}{%else%}Не вказано
+        {%if object.agency.address%}{{object.agency.address}}{%else%}Не вказано
         {%endif%}</em></dd>
         <dt class="col-sm-3 text-right">Професійна біографія</dt>
         <dd class="col-sm-9">{{object.bio|linebreaks}}</dd>

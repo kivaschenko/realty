@@ -10,10 +10,8 @@
         <div class="col5">
         <form method="post" enctype="multipart/form-data">
           {% csrf_token %}
-          <table class="table">
-            {{form.as_table}}
-          </table>
-          <input type="submit" class="btn btn-info" value="Відправити">
+          <p>{{form.as_p}}</p>
+          <input type="submit" class="btn btn-sm btn-info" value="Відправити">
         </form>
         </div>
     </div>

@@ -57,10 +57,10 @@ def get_agency(request, slug):
     if request.user != object.created_by:
         object.num_visits += 1
         object.save()
-    realtor_list = Realtor.objects.filter(agensy_id=object.pk)
+    realtor_list = Realtor.objects.filter(agency_id=object.pk)
     return render(
         request, 
-        template_name='realtor/agensy.html',
+        template_name='realtor/agency.html',
         context={'object':object, 'realtor_list':realtor_list})
 
 
@@ -74,7 +74,7 @@ def edit_agency(request, slug):
         return HttpResponseRedirect('/')
     else:
         form = AgencyForm(instance=object)
-        return render(request, 'realtor/edit_agensy.html', {'form':form})
+        return render(request, 'realtor/edit_agency.html', {'form':form})
 
 
 def realtor(request, pk):

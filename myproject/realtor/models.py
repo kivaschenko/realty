@@ -83,7 +83,7 @@ class Realtor(models.Model):
         help_text="міжнародний формат, +38067XXXYYZZ",)
     start_year = models.CharField(max_length=4,
         verbose_name='Рік початку роботи ріелтором')
-    agensy = models.ForeignKey(Agency, on_delete=models.SET_NULL, related_name='realtors',
+    agency = models.ForeignKey(Agency, on_delete=models.SET_NULL, related_name='realtors',
             null=True,  blank=True, verbose_name="Агенство",)
     bio = models.TextField(max_length=1000, blank=True, null=True,
         verbose_name="Подробиці про ріелтора",
@@ -114,7 +114,7 @@ class Realtor(models.Model):
 
     # TO STRING METHOD
     def __str__(self):
-        return f'{self.pk} {self.created_by.first_name} {self.created_by.last_name} - {self.agensy}'
+        return f'{self.created_by.first_name} {self.created_by.last_name} - {self.agency}'
 
     # ABSOLUTE URL METHOD
     def get_absolute_url(self):

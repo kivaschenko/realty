@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import *
+from .views import create_land, land_detail
 
 urlpatterns = [
 	path('create_land_offer/', create_land, name='create_land'),

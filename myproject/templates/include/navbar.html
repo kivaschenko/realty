@@ -46,7 +46,11 @@
           <a class="dropdown-item" href="{%url 'create_realtor'%}">
             Створити профіль ріелтора</a>
           {%endif%}
-          <a class="dropdown-item" href="{%url 'create_agensy'%}">Створити агенство</a>
+          {%if user.agency%}
+          <a class="dropdown-item" href="{% url 'realtor:agency' user.agency.slug%}">Моє агенство</a>
+          {%else%}
+          <a class="dropdown-item" href="{%url 'create_agency'%}">Створити агенство</a>
+          {%endif%}
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'update' %}">Редагувати профіль</a>
           <a class="dropdown-item" href="{% url 'password_change'%}">Змінити пароль</a>
@@ -59,7 +63,7 @@
         <a class="nav-link" href="{% url 'contact' %}">Контакт</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'cookies' %}">About cookies</a>
+        <a class="nav-link" href="{% url 'cookies' %}">Політика кукіс</a>
       </li>
     </ol>
 
