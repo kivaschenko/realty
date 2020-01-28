@@ -19,7 +19,7 @@ from django.db.models import Q
 @login_required
 def create_realtor(request):
     if request.method == 'POST':
-        form = RealtorForm(request.POST)
+        form = RealtorForm(request.POST, request.FILES or None)
         if form.is_valid():
             form.instance.created_by = request.user
             form.save()
@@ -32,16 +32,8 @@ def create_realtor(request):
 
 @login_required
 def create_agency(request):
-#     try:
-#         q = Agency.objects.get(created_by=request.user)
-#         messages.warning(request, "Ви вже маєте агенство! \
-# Щоб створити нове, видаліть його або передайте іншому користувачеві!")
-#         return HttpResponseRedirect('/')
-#     except Agency.DoesNotExist:
-#         pass
-
     if request.method == 'POST':
-        form = AgencyForm()
+        form = AgencyForm(request.POST, request.FILES or None)
         if form.is_valid():
             form.instance.created_by = request.user 
             form.save()
