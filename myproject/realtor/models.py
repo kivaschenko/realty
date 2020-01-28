@@ -88,16 +88,11 @@ class Realtor(models.Model):
     bio = models.TextField(max_length=1000, blank=True, null=True,
         verbose_name="Подробиці про ріелтора",
         help_text="<em>все, що вважаєте за потрібне про себе, свою фірму до 1000 знаків</em>",)
+    # INVISIBLE FIELDS
     created_by = models.OneToOneField(User, on_delete=models.CASCADE,
                verbose_name='Власник профілю',)
     num_visits = models.PositiveIntegerField(default=0)
-    # RATING AND COUNTING OF OFFERS
-    rating = models.DecimalField(verbose_name='Рейтинг', max_digits=3,
-            decimal_places=2, default=0.00)
-    offers = models.PositiveSmallIntegerField(verbose_name="Об'єктів на продаж",
-            default=0)
-    in_archive = models.PositiveSmallIntegerField(
-               verbose_name="Об'єктів в архіві", default=0)
+
 
     # SAVING MEDIA FILES
     def user_directory_path(instance, filename):
@@ -122,6 +117,34 @@ class Realtor(models.Model):
         return reverse('realtor',  kwargs={'pk': self.pk})
 
 
+class StatisticUser(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="User")
+    # RATING AND COUNTING OF OFFERS
+    # rating = models.DecimalField(verbose_name='Рейтинг', max_digits=3,
+    #         decimal_places=2, default=0.00)
+    limit_offers = models.PositiveSmallIntegerField(verbose_name='Ліміт оголошень, штук',
+            default=1)
+    offers = models.PositiveSmallIntegerField(verbose_name="Об'єктів на продаж",
+            default=0)
+    in_archive = models.PositiveSmallIntegerField(
+               verbose_name="Об'єктів в архіві", default=0)   
+    def __str__(self) :
+        return self.user 
+    class Meta:
+        ordering = ["user"]
+
+
+class PaymentUser(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name='User')
+    payment = models.PositiveIntegerField(verbose_name="Сума оплати")
+    currency = models.CharField(verbose_name='Валюта', max_length=3,
+             choices=(('UAH', 'UAH'), ('USD', 'USD'), ('EUR', 'EUR')), blank=False, 
+             default='EUR',)
+    pay_date = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f'{self.payment} {self.currency} - {self.pay_date} - {self.user}'
+    class Meta:
+        ordering = ["-pub_date"]
 
 # CHOICE_SET = (
 #     ('5', '5- відмінно, Щиро рекомендую'),
