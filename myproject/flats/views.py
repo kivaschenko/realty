@@ -80,6 +80,7 @@ class OfferChangeOwner(LoginRequiredMixin, generic.UpdateView):
             return super().get(request, *args, **kwargs)
         else:
             return HttpResponseForbidden("Ви не маєте прав редагувати це оголошення!")
+                    
 
 class OfferList(generic.ListView):
     """  Generic class-based view for a list of offers.

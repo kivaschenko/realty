@@ -10,5 +10,5 @@ urlpatterns = [
 urlpatterns += [
     path('agency/<int:pk>/<slug>/', get_agency, name='agency'),
     path('create/new/agency/', create_agency, name='create_agency'),
-    path('agency/<int:pk>/<slug>/edit/', edit_agency, name='edit_agency'),
+    path('agency_edit/<int:pk>/', edit_agency, name='edit_agency'),
 ]

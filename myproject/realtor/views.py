@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views import generic
 from django.db import transaction
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -13,7 +13,6 @@ from flats.models import Offer
 from houses.models import House
 from land.models import Land
 from django.views.generic import ListView
-from django.db.models import Q
 
 
 @login_required
@@ -57,16 +56,19 @@ def get_agency(request, pk, slug):
 
 
 @login_required
-def edit_agency(request, pk, slug):
-    object = Agency.objects.get(slug=slug)
-    if request.method == 'POST':
-        form = AgencyForm(request.POST, request.FILES or None, instance=object)
-        form.save()
-        messages.success(request, 'Зміни до сторінки агенства внесені!')
-        return HttpResponseRedirect('/')
+def edit_agency(request, pk):
+    object = Agency.objects.get(pk=pk)
+    if request.user == object.created_by:
+        if request.method == 'POST':
+            form = AgencyForm(request.POST, request.FILES or None, instance=object)
+            form.save()
+            messages.success(request, 'Зміни до сторінки агенства внесені!')
+            return HttpResponseRedirect('/')
+        else:
+            form = AgencyForm(instance=object)
+            return render(request, 'realtor/edit_agency.html', {'form':form})
     else:
-        form = AgencyForm(instance=object)
-        return render(request, 'realtor/edit_agency.html', {'form':form})
+        return HttpResponseForbidden("Ви не маєте прав редагувати цю сторінку!")
 
 
 def realtor(request, pk):
