@@ -134,7 +134,7 @@ class StatisticUser(models.Model):
         ordering = ["user"]
 
 
-class PaymentUser(models.Model):
+class Payment(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name='User')
     payment = models.PositiveIntegerField(verbose_name="Сума оплати")
     currency = models.CharField(verbose_name='Валюта', max_length=3,
@@ -144,7 +144,7 @@ class PaymentUser(models.Model):
     def __str__(self):
         return f'{self.payment} {self.currency} - {self.pay_date} - {self.user}'
     class Meta:
-        ordering = ["-pub_date"]
+        ordering = ["-id"]
 
 # CHOICE_SET = (
 #     ('5', '5- відмінно, Щиро рекомендую'),
