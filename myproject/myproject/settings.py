@@ -25,7 +25,7 @@ SECRET_KEY = '60+xw_jdf0437y!b#4%xg+94@cj*2a!plydvlbm%^ie7byy(sa'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '64.225.41.178',]
+ALLOWED_HOSTS = ['127.0.0.1', '138.68.7.116',]
 
 
 # Application definition
@@ -89,7 +89,7 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'realtydb',
         'USER': 'ray',
-        'PASSWORD': 'Ki150797',
+        'PASSWORD': '2358',
         'HOST': 'localhost',
         'PORT': '5432',
     }
