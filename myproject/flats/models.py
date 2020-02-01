@@ -205,7 +205,7 @@ class Offer(models.Model):
     total_floor = models.PositiveSmallIntegerField(verbose_name='Поверхів')
     area = models.PositiveSmallIntegerField(verbose_name='Загальна площа, кв.м')
     kitchen = models.PositiveSmallIntegerField(verbose_name='Кухня площа, кв.м')
-    walls = models.CharField(max_length=10, verbose_name='Матеріал стін',
+    walls = models.CharField(max_length=15, verbose_name='Матеріал стін',
           choices=WALLS)
     rooms = models.PositiveSmallIntegerField(verbose_name='Кількість кімнат')
     planning = models.CharField(max_length=14, choices=PLANNING,
