@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin=""/>
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+    crossorigin=""></script>
+</head>
+<body>
+    <h1>Земельні ділянки Черкаси і Черкаський район - продаж та довгострокова оренда</h1>
+    <div id="map_land" style="width:1920px; height:1080px;"></div>
+
+    <script type="text/javascript">
+        var mymap = L.map('map_land').setView([49.448, 32.05], 8); 
+        L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(mymap);
+        {%if object_list%}
+            {%for land in object_list%}
+                var polygon = L.polygon('{{land.polygon}}')
+                    .addTo(mymap)
+                    .bindPopup('{{land.title}}');
+            {%enfor%}
+        {%endif%}
+    </script>
+</body>

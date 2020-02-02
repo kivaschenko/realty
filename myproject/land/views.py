@@ -1,4 +1,6 @@
+from django.views import generic
 from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponseRedirect, Http404
@@ -50,3 +52,40 @@ def land_detail(request, slug):
 		form = ContactForm()
 	return render(request, 'land/land_detail.html', {'object':land, 'form':form})
 
+
+class LandList(generic.ListView):
+	model = Land
+
+
+class LandUpdate(LoginRequiredMixin, generic.UpdateView):
+    model = Land
+    form_class = LandUpdateForm
+    template_name = 'land/edit_land.html'
+    def test_func(self):
+        obj = self.get_object()
+        return obj.created_by == self.request.user
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.created_by == request.user:
+            return super().get(request, *args, **kwargs)
+        else:
+            return HttpResponseForbidden("Ви не маєте прав редагувати це оголошення!")
+
+@login_required
+def delete_land(request, pk):
+    try:
+        house = House.objects.get(pk=pk)
+        if house.created_by == request.user:
+            house.delete()
+            messages.success(request, "Оголошення видалено!")
+            return HttpResponseRedirect('/')
+        else:
+            return HttpResponseForbidden("У вас немає прав видалити це оголошення!")
+    except:
+        raise Http404
+
+
+class LandMap(generic.ListView):
+	model = Land
+	template_name = "land/map_land.html"
+	

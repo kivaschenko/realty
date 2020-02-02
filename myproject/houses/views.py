@@ -105,9 +105,10 @@ class HouseChangeOwner(LoginRequiredMixin, generic.UpdateView):
         else:
             return HttpResponseForbidden("Ви не маєте прав редагувати це оголошення!")
 
+
 class HouseList(generic.ListView):
     model = House
-    paginate = 10
+    # paginate = 10
 
 
 @login_required

@@ -1,0 +1,28 @@
+{% extends 'base.html'%}
+{% load leaflet_tags %}
+{% block title %}Редагувати земельну ділянку{% endblock title %}
+
+{% block leaflet %}
+{% leaflet_js plugins="forms" %}
+{% leaflet_css plugins="forms" %}
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item active"><a href="{%url 'home'%}">Головна</a>
+<li class="breadcrumb-item active"><a href="{%url 'list_land'%}">Земельні ділянки</a>
+<li class="breadcrumb-item">Редагувати земельну ділянку</a>
+{% endblock %}
+
+{% block content%}
+<div class="container">
+  <div class="col">
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <p>{{ form.as_p }}</p>
+        <input type="submit" class="btn btn-success" value=" Додати зміни  ">
+    </form>
+    <br>
+    <a href="{%url 'delete_land' object.pk%}" class="btn btn-sm btn-danger"> Видалити </a>
+  </div>
+</div>
+{% endblock%}

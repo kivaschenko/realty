@@ -4,8 +4,8 @@
 продаж і довгострокова оренда{% endblock %}
 
 {% block breadcrumb %}
-  <li class="breadcrumb-item"><a href="{% url 'home'%}">Головна</a></li>
-  <li class="breadcrumb-item active">Будинки</li>
+  <li class="breadcrumb-item active"><a href="{% url 'home'%}">Головна</a></li>
+  <li class="breadcrumb-item">Будинки</li>
 {% endblock %}
 
 {% block content %}
@@ -28,6 +28,7 @@
     {% else %}
     <form>
       <div class="row">
+        <p>Повний список о'єктів доступний зареєстрованим користувачам.</p>
         <div class="col-md-6">
         <label for="formGroupExampleInput">
     Пошук об'єкта нерухомості або ріелтора</label>

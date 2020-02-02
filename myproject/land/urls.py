@@ -1,10 +1,18 @@
 from django.urls import path
-from .views import create_land, land_detail
+from .views import (
+	create_land, 
+	land_detail, 
+	delete_land, 
+	LandList, 
+	LandUpdate,
+	LandMap,
+)
 
 urlpatterns = [
-	path('create_land_offer/', create_land, name='create_land'),
-	path('land_detail/<slug>/', land_detail, name='land_detail'),
-# 	path('land/<int:pk>/edit/', edit_land, name='edit_land'),
-# 	path('delete/<int:pk>/land/', delete_land, name='delete_land'),
-# 	path('list/', list_land, name='list_land'),
+	path('create_land_offer/', create_land, name='create_land'), #<- done
+	path('land_detail/<slug>/', land_detail, name='land_detail'), #<- done
+	path('land/<int:pk>/edit/', LandUpdate.as_view(), name='edit_land'), #<- done
+	path('delete/<int:pk>/land/', delete_land, name='delete_land'), #<- done 
+	path('list/', LandList.as_view(), name='list_land'), #<- done
+	path('map_land/', LandMap.as_view(), name='map_land'), #<- done
 ]
