@@ -11,12 +11,12 @@
     <script type="text/javascript">
         var mymap = L.map('map_land').setView([49.448, 32.05], 8); 
         L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(mymap);
-        {%if object_list%}
-            {%for land in object_list%}
-                var polygon = L.polygon({{land.polygon}})
-                    .addTo(mymap)
-                    .bindPopup('{{land.title}}');
-            {%enfor%}
-        {%endif%}
+
+        {%for land in object_list%}
+            var polygon = L.polygon({{land.polygon}})
+                .addTo(mymap)
+                .bindPopup('{{land.title}}');
+        {%endfor%}
+
     </script>
 </body>
