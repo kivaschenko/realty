@@ -25,14 +25,14 @@
         </div>
 
  <script type="text/javascript">
-  var map = L.map('main').setView([49.448, 32.05], 10);
+  var map = L.map('main').setView([49.44, 32.05], 10);
   L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
          attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
      }).addTo(map);
   function onEachFeature(feature, layer) {
 		var popupContent = '<h5> ' +
       feature.properties.price + " " + feature.properties.currency + "</h5>" +
-      '<h6>' + '<a href="http://64.225.41.178:8000/houses/house/' +
+      '<h6>' + '<a href="http://138.68.7.116/houses/house/' +
       feature.properties.pk + '/' +
       feature.properties.slug + '/">' +
       feature.properties.title +'</a>' + '</h6>';
