@@ -615,9 +615,9 @@
     <h2>Опис об'єкту</h2>
     <div class="col">
       {{ object.body |linebreaks }}
-    </div>
+
       <br />
-    <div class="row">
+
       {% if object.image1%}
       <img src="{{object.image1.url}}" alt="{{object.title}} - світлина 1" class="img-thumbnail">
       {%endif%}

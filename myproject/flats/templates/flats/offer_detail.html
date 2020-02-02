@@ -531,11 +531,11 @@
   <div class="col-sm-8" style="background-color:lavenderblush;">
 
     <h2>Опис об'єкту</h2>
-    <div class="row">
+    <div class="col">
       {{ object.body |linebreaks }}
-    </div>
+
     <br />
-    <div class="row">
+
       {% if object.image1%}
       <img src="{{object.image1.url}}" alt="{{object.title}} - фото 1" class="img-thumbnail">
       {%endif%}
