@@ -130,7 +130,7 @@ class Land(models.Model):
     @property
     def polygon(self):
         coords = self.geometry.coords[0]
-        polygon = [list(item) for item in coords]
+        polygon = [list(item[1],item[0]) for item in coords]
         return polygon
     @property
     def lat_lng(self):
