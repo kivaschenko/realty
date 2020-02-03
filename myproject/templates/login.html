@@ -10,13 +10,13 @@
     <div class="col-sm-6">
       <form method="post">
         {% csrf_token %}
-        <p>{{ form.as_p}}</p>
+        <table>{{ form.as_table}}</table>
         <button class="btn btn-success" type="submit">Зайти</button>
       </form>
-    </div>
-    <a href="{% url 'password_reset' %}">Забули пароль?</a>
+    <a href="{% url 'password_reset' %}">Забули пароль? </a>
     або
-    <a href="{%url 'rules'%}">Реєстрація</a>
+    <a href="{%url 'rules'%}"> Реєстрація</a>
+    </div>
   </div>
 </div>
 {% endblock content %}
