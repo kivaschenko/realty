@@ -6,24 +6,17 @@
 {% endblock%}
 {% block content %}
 <div class="container">
-<div class="row justify-content-center">
-<div class="col">
-<div class="card">
-<div class="card-body">
-<h2 class="card-title">Залогінитись</h2>
-<form method="post">
-  {% csrf_token %}
-  <p>{{ form.as_p}}</p>
-  <button class="btn btn-success" type="submit">Зайти</button>
-</form>
-</div>
-<div class="card-footer text-muted text-center">
-<a href="{% url 'password_reset' %}">Забули пароль?</a>
- або
-<a href="{%url 'rules'%}">Реєстрація</a>
-</div>
-</div>
-</div>
-</div>
+  <div class="row justify-content-center">
+    <div class="col-sm-6">
+      <form method="post">
+        {% csrf_token %}
+        <p>{{ form.as_p}}</p>
+        <button class="btn btn-success" type="submit">Зайти</button>
+      </form>
+    </div>
+    <a href="{% url 'password_reset' %}">Забули пароль?</a>
+    або
+    <a href="{%url 'rules'%}">Реєстрація</a>
+  </div>
 </div>
 {% endblock content %}
