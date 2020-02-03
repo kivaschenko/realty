@@ -43,15 +43,7 @@
           <a class="dropdown-item" href="{%url 'create_land'%}">Додати земельну ділянку</a>
         </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'contact' %}">Контакт</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'cookies' %}">Політика кукіс</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Підтримати проект</a>
-      </li>
+
     {% if user.is_authenticated %}
       <li class="nav-item active dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
