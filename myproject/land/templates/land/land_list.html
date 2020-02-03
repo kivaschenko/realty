@@ -7,43 +7,41 @@
 
 {%block content%}
 <h2>Земельні ділянки в Черкасах і Черкаському районі</h2>
-<div class="container">
-    {%if user.is_authenticated%}
+<div class="container">       
+    <table id="example" class="display" style="width:100%"></table>
+        <thead>
+            <tr>
+                <th>Заголовок</th>
+                <th>Ціна</th>
+                <th>Валюта</th>
+                <th>Зонування</th>
+                <th>Загальна площа земельної ділянки, га</th>
+                <th>Дата публікації</th>
+            </tr>
+        </thead>
+        <tbody>
         {%if object_list%}
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Заголовок</th>
-                    <th>Ціна</th>
-                    <th>Валюта</th>
-                    <th>Зонування</th>
-                    <th>Загальна площа земельної ділянки, га</th>
-                    <th>Дата публікації</th>
-                </tr>
-            </thead>
-            <tbody>
-                {%for object in object_list%}
-                <tr>
-                    <td>{{object.title}}</td>
-                    <td>{{object.price}}</td>
-                    <td>{{object.get_currency_display}}</td>
-                    <td>{{object.get_MSZoning_display}}</td>
-                    <td>{{object.LandArea}}</td>
-                    <td>{{object.pub_date|date}}</td>
-                </tr>
-                {%endfor%}
-            </tbody>
-        </table>
+            {%for object in object_list%}
+            <tr>
+                <td>{{object.title}}</td>
+                <td>{{object.price}}</td>
+                <td>{{object.get_currency_display}}</td>
+                <td>{{object.get_MSZoning_display}}</td>
+                <td>{{object.LandArea}}</td>
+                <td>{{object.pub_date|date}}</td>
+            </tr>
+            {%endfor%}
         {%else%}
-        <p>Тут поки що немає оголошень.</p>
+            <tr>
+                Тут поки що немає оголошень.
+            </tr>
         {%endif%}
-    {%endif%}
+        </tbody>
+    </table>
 </div>
 <script type="text/javascript">
-    $(document).ready( function () {
-        $('#land').DataTable( {
-        "order": [[ 3, "desc" ]]
-    });
-    } );
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
 </script>
 {%endblock content%}

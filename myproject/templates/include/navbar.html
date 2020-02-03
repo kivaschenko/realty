@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-sm navbar-dark justify-content-between" style="background-color:darkslateblue;">
+<nav class="navbar navbar-expand-lg navbar-dark justify-content-between" style="background-color:darkslateblue;">
   <a class="navbar-brand" style="font-family: 'Lobster', cursive; font-size: 26px;"
   href="{% url 'home' %}">CherkasyRealEstate.Org.ua</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -12,7 +12,7 @@
           Квартири, кімнати
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{%url 'flats'%}">Квартири всі картки</a>
+          <a class="dropdown-item" href="{%url 'flats'%}">Квартири картки</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{%url 'flats_map'%}">Мапа квартир</a>
           <div class="dropdown-divider"></div>
@@ -24,7 +24,7 @@
           Будинки
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{% url 'house_list'%}">Будинки всі картки</a>
+          <a class="dropdown-item" href="{% url 'house_list'%}">Будинки картки</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'house_map'%}">Мапа будинків</a>
           <div class="dropdown-divider"></div>
@@ -36,12 +36,21 @@
           Земельні ділянки
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{% url 'list_land'%}">Земельні ділянки всі картки</a>
+          <a class="dropdown-item" href="{% url 'list_land'%}">Земельні ділянки таблиця</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'map_land'%}">Мапа земельних ділянок</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{%url 'create_land'%}">Додати земельну ділянку</a>
         </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'contact' %}">Контакт</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'cookies' %}">Політика кукіс</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Підтримати проект</a>
       </li>
     {% if user.is_authenticated %}
       <li class="nav-item active dropdown">
@@ -66,24 +75,24 @@
 
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'update' %}">Редагувати профіль</a>
-          <a class="dropdown-item" href="{% url 'password_change'%}">Змінити пароль</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{% url 'logout' %}">Вийти</a>
+          <a class="dropdown-item" href="{% url 'password_change'%}">Змінити пароль</a>
           </div>
       </li>
 
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'contact' %}">Контакт</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'cookies' %}">Політика кукіс</a>
-      </li>
     </ol>
-
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" id="search" type="text" placeholder="Пошук..." aria-label="">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Пошук</button>
+    </form>
+    <form class="form-inline my-2 my-auto">
+      <a class="btn btn-outline-danger" href="{% url 'logout' %}">Вийти</a>
+    </form>
   {% else %}
     <form class="form-inline ml-auto">
-      <a href="{% url 'login' %}" class="btn btn-warning">Зайти</a>  
-      <a href="{% url 'rules' %}" class="btn btn-success">Реєстрація</a>
+      <a href="{% url 'login' %}" class="btn btn-outline-warning">Зайти</a>  
+
+      <a href="{% url 'rules' %}" class="btn btn-outline-success">Реєстрація</a>
     </form>
   {% endif %}
   </div>

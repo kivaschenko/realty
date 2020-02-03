@@ -9,19 +9,13 @@
 
 {% block content %}
 <h2>Будинки {{type}} в Черкасах</h2>
-{% if user.is_authenticated%}
+
   <div class="row">
     <div class="col-7">
       <p>Введіть що-небудь в поле нижче для пошуку по таблиці:</p>
       <input id="myInput" type="text" placeholder="Пошук.."
       class="form-control mb-4 mr-sm-4">
     </div>
-
-    <div class="col-sm-3">
-      <a href="{% url 'create_house'%}" type="button"
-      class="btn btn-outline-primary">Додати </a>
-    </div>
-  </div>
 
 <table class="table table-striped">
   <thead>
@@ -62,17 +56,5 @@
 {% endif %}
   </tbody>
 </table>
-{% else %}
-<form>
-  <div class="row">
-    <div class="col-md-6"
-    <label for="formGroupExampleInput">
-Пошук об'єкта нерухомості або ріелтора</label>
-    <input type="text" class="form-control" id="formGroupExampleInput"
-placeholder="Введіть район, вулицю, назву агенства, ім'я ріелтора тощо...">
-  </div>
-  </div>
-</form>
-{% endif %}
 
 {% endblock content %}

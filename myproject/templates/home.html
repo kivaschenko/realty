@@ -6,9 +6,10 @@
 {% endblock breadcrumb %}
 
 {% block content %}
-{% if user.is_authenticated%}
+
 <div class="row">
-  <div class="col-sm-4">
+  <!-- first column -->
+  <div class="col-4">
     <table class="table">
       <thead class="thead-inverse">
         <tr>
@@ -40,7 +41,8 @@
       </tbody>
     </table>
   </div>
-  <div class="col-md-4">
+  <!--second column-->
+  <div class="col-4">
     <table class="table">
       <thead>
         <tr>
@@ -58,19 +60,9 @@
       </tbody>
     </table>
   </div>
-</div>
-{% else %}
-<form>
-  <div class="row" <body style="background-color:lightgray;">
-    <div class="col-md-6">
-      <br>
-        <label for="search"><h4>
-    Пошук об'єкта нерухомості або ріелтора</h4></label>
-        <input type="text" class="form-control" id="search"
-    placeholder="Введіть район, вулицю, назву агенства, ім'я ріелтора тощо...">
-    <br><br><br>
-    </div>
+  <!--third column-->
+  <div class="col-4">
+    <p>Якась стрічка новин, голосування, курс долара Приватбанку рекламне місце тощо...</p>
   </div>
-</form>
-{% endif %}
+</div>
 {% endblock content %}
