@@ -17,6 +17,7 @@
 {% load static%}
 {% block content %}
 <div class="container content">
+<div class="row">
   <div class="col-sm-6">
     {% if object.logo %}
       <img src="{{ object.logo.url }}" class="img-thumbnail"
@@ -81,6 +82,7 @@
         {%endif%}
         </div>
       </div>       
+    </div>
   </div>
 </div>
 {% endblock %}
