@@ -1,9 +1,24 @@
 {% load leaflet_tags %} 
     {% leaflet_css %}
-    {% leaflet_js %}	
-    <div style="width:1920px; height:1080px;">
-      {% leaflet_map "main" %}
-    </div>
+    {% leaflet_js %}
+    <style>
+
+      .leaflet-container {  /* all maps */
+          width:  600px;
+          height: 400px;
+      }
+  
+      #specialbigmap {
+          height: 800px;
+      }
+  
+      /* Resize the "display_raw" textbox */
+      .django-leaflet-raw-textarea {
+          width: 100%;
+      }
+  
+  </style>	
+    <div>{% leaflet_map "main" %}</div>
 
  <script type="text/javascript">
   var map = L.map('main').setView([49.44, 32.05], 12);

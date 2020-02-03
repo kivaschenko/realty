@@ -11,7 +11,7 @@
             L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
             {% for e in object_list %}
             L.polygon({{e.polygon}}).addTo(map)
-                .bindPopup('<a href="{%url "land_detail" object.slug %}">{{e.title}}</a>');
+                .bindPopup('<a href="{%url "land_detail" e.slug %}">{{e.title}}</a>');
             L.marker()
             L.marker({{object.lat_lng}}).addTo(map)
                 .bindTooltip('{{object.lat_lng}}')

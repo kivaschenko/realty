@@ -10,7 +10,6 @@
 
 {% block content %}
 <h2>Квартири та кімнати {{type}} в Черкасах</h2>
-{% if user.is_authenticated%}
   <div class="row">
     <div class="col-7">
       <p>Введіть що-небудь в поле нижче для пошуку по таблиці:</p>
@@ -61,18 +60,4 @@
     <p>Тут поки немає оголошень. Ваше може бути першим.</p>
 {% endif %}
   </tbody>
-</table>
-{% else %}
-<form>
-  <div class="row">
-    <div class="col-md-6"
-    <label for="formGroupExampleInput">
-Пошук об'єкта нерухомості або ріелтора</label>
-    <input type="text" class="form-control" id="formGroupExampleInput"
-placeholder="Введіть район, вулицю, назву агенства, ім'я ріелтора тощо...">
-  </div>
-  </div>
-</form>
-{% endif %}
-
 {% endblock content %}
