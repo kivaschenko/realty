@@ -17,7 +17,7 @@
 <div class="container content">
 
   <div class="row" style="margin-left: 20px;">
-    <div class="col5">
+    <div class="col-md-5">
     {% if object.avatar %}
       <img src="{{ object.avatar.url }}" class="img-thumbnail"
       alt="Фото " style="width:300px;">
@@ -37,8 +37,8 @@
       <dl class="row">
         <dt class="col-sm-3 text-right">Ріелтор </dt>
         <dd class="col-sm-9">
-        <h2 style="font-family: 'Lobster', cursive; font-size: 26px;">
-        {{ object.created_by.first_name }} {{object.created_by.last_name}}</h2>
+        <h3 style="font-family: 'Lobster', cursive; font-size: 26px;">
+        {{ object.created_by.first_name }} {{object.created_by.last_name}}</h3>
         </dd>
 
         <dt class="col-sm-3 text-right">Телефон основний</dt>
@@ -77,7 +77,7 @@
 </div>
 <div class="container content">
   <div class="row">
-    <div class="col">
+    <div class="col-sm-6">
       <div class="card">
         <div class="card-body">
           <h4 class="card-title">Список квартир ріелтора</h4>
@@ -92,7 +92,7 @@
                 {{object.get_currency_display}}</span></h5>  
                 {%if object.created_by == request.user%}
                   <a href="{%url 'update_offer' object.pk%}" class="btn btn-sm btn-primary"> Редагувати </a>  
-                  <a href="{%url 'change_owner' object.pk%}" class="btn btn-sm btn-secondary"> Передати іншому користувачеві </a>
+                  <a href="{%url 'change_owner' object.pk%}" class="btn btn-sm btn-secondary"> Передати іншому</a>
                 {%endif%} 
               </li>
             </ul>
@@ -116,8 +116,8 @@
                 <span class="badge badge-primary">{{object.price}}
                 {{object.get_currency_display}}</span></h5>  
                 {%if object.created_by == request.user%}
-                  <a href="{%url 'house_update' object.pk%}" class="btn btn-sm btn-primary"> Редагувати </a>    
-                  <a href="{%url 'change_rieltor' object.pk%}" class="btn btn-sm btn-secondary"> Передати іншому користувачеві </a>
+                  <a href="{%url 'house_update' object.pk%}" class="btn btn-sm btn-primary">Редагувати</a>    
+                  <a href="{%url 'change_rieltor' object.pk%}" class="btn btn-sm btn-secondary">Передати іншому</a>
                 {%endif%}                
               </li>
             </ul>
@@ -142,7 +142,7 @@
                 {{object.get_currency_display}}</span></h5>  
                 {%if object.created_by == request.user%}
                   <a href="#" class="btn btn-sm btn-primary"> Редагувати </a>    
-                  <a href="#" class="btn btn-sm btn-secondary"> Передати іншому користувачеві </a>
+                  <a href="#" class="btn btn-sm btn-secondary">Передати іншому</a>
                 {%endif%}                
               </li>
             </ul>
@@ -152,8 +152,6 @@
           {%endif%}
         </div>
       </div>
-
-
     </div>
   </div>
 </div>
