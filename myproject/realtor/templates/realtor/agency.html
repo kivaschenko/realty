@@ -32,27 +32,8 @@
       <br>
       <p><em>Переглядів сторінки: {{object.num_visits}}</em></p>
     {% endif %}
-      <div class="card">
-        <div class="card-body">
-        <h3 class="card-title">Ріелтори агенства</h3>
-        
-        {% if realtor_list%}
-        {% for object in realtor_list%}
-        <ol>
-          <li>
-            <h4 style="font-family: 'Lobster', cursive; font-size: 26px;">
-              <a href="{%url 'realtor' object.pk%}">
-              {{ object.created_by.first_name }} {{object.created_by.last_name}}
-              </a>
-            </h4>
-          </li>
-        </ol>
-        {%endfor%}
-        {%else%}
-        <p>Тут поки ще немає ріелторів</p>
-        {%endif%}
-        </div>
-      </div>    
+    <!-- here map-->
+    {% include 'realtor/include/agency_map.html' %} 
     </div>
 
     <div class="col-sm-8">
@@ -82,9 +63,27 @@
         <dd class="col-sm-9">{{object.body|linebreaks}}</dd>
       </dl>
       <hr>
-      <div class="row">
-        {% include 'realtor/include/agency_map.html' %}  
-      </div>
+      <div class="card">
+        <div class="card-body">
+        <h3 class="card-title">Ріелтори агенства</h3>
+        
+        {% if realtor_list%}
+        {% for object in realtor_list%}
+        <ol>
+          <li>
+            <h4 style="font-family: 'Lobster', cursive; font-size: 26px;">
+              <a href="{%url 'realtor' object.pk%}">
+              {{ object.created_by.first_name }} {{object.created_by.last_name}}
+              </a>
+            </h4>
+          </li>
+        </ol>
+        {%endfor%}
+        {%else%}
+        <p>Тут поки ще немає ріелторів</p>
+        {%endif%}
+        </div>
+      </div>       
     </div>
   </div>
 </div>
