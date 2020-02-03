@@ -25,27 +25,27 @@
 <h3>{{ object.title }}</h3>
 <div class="row style="margin-left: 20px;"">
   <!-- about saler -->
-  <div class="col-4" style="background-color:lavender;">
+  <div class="col-md-4" style="background-color:lavender;">
     <br>
     <dl class="row">
-      <dt class="col-3">Тип</dt>
-      <dd class="col-9">
+      <dt>Тип</dt>
+      <dd>
       <h4>
         <span class="badge badge-info">
           {{object.get_type_offer_display}}</span></h4>
       </dd>
-      <dt class="col-3">Адреса</dt>
-      <dd class="col-9">
+      <dt>Адреса</dt>
+      <dd>
       <h4>{{object.address}}</h4>
       </dd>
-      <dt class="col-3">Ціна </dt>
-      <dd class="col-9"><h4>
+      <dt>Ціна </dt>
+      <dd><h4>
       <span class="badge badge-warning">{{ object.price}}
       {{object.get_currency_display}}</span></h4>
       </dd>
-      <dt class="col-3">
+      <dt>
         {%if object.created_by.realtor%}Ріелтор {%else%}Продавець{%endif%}</dt>
-      <dd class="col-9">
+      <dd>
         {%if object.created_by.realtor%}
       <a href="{% url 'realtor' object.created_by.realtor.id %}"
       style="font-family: 'Lobster', cursive; font-size: 20px;">
@@ -55,8 +55,8 @@
       {{ object.created_by.first_name }} {{object.created_by.last_name}} </p>
       {%endif%}
       </dd>
-      <dt class="col-3">Телефон: </dt>
-      <dd class="col-9">
+      <dt>Телефон: </dt>
+      <dd>
         {%if object.created_by.realtor%}
       <a href="tel:{{object.created_by.realtor.phone}}">
       {{object.created_by.realtor.phone}}</a>
@@ -64,12 +64,12 @@
         користувач немає профілю "Ріелтор"
         {%endif%}
       </dd>
-      <dt class="col-3">Агенство: </dt>
-      <dd class="col-9">
+      <dt>Агенство: </dt>
+      <dd>
       <a href="{%url 'agency' object.created_by.realtor.agency.pk object.created_by.realtor.agency.slug%}">{{object.created_by.realtor.agency}}</a>
       </dd>
-      <dt class="col-3">Додаткові умови: </dt>
-      <dd class="col-9">
+      <dt>Додаткові умови: </dt>
+      <dd>
       <ul>
       {% if object.agree_price is True%}
       <li>Ціна договірна</li>
@@ -105,7 +105,7 @@
     {%endif%}
     <br />
   </div>
-  <div class="col-8" style="background-color:lavenderblush;">
+  <div class="col-md-8" style="background-color:lavenderblush;">
   <!-- here a map -->
   <div class="row">
   {% include 'include/flat_map.html' %}
@@ -113,7 +113,7 @@
   </div>
 </div>
 <div class="row style="margin-left: 20px;"">
-  <div class="col-4" style="background-color:lavender;">
+  <div class="col-md-4" style="background-color:lavender;">
     <h3>Основні характеристики об'єкта</h3>
     <table class="table table-striped">
     <thead>
@@ -528,7 +528,7 @@
     {% endif %}
   </div>
 
-  <div class="col-8" style="background-color:lavenderblush;">
+  <div class="col-md-8" style="background-color:lavenderblush;">
 
     <h2>Опис об'єкту</h2>
     <div class="col">

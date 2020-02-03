@@ -23,20 +23,20 @@
 <h3>{{ object.title }}</h3>
 <div class="row style="margin-left: 20px;"">
   <!-- First column -->
-  <div class="col-4" style="background-color:lavender;">
+  <div class="col-md-4" style="background-color:lavender;">
     <br>
     <dl class="row">
-      <dt class="col-3 ">Тип</dt>
-      <dd class="col-9"><h4><span class="badge badge-info">
+      <dt>Тип</dt>
+      <dd><h4><span class="badge badge-info">
           {{object.get_type_offer_display}}</span></h4></dd>
-      <dt class="col-3 ">Адреса</dt>
-      <dd class="col-9"><h5>{{object.address}}</h5></dd>
-      <dt class="col-3 ">Ціна </dt>
-      <dd class="col-9"><h4><span class="badge badge-warning">
+      <dt>Адреса</dt>
+      <dd><h5>{{object.address}}</h5></dd>
+      <dt>Ціна </dt>
+      <dd><h4><span class="badge badge-warning">
         {{ object.price}} {{object.get_currency_display}}</span></h4></dd>
-      <dt class="col-3 ">
+      <dt>
         {%if object.created_by.realtor%}Ріелтор {%else%}Продавець{%endif%}</dt>
-      <dd class="col-9">{%if object.created_by.realtor%}
+      <dd>{%if object.created_by.realtor%}
       <a href="{% url 'realtor' object.created_by.realtor.id %}"
       style="font-family: 'Lobster', cursive; font-size: 20px;">
       {{ object.created_by.first_name }} {{object.created_by.last_name}}</a>
@@ -44,17 +44,17 @@
       <p style="font-family: 'Lobster', cursive; font-size: 20px;">
       {{ object.created_by.first_name }} {{object.created_by.last_name}} </p>
       {%endif%}</dd>
-      <dt class="col-3 ">Телефон: </dt>
-      <dd class="col-9">
+      <dt>Телефон: </dt>
+      <dd>
         {%if object.created_by.realtor%}
       <a href="tel:{{object.created_by.realtor.phone}}">
       {{object.created_by.realtor.phone}}</a>
         {%else%}користувач немає профілю "Ріелтор"{%endif%}</dd>
-      <dt class="col-3 ">Агенство: </dt>
-      <dd class="col-9">
+      <dt>Агенство: </dt>
+      <dd>
       <a href="{%url 'agency' object.created_by.realtor.agency.pk object.created_by.realtor.agency.slug%}">{{object.created_by.realtor.agency}}</a></dd>
-      <dt class="col-3 ">Додаткові умови: </dt>
-      <dd class="col-9">
+      <dt>Додаткові умови: </dt>
+      <dd>
       <ul>
       {% if object.agree_price is True%}
       <li>Ціна договірна</li>
@@ -90,7 +90,7 @@
 
   </div>
   <!-- Second column -->
-  <div class="col-8" style="background-color:lavenderblush;">
+  <div class="col-md-8" style="background-color:lavenderblush;">
     <!-- here a map -->
     {% include 'include/house_map.html' %}
 
@@ -98,7 +98,7 @@
 </div>
 
 <div class="row style="margin-left: 20px;"">
-  <div class="col-4" style="background-color:lavender;">
+  <div class="col-md-4" style="background-color:lavender;">
     <h3>Основні характеристики об'єкта</h3>
     <table class="table table-striped">
     <thead>
@@ -611,7 +611,7 @@
     <p><em>Кількість переглядів оголошення: {{ object.num_visits }} </em></p>
     {% endif %}
   </div>
-  <div class="col-8" style="background-color:lavenderblush;">
+  <div class="col-md-8" style="background-color:lavenderblush;">
     <h2>Опис об'єкту</h2>
     {{ object.body |linebreaks }}
     <br />

@@ -1,19 +1,18 @@
 <!DOCTYPE html>
-<head>
-    <link rel="stylesheet" href="//unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
-    <!-- Make sure you put this AFTER Leaflet's CSS -->
-    <script src="//unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
-</head>
-<body>
-    <h1>Земельні ділянки Черкаси і Черкаський район - продаж та довгострокова оренда</h1>
-    <div id="map_land" style="width:1920px; height:1080px;"></div>
-    <script type="text/javascript">
-        var mymap = L.map('map_land').setView([49.448, 32.05], 12); 
-        L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(mymap);
-        {%for object in object_list%}
-        L.polygon({{object.polygon}})
-            .addTo(mymap)
-            .bindPopup('{{land.title}}');
-        {%endfor%}
-    </script>
-</body>
+    <head>
+        <link rel="stylesheet" href="//unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
+        <!-- Make sure you put this AFTER Leaflet's CSS -->
+        <script src="//unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    </head>
+    <body>
+        <h1>Земельні ділянки Черкаси і Черкаський район - продаж та довгострокова оренда</h1>
+        <div id="m" style="width:1920px; height:1080px;"></div>
+        <script type="text/javascript">
+            var map = L.map('m').setView([49.448, 32.05], 12); 
+            L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(mymap);
+            {% for object in object_list %}
+            L.polygon({{object.polygon}}).addTo(map).bindPopup('{{land.title}}');
+            {%endfor%}
+        </script>
+    </body>
+</html>
