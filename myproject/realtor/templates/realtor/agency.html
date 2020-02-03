@@ -17,9 +17,7 @@
 {% load static%}
 {% block content %}
 <div class="container content">
-
-  <div class="row" style="margin-left: 20px;">
-    <div class="col-sm-4">
+  <div class="col-sm-6">
     {% if object.logo %}
       <img src="{{ object.logo.url }}" class="img-thumbnail"
       alt="Фото " style="width:300px;">
@@ -34,34 +32,33 @@
     {% endif %}
     <!-- here map-->
     {% include 'realtor/include/agency_map.html' %} 
-    </div>
-
-    <div class="col-sm-8">
-      <dl class="row">
-        <dt class="col-sm-3 text-right">Агенція нерухомості</dt>
-        <dd class="col-sm-9">
-        <h2 style="font-family: 'Lobster', cursive; font-size: 26px;">
-        {{object.name}}</h2>
+  </div>
+  <div class="col-sm-6">
+    <dl>
+        <dt>Агенція нерухомості</dt>
+        <dd>
+        <h4 style="font-family: 'Lobster', cursive; font-size: 26px;">
+        {{object.name}}</h4>
         </dd>
 
-        <dt class="col-sm-3 text-right">Телефон основний</dt>
-        <dd class="col-sm-9"><a href="tel:{{object.phone1}}">
+        <dt>Телефон основний</dt>
+        <dd><a href="tel:{{object.phone1}}">
         {{object.phone1}}</a></dd>
 
-        <dt class="col-sm-3 text-right">Телефон додатковий</dt>
-        <dd class="col-sm-9"><a href="tel:{{object.phone2}}">
+        <dt>Телефон додатковий</dt>
+        <dd><a href="tel:{{object.phone2}}">
         {{object.phone2}}</a></dd>
 
-        <dt class="col-sm-3 text-right">Дата реєстрації на сайті</dt>
-        <dd class="col-sm-9">{{object.pub_date|date:"d M Y"}}</dd>
+        <dt>Дата реєстрації на сайті</dt>
+        <dd>{{object.pub_date|date:"d M Y"}}</dd>
 
-        <dt class="col-sm-3 text-right">Адреса офісу</dt>
-        <dd class="col-sm-9">
+        <dt>Адреса офісу</dt>
+        <dd>
         <em style="font-family: 'Times New Roman', serif;">
         {{object.address}}</em></dd>
-        <dt class="col-sm-3 text-right">Про нас</dt>
-        <dd class="col-sm-9">{{object.body|linebreaks}}</dd>
-      </dl>
+        <dt>Про нас</dt>
+        <dd>{{object.body|linebreaks}}</dd>
+    </dl>
       <hr>
       <div class="card">
         <div class="card-body">
@@ -84,7 +81,6 @@
         {%endif%}
         </div>
       </div>       
-    </div>
   </div>
 </div>
 {% endblock %}

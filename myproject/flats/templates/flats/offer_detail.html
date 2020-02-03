@@ -25,7 +25,7 @@
 <h3>{{ object.title }}</h3>
 <div class="row style="margin-left: 20px;"">
   <!-- about saler -->
-  <div class="col-md-4" style="background-color:lavender;">
+  <div class="col-sm-4" style="background-color:lavender;">
     <br>
     <dl>
       <dt>Тип</dt>
@@ -35,9 +35,7 @@
           {{object.get_type_offer_display}}</span></h4>
       </dd>
       <dt>Адреса</dt>
-      <dd>
-      <h4>{{object.address}}</h4>
-      </dd>
+      <dd>{{object.address}}</dd>
       <dt>Ціна </dt>
       <dd><h4>
       <span class="badge badge-warning">{{ object.price}}
@@ -105,15 +103,13 @@
     {%endif%}
     <br />
   </div>
-  <div class="col-md-8" style="background-color:lavenderblush;">
+  <div class="col-sm-8" style="background-color:lavenderblush;">
   <!-- here a map -->
-  <div class="row">
   {% include 'include/flat_map.html' %}
-  </div>
   </div>
 </div>
 <div class="row style="margin-left: 20px;"">
-  <div class="col-md-4" style="background-color:lavender;">
+  <div class="col-sm-4" style="background-color:lavender;">
     <h3>Основні характеристики об'єкта</h3>
     <table class="table table-striped">
     <thead>
@@ -528,7 +524,7 @@
     {% endif %}
   </div>
 
-  <div class="col-md-8" style="background-color:lavenderblush;">
+  <div class="col-sm-8" style="background-color:lavenderblush;">
 
     <h2>Опис об'єкту</h2>
     <div class="col">

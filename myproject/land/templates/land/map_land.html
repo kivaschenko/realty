@@ -7,10 +7,15 @@
     <body>
         <div id="m" style="width:1920px; height:1080px;"></div>
         <script type="text/javascript">
-            var map = L.map('m').setView([49.448, 32.05], 12); 
+            var map = L.map('m').setView([49.448, 32.05], 10); 
             L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
             {% for e in object_list %}
-            L.polygon({{e.polygon}}).addTo(map).bindPopup('{{e.title}}');
+            L.polygon({{e.polygon}}).addTo(map)
+                .bindPopup('<a href="{%url "land_detail" object.slug %}">{{e.title}}</a>');
+            L.marker()
+            L.marker({{object.lat_lng}}).addTo(map)
+                .bindTooltip('{{object.lat_lng}}')
+                .openTooltip();
             {%endfor%}
         </script>
     </body>

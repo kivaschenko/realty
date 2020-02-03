@@ -23,14 +23,14 @@
 <h3>{{ object.title }}</h3>
 <div class="row style="margin-left: 20px;"">
   <!-- First column -->
-  <div class="col-md-4" style="background-color:lavender;">
+  <div class="col-sm-4" style="background-color:lavender;">
     <br>
     <dl>
       <dt>Тип</dt>
       <dd><h4><span class="badge badge-info">
           {{object.get_type_offer_display}}</span></h4></dd>
       <dt>Адреса</dt>
-      <dd><h5>{{object.address}}</h5></dd>
+      <dd>{{object.address}}</dd>
       <dt>Ціна </dt>
       <dd><h4><span class="badge badge-warning">
         {{ object.price}} {{object.get_currency_display}}</span></h4></dd>
@@ -90,7 +90,7 @@
 
   </div>
   <!-- Second column -->
-  <div class="col-md-8" style="background-color:lavenderblush;">
+  <div class="col-sm-8" style="background-color:lavenderblush;">
     <!-- here a map -->
     {% include 'include/house_map.html' %}
 
@@ -98,7 +98,7 @@
 </div>
 
 <div class="row style="margin-left: 20px;"">
-  <div class="col-md-4" style="background-color:lavender;">
+  <div class="col-sm-4" style="background-color:lavender;">
     <h3>Основні характеристики об'єкта</h3>
     <table class="table table-striped">
     <thead>
@@ -611,7 +611,7 @@
     <p><em>Кількість переглядів оголошення: {{ object.num_visits }} </em></p>
     {% endif %}
   </div>
-  <div class="col-md-8" style="background-color:lavenderblush;">
+  <div class="col-sm-8" style="background-color:lavenderblush;">
     <h2>Опис об'єкту</h2>
     {{ object.body |linebreaks }}
     <br />
