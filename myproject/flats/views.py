@@ -126,7 +126,6 @@ def details(request, pk, slug):
                   context={'object':offer, 'form':form})
 
 
-@login_required
 def type_offer(request, type_offer):
     try:
         queryset = Offer.objects.filter(type_offer=type_offer).all()

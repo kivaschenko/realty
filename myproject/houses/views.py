@@ -111,7 +111,6 @@ class HouseList(generic.ListView):
     # paginate = 10
 
 
-@login_required
 def type_offer(request, type_offer):
     try:
         queryset = House.objects.filter(type_offer=type_offer).all()
