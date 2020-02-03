@@ -7,41 +7,48 @@
 
 {%block content%}
 <h2>Земельні ділянки в Черкасах і Черкаському районі</h2>
-<div class="container">       
-    <table id="example" class="display" style="width:100%"></table>
-        <thead>
-            <tr>
-                <th>Заголовок</th>
-                <th>Ціна</th>
-                <th>Валюта</th>
-                <th>Зонування</th>
-                <th>Загальна площа земельної ділянки, га</th>
-                <th>Дата публікації</th>
-            </tr>
-        </thead>
-        <tbody>
-        {%if object_list%}
-            {%for object in object_list%}
-            <tr>
-                <td>{{object.title}}</td>
-                <td>{{object.price}}</td>
-                <td>{{object.get_currency_display}}</td>
-                <td>{{object.get_MSZoning_display}}</td>
-                <td>{{object.LandArea}}</td>
-                <td>{{object.pub_date|date}}</td>
-            </tr>
-            {%endfor%}
-        {%else%}
-            <tr>
-                Тут поки що немає оголошень.
-            </tr>
+  <div class="row">
+    <div class="col-7">
+      <p>Введіть що-небудь в поле нижче для пошуку по таблиці:</p>
+      <input id="myInput" type="text" placeholder="Пошук.."
+      class="form-control mb-4 mr-sm-4">
+    </div>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">Земельна ділянка</th>
+  </tr>
+  </thead>
+  <tbody id="myTable">
+{% if object_list %}
+    {% for object in object_list %}
+  <tr>
+    <td scope="row"><h4><a href="{% url 'land_detail' object.slug%}">{{object.title}}</a></h4>
+      {{ object.address}},
+      <strong>{{ object.price }} {{ object.get_currency_display }}</strong>,
+      {{object.get_MSZoning_display}}, {{object.LandArea}} га, 
+      <em>(
+        {% if object.agree_price is True%}
+        Ціна договірна, {% else %}Без торгу, {% endif %}
+        {% if object.without_commission is True%}
+        Без комісійних, {% else %} Додатково є коміссійні, {% endif%}
+        {% if object.exchange is True%}
+        Можливість обміну, {% else %} Немає можливості обміну, {% endif %}
+        {% if object.collaboration is True%}
+        Можу співпрацювати з ріелторами{% else %}
+        Продаємо самостійно, {% endif%})</em>
+        {%if object.created_by.realtor%}
+        <a href="{%url 'realtor' object.created_by.realtor.pk%}">
         {%endif%}
-        </tbody>
-    </table>
-</div>
-<script type="text/javascript">
-$(document).ready(function() {
-    $('#example').DataTable();
-} );
-</script>
-{%endblock content%}
+          {{object.created_by.first_name}} {{object.created_by.last_name}}</a>
+    </td>
+  </tr>
+     {% endfor %}
+{% else %}
+    <p>Тут поки немає оголошень. Ваше може бути першим.</p>
+{% endif %}
+  </tbody>
+</table>
+
+{% endblock content %}

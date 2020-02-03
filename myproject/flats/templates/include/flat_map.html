@@ -2,24 +2,7 @@
 {% load leaflet_tags %}
  {% leaflet_css %}
  {% leaflet_js %}
- <style>
-
-  .leaflet-container {  /* all maps */
-      /* width:  1300px; */
-      height: 100%;
-  }
-
-  #specialbigmap {
-      height: 800px;
-  }
-
-  /* Resize the "display_raw" textbox */
-  .django-leaflet-raw-textarea {
-      width: 100%;
-  }
-
-</style>
-  <div class="col-sm-12" style="height:600px;">
+  <div style="height:600px;">
     {% leaflet_map "main" callback="map_init" %}
   </div>
 

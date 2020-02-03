@@ -1,22 +1,9 @@
 {% load leaflet_tags %} 
     {% leaflet_css %}
     {% leaflet_js %}	
-    <style>
-      .leaflet-container {  /* all maps */
-          /* width:  1300px; */
-          height: 800px;
-      }    
-      #specialbigmap {
-          height: 1080px;
-      }  
-      /* Resize the "display_raw" textbox */
-      .django-leaflet-raw-textarea {
-          width: 1920px;
-      }  
-    </style>
-        <div>
-          {% leaflet_map "main" %}
-        </div>
+<div style="width:1920px; height:1080px;">
+  {% leaflet_map "main" %}
+</div>
 
  <script type="text/javascript">
   var map = L.map('main').setView([49.44, 32.05], 10);
@@ -44,7 +31,7 @@
 
       pointToLayer: function (feature, latlng) {
         return L.circleMarker(latlng, {
-          radius: 8,
+          radius: 7,
           fillColor: "#00ff00",
           color: "#000",
           weight: 1,
