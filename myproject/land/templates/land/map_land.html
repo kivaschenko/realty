@@ -8,13 +8,11 @@
     <h2>Земельні ділянки в Черкассах і Черкаському районі: продаж, оренда</h2>
     <div id="m" style="width:1200px; height:800px;"></div>
     <script type="text/javascript">
-        var map = L.map('m').setView([49.448, 32.05], 10); 
+        var map = L.map('m').setView([49.44, 32.05], 12); 
         L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
         {% for e in object_list %}
             L.polygon({{e.polygon}}).addTo(map)
-                .bindPopup('<a href="{%url "land_detail" e.slug %}">{{e.title}}</a>')
-                .bindTooltip('{{object.lat_lng}}')
-                .openTooltip();
+                .bindPopup('<a href="{%url "land_detail" e.slug %}">{{e.title}}</a>');
         {%endfor%}
     </script>
     </body>
