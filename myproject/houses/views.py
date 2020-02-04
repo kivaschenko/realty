@@ -107,7 +107,7 @@ class HouseChangeOwner(LoginRequiredMixin, generic.UpdateView):
 
 
 # to represent all markers on map
-class HouseList(generic.ListView):
+class HouseMap(generic.ListView):
     model = House
     template_name = 'houses/map_house.html'
 
