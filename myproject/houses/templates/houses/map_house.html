@@ -23,8 +23,7 @@
 	var greenIcon = new LeafIcon({iconUrl: 'leaf-green.png'});
     {% for e in object_list %}
     L.marker({{e.lat_lng}}, {icon: greenIcon})
-    .bindPopup('<h4><a href="{%url "house" e.pk e.slug %}">{{e.title}}</a></h4> \ 
-                    <h2>{{e.price}} {{e.get_currency_display}}</h2>')
+    .bindPopup('<h4><a href="{%url "house" e.pk e.slug %}">{{e.title}}</a></h4> <h2>{{e.price}} {{e.get_currency_display}}</h2>')
     .addTo(map);
     {%endfor%}
     </script>
