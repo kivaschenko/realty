@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+    <head>
+        <link rel="stylesheet" href="//unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
+        <!-- Make sure you put this AFTER Leaflet's CSS -->
+        <script src="//unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    </head>
+    <body>
+    <h2>Будинки в Черкассах і Черкаському районі: продаж, оренда</h2>
+    <div class="container" id="m" style="width:1300px; height:600px;"></div>
+    <script type="text/javascript">
+        var map = L.map('m').setView([49.44, 32.05], 10); 
+        L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+	var LeafIcon = L.Icon.extend({
+		options: {
+			shadowUrl: 'leaf-shadow.png',
+			iconSize:     [38, 95],
+			shadowSize:   [50, 64],
+			iconAnchor:   [22, 94],
+			shadowAnchor: [4, 62],
+			popupAnchor:  [-3, -76]
+		}
+	});
+	var greenIcon = new LeafIcon({iconUrl: 'leaf-green.png'});
+    {% for e in object_list %}
+    L.marker({{e.lat_lng}}, {icon: greenIcon})
+    .bindPopup('<h4><a href="{%url "house" e.pk e.slug %}">{{e.title}}</a></h4> 
+                    <h2>{{e.price}} {{e.get_currency_display}}</h2>')
+    .addTo(map);
+    {%endfor%}
+    </script>
+    </body>
+</html>

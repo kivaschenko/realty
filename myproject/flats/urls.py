@@ -7,7 +7,8 @@ urlpatterns = [
     path('post_offer/', post_offer, name='post_offer'),
     path('edit/<int:pk>/', OfferUpdate.as_view(), name='update_offer'),
     path('<type_offer>/offers/', type_offer, name='type_offer_flat'),
-    path('on/map/', get_map, name="flats_map"),
+    # path('on/map/', get_map, name="flats_map"),
+    path('map_flat/', OfferMap.as_view(), name='flats_map'),
     path('delete/<int:pk>/', delete_offer, name='offer_delete'),
     path('change_owner/<int:pk>/', OfferChangeOwner.as_view(), name='change_owner'),
 ]

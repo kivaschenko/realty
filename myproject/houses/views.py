@@ -12,10 +12,10 @@ from .models import House
 from .forms import HouseForm, HouseUpdateForm, ContactForm
 
 
-def get_map(request):
-    data = serialize('geojson', House.objects.all(), geometry_field='geometry',
-                     fields=('pk', 'slug', 'title', 'price', 'currency', ))
-    return render(request, 'houses/map.html', context={'data':data})
+# def get_map(request):
+#     data = serialize('geojson', House.objects.all(), geometry_field='geometry',
+#                      fields=('pk', 'slug', 'title', 'price', 'currency', ))
+#     return render(request, 'houses/map.html', context={'data':data})
 
 
 def details(request, pk, slug):
@@ -106,9 +106,10 @@ class HouseChangeOwner(LoginRequiredMixin, generic.UpdateView):
             return HttpResponseForbidden("Ви не маєте прав редагувати це оголошення!")
 
 
+# to represent all markers on map
 class HouseList(generic.ListView):
     model = House
-    # paginate = 10
+    template_name = 'houses/map_house.html'
 
 
 def type_offer(request, type_offer):

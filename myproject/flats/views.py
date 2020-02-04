@@ -11,10 +11,16 @@ from django.db.models import Q
 from flats.forms import OfferCreateForm, OfferUpdateForm, ContactForm
 from flats.models import Offer
 
-def get_map(request):
-    data = serialize('geojson', Offer.objects.all(), geometry_field='geometry',
-                     fields=('pk', 'slug', 'title', 'price', 'currency', 'type_offer',))
-    return render(request, 'flats/map.html', context={'data':data})
+# def get_map(request):
+#     data = serialize('geojson', Offer.objects.all(), geometry_field='geometry',
+#                      fields=('pk', 'slug', 'title', 'price', 'currency', 'type_offer',))
+#     return render(request, 'flats/map.html', context={'data':data})
+
+
+class OfferMap(generic.ListView):
+    model = Offer 
+    template_name = 'flats/map_flat.html'
+
 
 
 @login_required
