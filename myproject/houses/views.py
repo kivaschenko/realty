@@ -121,3 +121,7 @@ def type_offer(request, type_offer):
     
     return render(request, 'houses/type_house_list.html',
             {'object_list':queryset, 'type':type})
+
+
+class HouseList(generic.ListView):
+    model = House
