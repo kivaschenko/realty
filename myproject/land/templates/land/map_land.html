@@ -10,22 +10,10 @@
     <script type="text/javascript">
         var map = L.map('m').setView([49.44, 32.05], 10); 
         L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
-        var LeafIcon = L.Icon.extend({
-            options: {
-                shadowUrl: 'leaf-shadow.png',
-                iconSize:     [38, 95],
-                shadowSize:   [50, 64],
-                iconAnchor:   [22, 94],
-                shadowAnchor: [4, 62],
-                popupAnchor:  [-3, -76]
-            }
-        });
-        var orangeIcon = new LeafIcon({iconUrl: 'leaf-orange.png'});
         {% for e in object_list %}
-            L.marker({{e.lat_lng}}, {icon: orangeIcon})
+            L.marker({{e.lat_lng}}).addTo(map)
             .bindPopup('<h4><a href="{%url "land_detail" e.slug %}">{{e.title}}</a></h4> 
-                        <h2>{{e.price}} {{e.get_currency_display}}</h2>')
-            .addTo(map);
+                        <h2>{{e.price}} {{e.get_currency_display}}</h2>');
         {%endfor%}
     </script>
     </body>
