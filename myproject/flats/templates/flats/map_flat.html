@@ -10,19 +10,19 @@
     <script type="text/javascript">
         var map = L.map('m').setView([49.44, 32.05], 10); 
         L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
-	var LeafIcon = L.Icon.extend({
-		options: {
-			shadowUrl: 'leaf-shadow.png',
-			iconSize:     [38, 95],
-			shadowSize:   [50, 64],
-			iconAnchor:   [22, 94],
-			shadowAnchor: [4, 62],
-			popupAnchor:  [-3, -76]
-		}
-	});
-    var redIcon = new LeafIcon({iconUrl: 'leaf-red.png'});
+	// var LeafIcon = L.Icon.extend({
+	// 	options: {
+	// 		shadowUrl: 'leaf-shadow.png',
+	// 		iconSize:     [38, 95],
+	// 		shadowSize:   [50, 64],
+	// 		iconAnchor:   [22, 94],
+	// 		shadowAnchor: [4, 62],
+	// 		popupAnchor:  [-3, -76]
+	// 	}
+	// });
+    // var redIcon = new LeafIcon({iconUrl: 'leaf-red.png'});
     {% for e in object_list %}
-    L.marker({{e.lat_lng}}, {icon: redIcon})
+    L.marker({{e.lat_lng}})
         .bindPopup('<h4><a href="{%url "offer-detail" e.pk e.slug %}">{{e.title}}</a></h4>
                     <h2>{{e.price}} {{e.get_currency_display}}</h2>')
         .addTo(map);
