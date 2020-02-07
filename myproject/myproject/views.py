@@ -14,7 +14,7 @@ def contact(request):
             email = form.cleaned_data['email']
             cc_myself = form.cleaned_data['cc_myself']
 
-            recipients = ['elitflatcherkasy@gmail.com',]
+            recipients = ['contact@cherkasyrealestate.org.ua',]
             if cc_myself:
                 recipients.append(email)
 

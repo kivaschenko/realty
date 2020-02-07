@@ -155,7 +155,7 @@ EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
-DEFAULT_FROM_EMAIL = "CherkasyRealEstate.Org.ua <contact@cherkasyrealestate.org.ua>"
+DEFAULT_FROM_EMAIL = "CherkasyRealEstate.Org.ua <info@cherkasyrealestate.org.ua>"
 # DEFAULT_TO_EMAIL = 'info@cherkasyrealestate.org.ua'
 
 # LEAFLET_CONFIG = {
