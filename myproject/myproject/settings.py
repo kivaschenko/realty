@@ -150,13 +150,13 @@ LOGIN_REDIRECT_URL = 'home'
 
 # Add new email settings to send messages
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = False
+EMAIL_USE_TLS = True
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 DEFAULT_FROM_EMAIL = "CherkasyRealEstate.Org.ua <info@cherkasyrealestate.org.ua>"
-# DEFAULT_TO_EMAIL = 'info@cherkasyrealestate.org.ua'
+DEFAULT_TO_EMAIL = 'info@cherkasyrealestate.org.ua'
 
 # LEAFLET_CONFIG = {
 #     'SPATIAL_EXTENT': (31.44, 49.217, 32.47, 49.68), #<- xmin,ymin,xmax,ymax

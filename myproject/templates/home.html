@@ -9,79 +9,24 @@
 </table>
 <form>
   <div class="row">
-    <div class="col-sm-6"
+    <div class="col-sm-6">
           <label for="formGroupExampleInput">
       Пошук об'єкта нерухомості або ріелтора</label>
           <input type="text" class="form-control" id="formGroupExampleInput"
       placeholder="Введіть район, вулицю, назву агенства, ім'я ріелтора тощо...">
       <input type="submit" value="Мені пощастить!" class="btn btn-outline-success">
     </div>
+    <p>Пошук поки що не працює,в розробці!</p>
   </div>
 </form>
 <div class="row">
   <!-- first column -->
-  <div class="col-sm-4">
-    <table class="table">
-      <thead class="thead-inverse">
-        <tr>
-          <th>Рубрики</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-          <h3>Квартири:</h3>
-          <h4><a  href="{% url 'type_offer_flat' 'sale' %}">
-            Продаж квартир, кімнат</a>
-          </h4>
-          <h4><a href="{% url 'type_offer_flat' 'rent' %}">
-            Довгострокова оренда квартир, кімнат</a>
-          </h4>          
-          </td>
-        </tr>
-        <tr>
-          <td>
-          <h3>Будинки:</h3>
-          <h4>
-            <a href="{% url 'type_offer_house' 'sale'%}">
-              Продаж будинків</a>
-          </h4>
-          <h4>
-            <a href="{% url 'type_offer_house' 'rent'%}">
-              Довгострокова оренда будинків</a>
-            </h4>
-          </td>
-        </tr>
-        <tr>
-          <td>
-          <h3>Земельні ділянки:</h3>
-          <h4>
-          <a href="{%url 'list_land'%}">
-            Продаж землі та довгострокова оренда</a>
-          </h4>
-          </td>
-        </tr>       
-      </tbody>
-    </table>
+  <div class="col-sm-4" style="background-color:lavender;">
+<p>Якийсь топ-3 оголошень квартир</p>
   </div>
   <!--second column-->
-  <div class="col-sm-4">
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Ріелтори</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for object in object_list %}
-        <tr>
-          <th scope="row"><h4>
-          <a href="{%url 'realtor' object.pk%}">
-            {{object.created_by.first_name}} {{object.created_by.last_name}}</a> </h4>
-        </tr>
-        {%endfor%}
-      </tbody>
-    </table>
+  <div class="col-sm-4" style="background-color:lavendeblush;">
+<p>Якийсь топ-3 оголошень будинки</p>
   </div>
   <!--third column-->
   <div class="col-sm-4">
