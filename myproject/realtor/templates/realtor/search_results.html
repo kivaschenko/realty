@@ -8,9 +8,11 @@
 <div>
     {%if object_list%}
     <ul>
+        {%for object in object_list%}
         <li>
             <a href="{%url 'agency' object.pk object.slug%}">{{object.name}}</a>
         </li>
+        {%endfor%}
     </ul>
     {%else%}
     <p>Немає співпадінь</p>
