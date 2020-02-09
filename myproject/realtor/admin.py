@@ -3,10 +3,15 @@ from .models import *
 from django.contrib.gis.admin import OSMGeoAdmin
 
 @admin.register(Agency)
-class OfferAdmin(OSMGeoAdmin):
+class AgencyAdmin(OSMGeoAdmin):
     default_lon = 3570000
     default_lat = 6350000
     default_zoom = 12
     # ...
 
-admin.site.register(Realtor)
+class RealtorAdmin(admin.ModelAdmin):
+    list_display = ('created_by', 'agency', 'phone')
+
+admin.site.register(Realtor, RealtorAdmin)
+
+

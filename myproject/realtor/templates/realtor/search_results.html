@@ -1,0 +1,21 @@
+{%extends 'base.html'%}
+{%block title%}Результати пошуку агенства{%endblock%}
+{% block breadcrumb %}
+<li class="breadcrumb-item active"><a href="{% url 'home' %}">Головна</a>
+<li class="breadcrumb-item">Результати пошуку агенства</li>
+{% endblock breadcrumb %}
+{%block content%}
+<div>
+    {%if object_list%}
+    <ul>
+        <li>
+            <a href="{%url 'agency' object.pk object.slug%}">{{object.name}}</a>
+        </li>
+    </ul>
+    {%else%}
+    <p>Немає співпадінь</p>
+    {%endif%}
+</div>
+
+
+{%endblock%}

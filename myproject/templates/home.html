@@ -7,16 +7,10 @@
 
 {% block content %}
 </table>
-<form>
+<form action="{%url 'search'%}" method='GET'>
   <div class="row">
-    <div class="col-sm-6">
-          <label for="formGroupExampleInput">
-      Пошук об'єкта нерухомості або ріелтора</label>
-          <input type="text" class="form-control" id="formGroupExampleInput"
-      placeholder="Введіть район, вулицю, назву агенства, ім'я ріелтора тощо...">
-      <input type="submit" value="Мені пощастить!" class="btn btn-outline-success">
-    </div>
-    <p>Пошук поки що не працює,в розробці!</p>
+    <input type="text" class="form-control" name="q"
+      placeholder="Пошук агенства нерухомості...">
   </div>
 </form>
 <div class="row">
@@ -25,11 +19,11 @@
 <p>Якийсь топ-3 оголошень квартир</p>
   </div>
   <!--second column-->
-  <div class="col-sm-4" style="background-color:lavendeblush;">
+  <div class="col-sm-4" style="background-color:lavenderblush;">
 <p>Якийсь топ-3 оголошень будинки</p>
   </div>
   <!--third column-->
-  <div class="col-sm-4">
+  <div class="col-sm-4" style="background-color:lavender;">
     <p>Якась стрічка новин, голосування, курс долара Приватбанку рекламне місце тощо...</p>
   </div>
 </div>

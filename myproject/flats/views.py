@@ -115,8 +115,7 @@ def details(request, pk, slug):
             name = form.cleaned_data['name']
             subject = "[CherkasyRealEstate.Org.ua] Мене зацікавив ваш об'єкт нерухомості"
             message = f"Мене цікавить: {offer.title} {offer.price} {offer.currency} - \
-                    {offer.address}. Зателефонуйте мені по номеру: {phone}. \
-                    До мене можна звертатись:  {name}"
+{offer.address}. Зателефонуйте мені по номеру: {phone}. До мене можна звертатись:  {name}"
             send_mail(
                 subject=subject, 
                 message=message, 

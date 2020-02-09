@@ -38,9 +38,8 @@ def land_detail(request, slug):
 			phone = form.cleaned_data['phone']
 			name = form.cleaned_data['name']
 			subject = "[CherkasyRealEstate.Org.ua] Мене зацікавив ваш об'єкт нерухомості"
-			message = f"Мене цікавить: {land.title} {land.price} {land.currency} - \
-					Зателефонуйте мені по телефону: {phone}.\
-					До мене можна звертатись: {name}"
+			message = f"Мене цікавить: {land.title} {land.price} {land.currency} - {land.address}\
+Зателефонуйте мені по телефону: {phone}. До мене можна звертатись: {name}"
 			send_mail(
 				subject=subject,
 				message=message,

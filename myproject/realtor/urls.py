@@ -12,3 +12,7 @@ urlpatterns += [
     path('create/new/agency/', create_agency, name='create_agency'),
     path('agency_edit/<int:pk>/', edit_agency, name='edit_agency'),
 ]
+
+urlpatterns += [
+    path('search_agency/', SearchResultsView.as_view(), name='search'),
+]

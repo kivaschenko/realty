@@ -2,7 +2,7 @@ import random
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import generic
-from django.db import transaction
+from django.db.models import Q
 from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden
 from django.contrib import messages
 from django.contrib.auth import login
@@ -136,3 +136,14 @@ def top_realtor(request):
         realtor_list = []
 
     return render(request, 'home.html', {'object_list':realtor_list})
+
+
+class SearchResultsView(generic.ListView):
+    model = Agency
+    template_name = 'realtor/search_results.html'
+    
+
+    def get_queryset(self): # new
+        query = self.request.GET.get('q')
+        object_list = Agency.objects.filter(name__icontains=query) | 
+        return object_list
