@@ -145,5 +145,5 @@ class SearchResultsView(generic.ListView):
 
     def get_queryset(self): # new
         query = self.request.GET.get('q')
-        object_list = Agency.objects.filter(name__icontains=query) | 
+        object_list = Agency.objects.filter(name__icontains=query)
         return object_list
