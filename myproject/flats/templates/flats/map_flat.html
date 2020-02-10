@@ -13,7 +13,7 @@
 <h2>Квартири в Черкассах і Черкаському районі: продаж, оренда</h2>
 <div id="m" style="width:1920px; height:1080px;"></div>
 <script type="text/javascript">
-var map = L.map('m').setView([49.45, 32.05], 12); 
+var map = L.map('m').setView([49.45, 32.05], 14); 
 L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 {% for e in object_list %}
 L.marker({{e.lat_lng}})
