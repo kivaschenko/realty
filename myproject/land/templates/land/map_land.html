@@ -29,7 +29,7 @@ crossorigin=""></script>
         L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
         {% for e in object_list %}
             L.marker({{e.lat_lng}}).addTo(map)
-            .bindPopup('<h3><a href="{%url "land_detail" e.slug %}">{{e.title}}</a></h3> <h3>{{e.price}} {{e.get_currency_display}}</h3>');
+            .bindPopup('<h3><a href="{%url "land_detail" e.slug %}" target="_blank">{{e.title}}</a></h3> <h3>{{e.price}} {{e.get_currency_display}}</h3>');
         {%endfor%}
     </script>
     </body>
