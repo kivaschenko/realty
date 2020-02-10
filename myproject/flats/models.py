@@ -20,7 +20,6 @@ TYPES_OBJECT = (
     ('part_flat', 'Частина квартири'),
     ('room', 'Кімната')
 )
-CURRENCY = (('UAH', 'грн.'), ('USD', 'USD'))
 BUILDING_TYPE = (
     ('royal', 'Царський будинок'),
     ('stalin', 'Сталінка'),
@@ -81,92 +80,6 @@ REPAIR = (
     ('for_clean_processing', 'під чистову обробку'),
     ('emergency_condition', 'Аварійний стан'),
 )
-DISTRICTS = (
-    ('Райони', (
-    ('700-richchia', '700-річчя'),
-    ('Vantazhnyi port', 'Вантажний порт'),
-    ('Vodokanal', 'Водоканал'),
-    ('Dakhnivka', 'Дахнівка'),
-    ('Dniprovskyi', 'Дніпровський'),
-    ('Zaliznychnyi vokzal', 'Залізничний вокзал'),
-    ('Zelena', 'Зелена'),
-    ('k-t Myr', 'к-т Мир'),
-    ('Kazbet', 'Казбет'),
-    ('Litak', 'Літак'),
-    ('Lunacharskyi', 'Луначарський'),
-    ('Mytnytsia', 'Митниця'),
-    ('Mytnytsia-richport', 'Митниця-річпорт'),
-    ('Mytnytsia-tsentr', 'Митниця-центр'),
-    ('PZR', 'ПЗР'),
-    ('Prydniprovskyi', 'Придніпровський'),
-    ('Piatykhatky', 'Пятихатки'),
-    ('Raion D', 'Район Д'),
-    ('Siedova', 'Сєдова'),
-    ('Sosnivka', 'Соснівка'),
-    ('Sosnivskyi', 'Соснівський'),
-    ('Khimselyshche', 'Хімселище'),
-    ('Tsentr', 'Центр'),
-    ('Shkilna', 'Шкільна'),
-    ('Yabluchnyi', 'Яблучний'))
-    ),
-    ('Передмістя', (
-    ('Biloziria', "Білозір'я"),
-    ('Heronymivka', 'Геронимівка'),
-    ('Orshanets', 'Оршанець'),
-    ('Ruska Poliana', 'Руська Поляна'),
-    ('Chervona Sloboda', 'Червона Слобода'))
-    ),
-    ('Села', (
-    ('Yelyzavetovka', 'Єлизаветовка'),
-    ('Irdyn', 'Ірдинь'),
-    ('Baibuzy', 'Байбузи'),
-    ('Berezniaky', 'Березняки'),
-    ('Budyshche', 'Будище'),
-    ('Buzukiv', 'Бузуків'),
-    ('Verhuny', 'Вергуни'),
-    ('Dubiivka', 'Дубіївка'),
-    ('Dumantsi', 'Думанці'),
-    ('Kumeiky', 'Кумейки'),
-    ('Lesky', 'Леськи'),
-    ('Lozivok', 'Лозівок'),
-    ('Moshny', 'Мошни'),
-    ('Moshnohiria', "Мошногір'я"),
-    ('Nechaivka', 'Нечаївка'),
-    ('Novoselivka', 'Новоселівка'),
-    ('Pervomaiske', 'Первомайське'),
-    ('Sahunivka', 'Сагунівка'),
-    ('Svitanok', 'Світанок'),
-    ('Svydivok', 'Свидівок'),
-    ('Sokyrno', 'Сокирно'),
-    ('Sofiivka', 'Софіївка'),
-    ('Stepanky', 'Степанки'),
-    ('Tubiltsi', 'Тубільці'),
-    ('Khatsky', 'Хацьки'),
-    ('Khreshchatyk', 'Хрещатик'),
-    ('Khudiaky', 'Худяки'),
-    ('Khutory', 'Хутори'),
-    ('Chorniavka', 'Чорнявка'),
-    ('Shelepukhy', 'Шелепухи'),
-    ('Yasnoziria', "Яснозір'я"))
-    ),
-)
-# EXTEND = ( , 51.26, , 48.42)
-
-
-# class District(models.Model):
-#     """ This model defines area as polygon and name of district.
-#     """
-#     name = models.CharField(verbose_name="Назва, Район, зона, територія", max_length=255,
-#     choices=DISTRICTS)
-#     geometry = geomodels.PolygonField(verbose_name='Площа на мапі', 
-#              extent=(31.44, 49.217, 32.47, 49.68), 
-#              help_text='окресліть фігуру на мапі, що відповідає потрібній площині')
-    
-#     class Meta:
-#         ordering = ['name',]
-    
-#     def __str__(self):
-#         return self.name
 
 
 class Offer(models.Model):
@@ -187,9 +100,9 @@ class Offer(models.Model):
           help_text='70 знаків', blank=False)
     type_object = models.CharField(max_length=10, choices=TYPES_OBJECT,
                     verbose_name="Тип об'єкта", default='flat')
-    price = models.PositiveIntegerField(verbose_name='Ціна')
+    price = models.PositiveIntegerField(verbose_name='Ціна в доларах')
     currency = models.CharField(verbose_name='Валюта', max_length=3,
-             choices=CURRENCY, blank=False, default='USD',)
+             choices=(('USD', 'USD'),), blank=False, default='USD',)
 
     # COLLABORATION
     agree_price = models.BooleanField('Договірна')

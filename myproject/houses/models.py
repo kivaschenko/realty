@@ -25,9 +25,9 @@ class House(models.Model):
                 default='SALE')
     title = models.CharField(max_length=70, verbose_name='Заголовок',
           help_text='70 знаків', blank=False)
-    price = models.PositiveIntegerField(verbose_name='Ціна')
+    price = models.PositiveIntegerField(verbose_name='Ціна в доларах')
     currency = models.CharField(verbose_name='Валюта', max_length=3,
-             choices=(('UAH', 'грн.'), ('USD', 'USD')), blank=False,
+             choices=(('USD', 'USD'),), blank=False,
              default='USD',)
 
     # COLLABORATION

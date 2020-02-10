@@ -25,8 +25,15 @@
     <br>
     <dl>
       <dt>Тип</dt>
-      <dd><h4><span class="badge badge-info">
-          {{object.get_type_offer_display}}</span></h4></dd>
+      <dd><h4>
+        {%if object.type_offer == 'sale'%}
+        <span class="badge badge-success">
+          {%else%}
+        <span class="badge badge-primary">
+          {{object.get_type_offer_display}}
+        </span>
+        {%endif%}
+        </h4></dd>
       <dt>Адреса</dt>
       <dd>{%if object.address%}{{object.address}}{%endif%}</dd>
       <dt>Ціна </dt>
@@ -47,10 +54,18 @@
         {%if object.created_by.realtor%}
       <a href="tel:{{object.created_by.realtor.phone}}">
       {{object.created_by.realtor.phone}}</a>
-        {%else%}користувач немає профілю "Ріелтор"{%endif%}</dd>
+        {%else%}
+        користувач немає профілю "Ріелтор"
+        {%endif%}</dd>
       <dt>Агенство: </dt>
       <dd>
-      <a href="{%url 'agency' object.created_by.realtor.agency.pk object.created_by.realtor.agency.slug%}">{{object.created_by.realtor.agency}}</a></dd>
+        {%if object.created_by.realtor.agency%}
+      <a href="{%url 'agency' object.created_by.realtor.agency.pk object.created_by.realtor.agency.slug%}">
+        {{object.created_by.realtor.agency}}</a>
+        {%else%}
+        продавець не працює в агенстві
+        {%endif%}
+      </dd>
       <dt>Додаткові умови: </dt>
       <dd>
       <ul>

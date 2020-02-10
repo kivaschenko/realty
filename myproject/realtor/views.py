@@ -141,6 +141,7 @@ def top_realtor(request):
 class SearchResultsView(generic.ListView):
     model = Agency
     template_name = 'realtor/search_results.html'
+    pagination = 10
     
 
     def get_queryset(self): # new
