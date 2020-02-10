@@ -31,13 +31,14 @@
       <dt>Тип</dt>
       <dd>
       <h4>
-        {%if object.type_offer == 'sale'%}
+      {%if object.type_offer == 'sale'%}
         <span class="badge badge-success">
-          {%else%}
+        {{object.get_type_offer_display}}
+      {%else%}
         <span class="badge badge-primary">
-          {{object.get_type_offer_display}}
+        {{object.get_type_offer_display}}
+      {%endif%}
         </span>
-        {%endif%}
       </h4>
       </dd>
       <dt>Адреса</dt>
