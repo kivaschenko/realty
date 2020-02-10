@@ -25,7 +25,7 @@ crossorigin=""></script>
     <h2>Земельні ділянки в Черкассах і Черкаському районі: продаж, оренда</h2>
     <div id="m"></div>
     <script type="text/javascript">
-        var map = L.map('m').setView([49.45, 32.05], 15); 
+        var map = L.map('m').setView([49.45, 32.05], 10); 
         L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
         {% for e in object_list %}
             L.marker({{e.lat_lng}}).addTo(map)
