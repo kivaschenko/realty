@@ -18,7 +18,7 @@ crossorigin=""></script>
 			height: 100%;
 			margin: 10px;
 		}
-		#m {height: 600px;}
+		#m {height: 400px;}
 	</style>
 </head>
 <body>
@@ -26,11 +26,6 @@ crossorigin=""></script>
 <div id="m"></div>
 <script type="text/javascript">
 var map = L.map('m').setView([49.448, 32.05], 13); 
-map.fitBounds([
-    [31.44, 49.217],
-    [32.47, 49.68]
-]);
-// (31.44, 49.217, 32.47, 49.68)
 L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 {% for e in object_list %}
 L.marker({{e.lat_lng}})
