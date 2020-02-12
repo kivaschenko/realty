@@ -148,3 +148,9 @@ class SearchResultsView(generic.ListView):
         query = self.request.GET.get('q')
         object_list = Agency.objects.filter(name__icontains=query)
         return object_list
+
+
+class RealtorList(generic.ListView):
+    model = Realtor 
+    template_name = 'realtor/realtor_list.html'
+    pagination = 10 
