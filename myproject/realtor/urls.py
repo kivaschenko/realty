@@ -5,6 +5,7 @@ urlpatterns = [
     path('create/', create_realtor, name='create_realtor'),
     path('<int:pk>/', realtor, name='realtor'),
     path('<int:pk>/edit/', edit_realtor, name='edit_realtor'),
+    path('list/', RealtorList.as_view(), name="realtor_list"),
 ]
 
 urlpatterns += [
