@@ -9,21 +9,21 @@
 {%block content%}
 <div class="container">
 	{%if object_list%}
-	<ul>
+	<ol>
 		{%for object in object_list%}
-		<li>
-			<a href="{%url 'realtor' object.pk%}">
+		<li><a href="{%url 'realtor' object.pk%}">
 			<h3 style="font-family: 'Lobster', cursive; font-size: 26px;">
 			{{ object.created_by.first_name }} {{object.created_by.last_name}}</h3></a> - 
-			{%if object.agency%}
+			<strong>Агенство: </strong>
+			{%if object.agency%} 
 			<a href="{% url 'agency' object.agency.pk object.agency.slug %}">
-			<strong>{{object.agency.name}}</strong></a>
+			{{object.agency.name}}</a>
 			{%else%}
 			<em>Агенство не вказано</em>
 			{%endif%}
 		</li>
 		{%endfor%}
-	</ul>
+	</ol>
 	{%else%}
 	<p>тут поки що немає зареєстрованих ріелторів. Ви можете стати першим.</p>
 	{%endif%}
