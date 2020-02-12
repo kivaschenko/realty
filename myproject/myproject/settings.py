@@ -88,13 +88,15 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+# JFKed%3W
+# JACK FRUIT KOREAN egg drip % 3 WALMART 
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'realtydb',
         'USER': 'ray',
-        'PASSWORD': '2358',
+        'PASSWORD': 'JFKed%3W',
         'HOST': 'localhost',
         'PORT': '5432',
     }

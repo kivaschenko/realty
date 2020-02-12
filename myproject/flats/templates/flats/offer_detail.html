@@ -532,8 +532,8 @@
     </table>
     <br />
     {% if user.is_authenticated %}
-    <p><em>Дата публікації оголошення: {{ object.pub_date|date}}</em></p>
-    <p><em>Кількість переглядів оголошення: {{ object.num_visits }} </em></p>
+    <p><em>Дата публікації: {{ object.pub_date|date}}</em></p>
+    <p><em>Кількість переглядів: {{ object.num_visits }} </em></p>
     {% endif %}
   </div>
 

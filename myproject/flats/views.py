@@ -1,5 +1,5 @@
 from django.core.mail import send_mail
-from django.core.serializers import serialize
+# from django.core.serializers import serialize
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages

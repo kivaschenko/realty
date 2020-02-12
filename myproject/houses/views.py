@@ -1,5 +1,5 @@
 from django.core.mail import send_mail
-from django.core.serializers import serialize
+# from django.core.serializers import serialize
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
@@ -124,3 +124,4 @@ def type_offer(request, type_offer):
 
 class HouseList(generic.ListView):
     model = House
+    pagination = 10

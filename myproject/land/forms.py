@@ -20,7 +20,7 @@ class LandForm(ModelForm):
 
     class Meta:
         model = Land
-        exclude = ['created_by', 'num_visits', 'slug', 'pub_date']
+        exclude = ['address', 'created_by', 'num_visits', 'slug', 'pub_date']
         widgets = {
         'geometry': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS),
     }
