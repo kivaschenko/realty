@@ -10,12 +10,18 @@
 <div class="container">
 	{%if object_list%}
 	<ul>
-		<li><a href="{%url 'realtor' object.pk%}">
-			  	<h3 style="font-family: 'Lobster', cursive; font-size: 26px;">
-				{{ object.created_by.first_name }} {{object.created_by.last_name}}
-				</h3>
-			</a> - {%if object.agency%}<strong>{{object.agency}}</strong>{%else%}
-			<em>Агенство не вказано</em>{%endif%}
+		<li>
+			<a href="{%url 'realtor' object.pk%}">
+			<h3 style="font-family: 'Lobster', cursive; font-size: 26px;">
+			{{ object.created_by.first_name }} {{object.created_by.last_name}}
+			</h3>
+			</a> - 
+			{%if object.agency%}
+			<a href="{% url 'agency' object.agency.pk object.agency.slug %}">
+			<strong>{{object.agency.name}}</strong></a>
+			{%else%}
+			<em>Агенство не вказано</em>
+			{%endif%}
 		</li>
 	</ul>
 </div>
