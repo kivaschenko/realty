@@ -6,12 +6,6 @@
 {% endblock breadcrumb %}
 
 {% block content %}
-<!-- Search form -->
-<div class="active-cyan-4 mb-4">
-  <form action="{%url 'search'%}" method='GET'>
-    {{form}}
-  </form>
-</div>
 
 <div class="row">
   <!-- first column -->
@@ -46,7 +40,15 @@
     </div>
   <!--third column-->
   <div class="col-sm-4" style="background-color:lavender;">
-    <h3>Випадково вибрані 3 ріелтори:</h3>
+    <p>Якась стрічка новин, голосування, курс долара Приватбанку рекламне місце тощо...</p>
+    <br>
+    <!-- Search form -->
+    <div>
+    <form action="{%url 'search'%}" method='GET'>
+    {{form}}
+    </form>
+    </div>
+    <p><strong>Випадково вибрані 3 ріелтори:</strong></p>
     {%for object in realtor_list%}
     <ol>
       <li><a href="{% url 'realtor' object.created_by.realtor.id %}"
@@ -55,7 +57,6 @@
       </li>
     </ol>
     {%endfor%}
-    <p>Якась стрічка новин, голосування, курс долара Приватбанку рекламне місце тощо...</p>
     <br /><br />
     <em><a href="{%url 'realtor_list'%}">  ...усі ріелтори тут</a></em>
   </div>
