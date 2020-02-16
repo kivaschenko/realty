@@ -1,0 +1,17 @@
+{% extends 'base.html'%}
+{% block breadcrumb %}
+<li class="breadcrumb-item active"><a href="{% url 'home' %}">Головна</a>
+<li class="breadcrumb-item">Підтримати проект</li>
+{% endblock %}
+{% block content %}
+<div class="col-sm-12">
+  <h2>Допомогти проекту розвиватись</h2>
+  <dl>
+  	<dt><strong>Разова допомога</strong></dt>
+  	<dd>На карту Приватбанку: 5169360007124138</dd>
+  	<dt><strong>Стати патроном</strong></dt>
+  	<dd><a href="#">Зареєструватися як патрон та отримати переваги</a></dd>
+  </dl>
+</div>
+
+{% endblock content %}
