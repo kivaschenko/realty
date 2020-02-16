@@ -31,4 +31,8 @@ class AgencyForm(forms.ModelForm):
                 'pub_date']
         widgets = {
         'geometry': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS),
-    }      
+    }     
+
+class SearchForm(forms.Form):
+    search_query = forms.CharField(max_length=50, label='Пошук агенства за назвою, адресою ')
+   

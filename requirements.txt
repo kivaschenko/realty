@@ -1,5 +1,6 @@
 asgiref==3.2.3
 Django==2.2.7
+django-cleanup==4.0.0
 django-leaflet==0.26.0
 geographiclib==1.50
 geopy==1.20.0

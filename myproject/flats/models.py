@@ -290,6 +290,28 @@ class Offer(models.Model):
         if not self.pk:
             self._generate_slug()
             self._generate_address()
+        # # delete old file when replacing by updating the file
+        # try:
+        #     this = Offer.objects.get(id=self.id)
+        #     if this.image1 != self.image1:
+        #         this.image.delete(save=False)
+        #     if this.image2 != self.image2:
+        #         this.image.delete(save=False)
+        #     if this.image3 != self.image3:
+        #         this.image.delete(save=False)
+        #     if this.image4 != self.image4:
+        #         this.image.delete(save=False)
+        #     if this.image5 != self.image5:
+        #         this.image.delete(save=False)  
+        #     if this.image6 != self.image6:
+        #         this.image6.delete(save=False)          
+        #     if this.image7 != self.image7:
+        #         this.image7.delete(save=False)
+        #     if this.image8 != self.image8:
+        #         this.image8.delete(save=False)
+        #     if this.image9 != self.image9:
+        #         this.image9.delete(save=False)
+        # except: pass # when new images then we do nothing, normal case          
         super().save(*args, **kwargs)
 
     # ABSOLUTE URL METHOD

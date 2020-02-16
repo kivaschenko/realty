@@ -14,3 +14,5 @@ class ContactForm(forms.Form):
             label='Текст')
     email = forms.EmailField(label='Email для відповіді')
     cc_myself = forms.BooleanField(required=True, label='Надіслати копію собі')
+
+  

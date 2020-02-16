@@ -9,23 +9,55 @@
 <!-- Search form -->
 <div class="active-cyan-4 mb-4">
   <form action="{%url 'search'%}" method='GET'>
-    <input class="form-control" type="text"  name="q" placeholder="Пошук агенства нерухомості..." aria-label="Search">
-  </form> 
+    {{form}}
+  </form>
 </div>
 
 <div class="row">
   <!-- first column -->
   <div class="col-sm-4" style="background-color:lavender;">
-<p>Топ-3 оголошень квартир</p>
-  </div>
+    <h3>Останні 3 оголошення по квартирам</h3>
+    {%if flat_list%}
+    <div class="col">
+    {% for object in flat_list %}
+    <div class="row">
+    {% include 'include/card.html' %}
+    </div>
+    {%endfor%}
+    </div>            
+    {% else %}
+    <p>Тут поки немає оголошень. Ваше може бути першим.</p>
+    {% endif %}
+    </div>
   <!--second column-->
   <div class="col-sm-4" style="background-color:lavenderblush;">
-<p>Топ-3 оголошень будинки</p>
-  </div>
+    <h3>Останні 3 оголошення по будинкам</h3>
+    {%if house_list%}
+    <div class="col">
+    {% for object in house_list %}
+    <div class="row">
+    {% include 'include/house_card.html' %}
+    </div>
+    {%endfor%} 
+    </div>           
+    {% else %}
+    <p>Тут поки немає оголошень. Ваше може бути першим.</p>
+    {% endif %}
+    </div>
   <!--third column-->
   <div class="col-sm-4" style="background-color:lavender;">
-    <h3><a href="{%url 'realtor_list'%}">Ріелтори список</a></h3>
+    <h3>Випадково вибрані 3 ріелтори:</h3>
+    {%for object in realtor_list%}
+    <ol>
+      <li><a href="{% url 'realtor' object.created_by.realtor.id %}"
+        style="font-family: 'Lobster', cursive; font-size: 20px;">
+        {{ object.created_by.first_name }} {{object.created_by.last_name}}</a>
+      </li>
+    </ol>
+    {%endfor%}
     <p>Якась стрічка новин, голосування, курс долара Приватбанку рекламне місце тощо...</p>
+    <br /><br />
+    <em><a href="{%url 'realtor_list'%}">  ...усі ріелтори тут</a></em>
   </div>
 </div>
 {% endblock content %}

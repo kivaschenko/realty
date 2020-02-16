@@ -19,7 +19,7 @@ from django.views.generic import TemplateView
 from realtor import views as realtor_views
 
 urlpatterns = [
-    path('', realtor_views.top_realtor, name='home'),
+    path('', realtor_views.top_home, name='home'),
     path('rules/', TemplateView.as_view(template_name='rules.html'), name='rules'),
     path('cookie_policy/',
 TemplateView.as_view(template_name='cookie_policy.html'), name='cookies'),

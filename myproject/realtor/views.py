@@ -7,12 +7,12 @@ from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from .forms import RealtorForm, AgencyForm
+from .forms import RealtorForm, AgencyForm, SearchForm
 from .models import Realtor, Agency
 from flats.models import Offer
 from houses.models import House
 from land.models import Land
-from django.views.generic import ListView
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 
 
 @login_required
@@ -120,7 +120,19 @@ def edit_realtor(request, pk):
 
 
 
-def top_realtor(request):
+def top_home(request):
+    """The function returns last 3 offers from flats.models.Offer, houses.models.House 
+    and randomly choosed 3 realtors.
+    """
+    form = SearchForm()
+    try:
+        offer_list = Offer.objects.all()[:3]
+    except:
+        offer_list = Offer.objects.all()[0]
+    try:
+        house_list = House.objects.all()[:3]
+    except:
+        house_list = House.objects.all()[0]
     try:
         queryset = Realtor.objects.all()
         pk_gen = (item.id for item in queryset)
@@ -135,18 +147,22 @@ def top_realtor(request):
     except:
         realtor_list = []
 
-    return render(request, 'home.html', {'object_list':realtor_list})
+    return render(request, 'home.html', {'realtor_list':realtor_list, 
+                'flat_list':offer_list, 'house_list':house_list, 
+                'form':form})
 
 
 class SearchResultsView(generic.ListView):
     model = Agency
     template_name = 'realtor/search_results.html'
     pagination = 10
-    
-
     def get_queryset(self): # new
-        query = self.request.GET.get('q')
-        object_list = Agency.objects.filter(name__icontains=query)
+        query = self.request.GET.get('search_query')
+        vector = SearchVector('name', 'body', 'address')
+        search_query = SearchQuery(query)
+        object_list = Agency.objects.annotate(
+            rank=SearchRank(vector, search_query)
+        ).order_by('-rank')
         return object_list
 
 
@@ -154,3 +170,5 @@ class RealtorList(generic.ListView):
     model = Realtor 
     template_name = 'realtor/realtor_list.html'
     pagination = 10 
+
+
