@@ -3,6 +3,7 @@
 <li class="breadcrumb-item active"><a href="{% url 'home' %}">Головна</a>
 <li class="breadcrumb-item">Контакт</li>
 {% endblock %}
+{%load static%}
 {% block content %}
 <div class="row">
 <div class="col-sm-6">
@@ -14,10 +15,8 @@
   </form>
 </div>
 <div class="col-sm-6">
-  <dl>
-    <dt>Можете просто написати мені в Telegram:</dt>
-    <dd>@Kivashchenko</dd>
-  </dl>
+	<br />
+	<a href="https://twitter.com/k_ivaschenko"><img src="{%static 'img/twitter.jpg'%}"></a>
 </div>
 </div>
 {% endblock content %}
