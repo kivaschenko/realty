@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.db.models import Q
 from .models import House
-from .forms import HouseForm, HouseUpdateForm, ContactForm
+from .forms import HouseForm, HouseUpdateForm, ContactForm, FilterPriceForm
 
 
 # def get_map(request):
@@ -106,9 +106,25 @@ class HouseChangeOwner(LoginRequiredMixin, generic.UpdateView):
 
 
 # to represent all markers on map
-class HouseMap(generic.ListView):
-    model = House
+# class HouseMap(generic.ListView):
+#     model = House
+#     template_name = 'houses/map_house.html'
+
+def house_map(request):
     template_name = 'houses/map_house.html'
+    object_list = None
+    form = FilterPriceForm(request.GET)
+    if request.GET.get('min_price'):
+        min_price = request.GET.get('min_price')
+    else:
+        min_price = 0
+    if request.GET.get('max_price'):
+        max_price = request.GET.get('max_price')
+    else:
+        max_price = 10000000
+    object_list = House.objects.filter(price__gte=min_price).filter(price__lte=max_price)
+
+    return render(request, template_name, {'object_list':object_list, "form":form})
 
 
 def type_offer(request, type_offer):

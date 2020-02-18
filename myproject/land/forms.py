@@ -41,3 +41,8 @@ class LandUpdateForm(ModelForm):
 class ContactForm(forms.Form):
     name = forms.CharField(max_length=160, label="Ім'я")
     phone = forms.CharField(max_length=14, label='Телефон')
+
+
+class FilterPriceForm(forms.Form):
+    min_price = forms.CharField(label='мінім. ціна, $', required=False)
+    max_price = forms.CharField(label='макс. ціна, $', required=False)

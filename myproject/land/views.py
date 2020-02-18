@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect, Http404
 from django.core.mail import send_mail
 from .models import Land
-from .forms import LandForm, LandUpdateForm, ContactForm
+from .forms import LandForm, LandUpdateForm, ContactForm, FilterPriceForm
 
 
 @login_required
@@ -85,7 +85,19 @@ def delete_land(request, pk):
         raise Http404
 
 
-class LandMap(generic.ListView):
-	model = Land
-	template_name = "land/map_land.html"
+def map_land(request):
+    template_name = 'land/map_land.html'
+    object_list = None
+    form = FilterPriceForm(request.GET)
+    if request.GET.get('min_price'):
+        min_price = request.GET.get('min_price')
+    else:
+        min_price = 0
+    if request.GET.get('max_price'):
+        max_price = request.GET.get('max_price')
+    else:
+        max_price = 10000000
+    object_list = Land.objects.filter(price__gte=min_price).filter(price__lte=max_price)
+
+    return render(request, template_name, {'object_list':object_list, "form":form})
 	

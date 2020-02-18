@@ -49,7 +49,8 @@
     {{form}}
     </form>
     </div>
-    <p><strong>Випадково вибрані 3 ріелтори:</strong></p>
+    <br>
+    <h6>Випадково вибрані 3 ріелтори:</h6>
     {%for object in realtor_list%}
     <ol>
       <li><a href="{% url 'realtor' object.created_by.realtor.id %}"

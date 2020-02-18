@@ -103,7 +103,7 @@ crossorigin=""></script>
 </form>
 </div>
 <div class="col-sm-12">
-<div id="m" ></div>
+<div id="m"></div>
 </div>
 <script type="text/javascript">
 var map = L.map('m').setView([49.381, 32.056], 11); 
@@ -114,7 +114,7 @@ L.tileLayer("//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 {% for e in object_list %}
 L.marker({{e.lat_lng}})
-    .bindPopup('<div class="col"><h6>{{e.price}} {{e.get_currency_display}}</h6> <h6><a href="{%url "offer-detail" e.pk e.slug %}" target="_blank">{{e.title}}</a></h6> <img src="{{object.image1.url}}" style="width:40px;"></div>')
+    .bindPopup('<h6>{{e.price}} {{e.get_currency_display}}</h6> <h6><a href="{%url "offer-detail" e.pk e.slug %}" target="_blank">{{e.title}}</a></h6>')
     .addTo(map);
 {%endfor%}
 </script>
