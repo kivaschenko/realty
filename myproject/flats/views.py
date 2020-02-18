@@ -8,7 +8,12 @@ from django.urls import reverse, reverse_lazy
 from django.http import Http404, HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render
 from django.db.models import Q
-from flats.forms import OfferCreateForm, OfferUpdateForm, ContactForm
+from flats.forms import (
+    OfferCreateForm, 
+    OfferUpdateForm, 
+    ContactForm,
+    FilterPriceForm
+) 
 from flats.models import Offer
 
 # def get_map(request):
@@ -18,8 +23,39 @@ from flats.models import Offer
 
 
 class OfferMap(generic.ListView):
+    """The generic class represents list to map"""
     model = Offer 
     template_name = 'flats/map_flat.html'
+    # form_class = FilterPriceForm()
+
+    def get_queryset(self): # new
+        try:
+            min_price = int(self.request.GET.get('min_price')) #min_price
+        except:
+            min_price = 10
+        try:
+            max_price = int(self.request.GET.get('max_price')) #min_price
+        except:
+            max_price = 10000000
+        object_list = Offer.objects.filter(price__gte=min_price).filter(price__lte=max_price)
+        return object_list
+
+
+def flats_map(request):
+    template_name = 'flats/map_flat.html'
+    object_list = None
+    form = FilterPriceForm(request.GET)
+    if request.GET.get('min_price'):
+        min_price = request.GET.get('min_price')
+    else:
+        min_price = 0
+    if request.GET.get('max_price'):
+        max_price = request.GET.get('max_price')
+    else:
+        max_price = 10000000
+    object_list = Offer.objects.filter(price__gte=min_price).filter(price__lte=max_price)
+
+    return render(request, template_name, {'object_list':object_list, "form":form})
 
 
 

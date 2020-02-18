@@ -20,7 +20,7 @@ crossorigin=""></script>
 <style>
 	html, body {
 		height: 100%;
-		scroll-margin-right: 10px;
+		scroll-margin-right: 20px;
 	}
 	#m {height: 600px;}
 </style>
@@ -96,9 +96,15 @@ crossorigin=""></script>
 <li class="breadcrumb-item"><a href="/">Головна</a></li>
 <li class="breadcrumb-item active">Мапа - квартири, кімнати</li>
 </ol>
-</div>
 
+<form action="{%url 'flats_map'%}" method="get" class="form-inline">
+{{form}}
+<button type="submit" class="btn btn-sm btn-success mb-2">Фільтрувати!</button>
+</form>
+</div>
+<div class="col-sm-12">
 <div id="m" ></div>
+</div>
 <script type="text/javascript">
 var map = L.map('m').setView([49.381, 32.056], 11); 
 L.tileLayer("//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -108,7 +114,7 @@ L.tileLayer("//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 {% for e in object_list %}
 L.marker({{e.lat_lng}})
-    .bindPopup('<h4><a href="{%url "offer-detail" e.pk e.slug %}" target="_blank">{{e.title}}</a></h4> <h3>{{e.price}} {{e.get_currency_display}}</h3>')
+    .bindPopup('<div class="col"><h6>{{e.price}} {{e.get_currency_display}}</h6> <h6><a href="{%url "offer-detail" e.pk e.slug %}" target="_blank">{{e.title}}</a></h6> <img src="{{object.image1.url}}" style="width:40px;"></div>')
     .addTo(map);
 {%endfor%}
 </script>
@@ -120,6 +126,6 @@ L.marker({{e.lat_lng}})
 
 <br />
 <br />
-
+</div>
 </body>
 </html>
