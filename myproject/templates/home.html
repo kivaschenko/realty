@@ -7,11 +7,6 @@
 
 {% block content %}
 <div class="row">
-<!-- Search form -->
-<form action="{%url 'search'%}" method='GET'>
-<p>{{form.as_p}}</p>
-<input type="submit" value="Знайти" class="btn btn-primary">
-</form>
     <h1>Увага, сайт в режимі тестування. Деякі розділи та опції можуть працювати некорректно!</h1><h3> Запланований термін початку робочого режиму - 01 березня 2020 року.</h3>
   <!-- first column -->
   <div class="col-sm-4" style="background-color:lavender;">
@@ -47,7 +42,11 @@
   <div class="col-sm-4" style="background-color:lavender;">
     <p>Якась стрічка новин, голосування, курс долара Приватбанку рекламне місце тощо...</p>
     <br>
-
+<!-- Search form -->
+    <form action="{%url 'search'%}" method='GET'>
+    <p>{{form.as_p}}</p>
+    <input type="submit" value="Знайти" class="btn btn-primary">
+    </form>
     <h6>Випадково вибрані 3 ріелтори:</h6>
     {%for object in realtor_list%}
     <ol>
