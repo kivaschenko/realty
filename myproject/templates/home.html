@@ -6,8 +6,16 @@
 {% endblock breadcrumb %}
 
 {% block content %}
-
+<div class="container">
 <div class="row">
+<!-- Search form -->
+<div>
+<form action="{%url 'search'%}" method='GET' class="form-control">
+<p>{{form.as_p}}</p>
+<input type="submit" value="Знайти" class="btn btn-primary">
+</form>
+</div>
+<br>
     <h1>Увага, сайт в режимі тестування. Деякі розділи та опції можуть працювати некорректно!</h1><h3> Запланований термін початку робочого режиму - 01 березня 2020 року.</h3>
   <!-- first column -->
   <div class="col-sm-4" style="background-color:lavender;">
@@ -43,13 +51,7 @@
   <div class="col-sm-4" style="background-color:lavender;">
     <p>Якась стрічка новин, голосування, курс долара Приватбанку рекламне місце тощо...</p>
     <br>
-    <!-- Search form -->
-    <div>
-    <form action="{%url 'search'%}" method='GET'>
-    {{form}}
-    </form>
-    </div>
-    <br>
+
     <h6>Випадково вибрані 3 ріелтори:</h6>
     {%for object in realtor_list%}
     <ol>
@@ -62,5 +64,6 @@
     <br /><br />
     <em><a href="{%url 'realtor_list'%}">  ...усі ріелтори тут</a></em>
   </div>
+</div>
 </div>
 {% endblock content %}
