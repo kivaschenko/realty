@@ -47,15 +47,6 @@
     <p>{{form.as_p}}</p>
     <input type="submit" value="Знайти" class="btn btn-primary">
     </form>
-    <h6>Випадково вибрані 3 ріелтори:</h6>
-    {%for object in realtor_list%}
-    <ol>
-      <li><a href="{% url 'realtor' object.created_by.realtor.id %}"
-        style="font-family: 'Lobster', cursive; font-size: 20px;">
-        {{ object.created_by.first_name }} {{object.created_by.last_name}}</a>
-      </li>
-    </ol>
-    {%endfor%}
     <br /><br />
     <em><a href="{%url 'realtor_list'%}">  ...усі ріелтори тут</a></em>
   </div>

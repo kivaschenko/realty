@@ -177,3 +177,4 @@ def type_offer(request, type_offer):
         {'object_list':queryset, 'type':type})
 
 
+

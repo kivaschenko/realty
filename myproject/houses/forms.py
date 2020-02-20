@@ -41,6 +41,6 @@ class ContactForm(forms.Form):
 
 
 class FilterPriceForm(forms.Form):
-    min_price = forms.CharField(label='мінім. ціна, $', required=False)
-    max_price = forms.CharField(label='макс. ціна, $', required=False)
+    min_price = forms.CharField(label='мінім. ціна', required=False)
+    max_price = forms.CharField(label='макс. ціна', required=False)
     

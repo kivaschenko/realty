@@ -100,9 +100,9 @@ class Offer(models.Model):
           help_text='70 знаків', blank=False)
     type_object = models.CharField(max_length=10, choices=TYPES_OBJECT,
                     verbose_name="Тип об'єкта", default='flat')
-    price = models.PositiveIntegerField(verbose_name='Ціна в доларах')
+    price = models.PositiveIntegerField(verbose_name='Ціна')
     currency = models.CharField(verbose_name='Валюта', max_length=3,
-             choices=(('USD', 'USD'),), blank=False, default='USD',)
+             choices=(('UAH', 'грн.'), ('USD', 'USD'),), blank=False, default='USD',)
 
     # COLLABORATION
     agree_price = models.BooleanField('Договірна')
