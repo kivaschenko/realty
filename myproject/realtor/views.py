@@ -125,32 +125,8 @@ def top_home(request):
     and randomly choosed 3 realtors.
     """
     form = SearchForm()
-    try:
-        offer_list = Offer.objects.all()[:3]
-    except:
-        offer_list = Offer.objects.all()[0]
-    try:
-        house_list = House.objects.all()[:3]
-    except:
-        house_list = House.objects.all()[0]
-    # try:
-    #     queryset = Realtor.objects.all()
-    #     pk_gen = (item.id for item in queryset)
-    #     pk_list = list(pk_gen) 
-    #     realtor_list = []
-    #     if len(pk_list) <= 3:
-    #         realtor_list = queryset
-    #     else:
-    #         top_3 = random.sample(pk_list, 3)
-    #         for i in top_3:
-    #             realtor_list.append(Realtor.objects.get(pk=i))
-    # except:
-    #     realtor_list = []
 
-    return render(request, 'home.html', {'form':form,
-                # 'realtor_list':realtor_list, 
-                'flat_list':offer_list, 'house_list':house_list, 
-                })
+    return render(request, 'home.html', {'form_agency':form, })
 
 
 class SearchResultsView(generic.ListView):

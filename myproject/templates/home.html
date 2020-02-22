@@ -9,42 +9,42 @@
 <div class="row">
     <h1>Увага, сайт в режимі тестування. Деякі розділи та опції можуть працювати некорректно!</h1><h3> Запланований термін початку робочого режиму - 01 березня 2020 року.</h3>
   <!-- first column -->
-  <div class="col-sm-4" style="background-color:lavender;">
-    <h3>Останні 3 оголошення по квартирам</h3>
-    {%if flat_list%}
-    <div class="col">
-    {% for object in flat_list %}
-    <div class="row">
-    {% include 'include/card.html' %}
-    </div>
-    {%endfor%}
-    </div>            
-    {% else %}
-    <p>Тут поки немає оголошень. Ваше може бути першим.</p>
-    {% endif %}
+  <div class="col-sm-8" style="background-color:lightgray;">
+    <h3 style="font-family: 'Lobster', cursive; font-size: 26px;">Пошук за адресою, заголовком </h3>
+        <!-- Search form -->
+        <form method="GET" action="{%url 'flat_search' %}">
+        <div class="input-group input-group-lg">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-lg">Квартири</span>
+          </div>
+          <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="search_query">
+        </div>
+        </form>
+        <br>
+        <form method="GET" action="#">
+        <div class="input-group input-group-lg">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-lg">Будинкии</span>
+          </div>
+          <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        </form>
+        <br>
+        <form method="GET" action="#">
+        <div class="input-group input-group-lg">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-lg">Земельні ділянки</span>
+          </div>
+          <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        </form>
     </div>
   <!--second column-->
-  <div class="col-sm-4" style="background-color:lavenderblush;">
-    <h3>Останні 3 оголошення по будинкам</h3>
-    {%if house_list%}
-    <div class="col">
-    {% for object in house_list %}
-    <div class="row">
-    {% include 'include/house_card.html' %}
-    </div>
-    {%endfor%} 
-    </div>           
-    {% else %}
-    <p>Тут поки немає оголошень. Ваше може бути першим.</p>
-    {% endif %}
-    </div>
-  <!--third column-->
   <div class="col-sm-4" style="background-color:lavender;">
-    <p>Якась стрічка новин, голосування, курс долара Приватбанку рекламне місце тощо...</p>
     <br>
 <!-- Search form -->
     <form action="{%url 'search'%}" method='GET'>
-    <p>{{form.as_p}}</p>
+    <p>{{form_agency.as_p}}</p>
     <input type="submit" value="Знайти" class="btn btn-primary">
     </form>
     <br /><br />

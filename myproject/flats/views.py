@@ -12,33 +12,10 @@ from flats.forms import (
     OfferCreateForm, 
     OfferUpdateForm, 
     ContactForm,
-    FilterPriceForm
+    FilterPriceForm,
+    SearchForm,
 ) 
 from flats.models import Offer
-
-# def get_map(request):
-#     data = serialize('geojson', Offer.objects.all(), geometry_field='geometry',
-#                      fields=('pk', 'slug', 'title', 'price', 'currency', 'type_offer',))
-#     return render(request, 'flats/map.html', context={'data':data})
-
-
-# class OfferMap(generic.ListView):
-#     """The generic class represents list to map"""
-#     model = Offer 
-#     template_name = 'flats/map_flat.html'
-#     # form_class = FilterPriceForm()
-
-#     def get_queryset(self): # new
-#         try:
-#             min_price = int(self.request.GET.get('min_price')) #min_price
-#         except:
-#             min_price = 10
-#         try:
-#             max_price = int(self.request.GET.get('max_price')) #min_price
-#         except:
-#             max_price = 10000000
-#         object_list = Offer.objects.filter(price__gte=min_price).filter(price__lte=max_price)
-#         return object_list
 
 
 def flats_map(request):
@@ -56,7 +33,6 @@ def flats_map(request):
     object_list = Offer.objects.filter(price__gte=min_price).filter(price__lte=max_price)
 
     return render(request, template_name, {'object_list':object_list, "form":form})
-
 
 
 @login_required
@@ -130,7 +106,16 @@ class OfferList(generic.ListView):
     """
     model = Offer
     paginate_by = 10
+    form_class = SearchForm()
 
+def offer_list(request):
+    form = SearchForm(request.GET)
+    try:
+        object_list = Offer.objects.all()
+    except:
+        object_list = []
+    return render(request, template_name="flats/offer_list.html", 
+                  context={'form':form, 'object_list':object_list})
 
 
 def details(request, pk, slug):
@@ -177,4 +162,36 @@ def type_offer(request, type_offer):
         {'object_list':queryset, 'type':type})
 
 
+##=====================================================
+##SEARCH
 
+from django.contrib.postgres.search import (
+    SearchVector, 
+    SearchQuery, 
+    SearchRank,
+    TrigramSimilarity,
+)
+
+search_vectors = SearchVector('address', weight='A') + \
+                  SearchVector('title', weight='B') + \
+                  SearchVector('body', weight='D')
+
+class SearchResultsView(generic.ListView):
+    model = Offer
+    template_name='flats/search_results.html'
+    pagination = 10
+    def get_queryset(self): # new
+        query = self.request.GET.get('search_query')
+        search_query = SearchQuery(query)
+        search_rank = SearchRank(search_vectors, search_query)
+        trigram_similarity = TrigramSimilarity('address', search_query)
+        object_list = Offer.objects.annotate(
+            search=search_vectors
+        ).filter(
+            search=search_query
+        ).annotate(
+            rank=search_rank + trigram_similarity
+        ).order_by('-rank')
+
+        return object_list
+##=========================================================

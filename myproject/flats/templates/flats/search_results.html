@@ -1,0 +1,26 @@
+{% extends "base.html" %}	
+{% block title %}Список оголошень Квартири та кімнати в Черкасах.
+продаж і довгострокова оренда{% endblock %}
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'home'%}">Головна</a></li>
+  <li class="breadcrumb-item"><a href="{%url 'flats'%}">Квартири, кімнати</a></li>
+  <li class="breadcrumb-item active">Результати пошуку</li>
+{% endblock %}
+{% block content %}
+<h2>Результати пошуку - Квартири та кімнати в Черкасах</h2>
+<div class="container">
+    <div class="row">
+    {% if object_list %}
+      {% for object in object_list %}
+        <div class="row">
+          <div class="col-sm-3">
+          {% include 'include/card.html' %}
+          </div>
+        </div>
+      {%endfor%}            
+    {% else %}
+    <p>Тут поки немає оголошень. Ваше може бути першим.</p>
+    {% endif %}
+    </div>
+</div>
+{% endblock content %}

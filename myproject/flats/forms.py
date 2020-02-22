@@ -49,5 +49,4 @@ class FilterPriceForm(forms.Form):
 
 
 class SearchForm(forms.Form):
-    search_query = forms.CharField(max_length=50, 
-                label='Пошук ')
+    search_query = forms.CharField(label='Пошук ')
