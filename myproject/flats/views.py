@@ -162,7 +162,7 @@ def type_offer(request, type_offer):
         {'object_list':queryset, 'type':type})
 
 
-##=====================================================
+##==================================================
 ##SEARCH
 
 from django.contrib.postgres.search import (
@@ -172,26 +172,23 @@ from django.contrib.postgres.search import (
     TrigramSimilarity,
 )
 
-search_vectors = SearchVector('address', weight='A') + \
-                  SearchVector('title', weight='B') + \
-                  SearchVector('body', weight='D')
-
 class SearchResultsView(generic.ListView):
     model = Offer
-    template_name='flats/search_results.html'
+    template_name = 'flats/search_results.html'
     pagination = 10
     def get_queryset(self): # new
         query = self.request.GET.get('search_query')
         search_query = SearchQuery(query)
-        search_rank = SearchRank(search_vectors, search_query)
-        trigram_similarity = TrigramSimilarity('address', search_query)
+        search_vector = SearchVector('title', 'body', 'address')
+        search_rank = SearchRank(search_vector, search_query)
+        trigram_similarity = TrigramSimilarity('title', query)
         object_list = Offer.objects.annotate(
-            search=search_vectors
-        ).filter(
-            search=search_query
-        ).annotate(
-            rank=search_rank + trigram_similarity
-        ).order_by('-rank')
+            search=search_vector
+            ).filter(
+                search=search_query
+            ).annotate(
+                rank=search_rank + trigram_similarity
+            ).order_by('-rank')
 
         return object_list
 ##=========================================================

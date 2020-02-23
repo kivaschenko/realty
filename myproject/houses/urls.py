@@ -10,4 +10,5 @@ urlpatterns = [
     path('update/<int:pk>/', HouseUpdate.as_view(), name='house_update'),
     path('delete/<int:pk>/', delete_house, name='delete_house'),
     path('change_rieltor/<int:pk>/', HouseChangeOwner.as_view(), name='change_rieltor'),
+    path('search/', SearchResultsView.as_view(), name='house_search'),
 ]

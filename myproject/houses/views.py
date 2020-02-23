@@ -141,3 +141,37 @@ def type_offer(request, type_offer):
 class HouseList(generic.ListView):
     model = House
     pagination = 10
+
+
+##==================================================
+##SEARCH
+
+from django.contrib.postgres.search import (
+    SearchVector, 
+    SearchQuery, 
+    SearchRank,
+    TrigramSimilarity,
+)
+
+class SearchResultsView(generic.ListView):
+    model = House
+    template_name = 'houses/search_results.html'
+    pagination = 10
+    def get_queryset(self): # new
+        query = self.request.GET.get('search_query')
+        print(query)
+        search_query = SearchQuery(query)
+        search_vector = SearchVector('title', 'body', 'address')
+        search_rank = SearchRank(search_vector, search_query)
+        print(search_rank)
+        trigram_similarity = TrigramSimilarity('title', query)
+        object_list = House.objects.annotate(
+            search=search_vector
+            ).filter(
+                search=search_query
+            ).annotate(
+                rank=search_rank + trigram_similarity
+            ).order_by('-rank')
+
+        return object_list
+##=========================================================

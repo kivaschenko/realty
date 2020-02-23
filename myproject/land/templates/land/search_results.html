@@ -1,19 +1,19 @@
 {% extends "base.html" %}	
-{% block title %}Результати пошуку Квартири та кімнати в Черкасах.
+{% block title %}Результати пошуку Земельні ділянки в Черкасах.
 продаж і довгострокова оренда{% endblock %}
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home'%}">Головна</a></li>
-  <li class="breadcrumb-item"><a href="{%url 'flats'%}">Квартири, кімнати</a></li>
+  <li class="breadcrumb-item"><a href="{%url 'list_land'%}">Земельні ділянки</a></li>
   <li class="breadcrumb-item active">Результати пошуку</li>
 {% endblock %}
 {% block content %}
-<h4>Результати пошуку - Квартири та кімнати в Черкасах</h4>
+<h4>Результати пошуку - Земельні ділянки в Черкасах</h4>
 <div class="container">
   <div class="row">
   {% if object_list %}
   <ol>
   {% for object in object_list %}
-  <li><a href="{%url 'offer-detail' object.pk object.slug%}"><h5>{{object.title}}</h5></a></li>
+  <li><a href="{%url 'land_detail' object.slug%}"><h5>{{object.title}}</h5></a></li>
   {%endfor%} 
   </ol>           
   {% else %}

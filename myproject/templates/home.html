@@ -7,40 +7,47 @@
 
 {% block content %}
 <div class="row">
-    <h1>Увага, сайт в режимі тестування. Деякі розділи та опції можуть працювати некорректно!</h1><h3> Запланований термін початку робочого режиму - 01 березня 2020 року.</h3>
+    <h6>Увага, сайт в режимі тестування. 
+ Деякі розділи та опції можуть працювати некорректно!</h6>
+ <p> Запланований термін початку робочого режиму - 15 березня 2020 року.</p>
   <!-- first column -->
-  <div class="col-sm-8" style="background-color:lightgray;">
-    <h3 style="font-family: 'Lobster', cursive; font-size: 26px;">Пошук за адресою, заголовком </h3>
+  <div class="col-sm-8" style="background-color:lavender;">
+    <h3 style="font-family: 'Lobster', cursive; font-size: 26px;">
+      Пошук по тексту оголошень, заголовкам, за адресою</h3>
         <!-- Search form -->
         <form method="GET" action="{%url 'flat_search' %}">
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group">
           <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-lg">Квартири</span>
+            <span class="input-group-text" style="background-color: lightgray;">Квартири</span>
           </div>
-          <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="search_query">
+          <input type="text" class="form-control" name="search_query">
+          <input type="submit" value="Знайти" class="btn btn-outline-secondary">
         </div>
+        
         </form>
         <br>
-        <form method="GET" action="#">
-        <div class="input-group input-group-lg">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-lg">Будинкии</span>
+        <form method="GET" action="{%url 'house_search'%}">
+          <div class="input-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" style="background-color: lightgray;">Будинки</span>
+            </div>
+            <input type="text" class="form-control" name="search_query">
+            <input type="submit" value="Знайти" class="btn btn-outline-secondary">
           </div>
-          <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
-        </div>
         </form>
         <br>
-        <form method="GET" action="#">
-        <div class="input-group input-group-lg">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-lg">Земельні ділянки</span>
+        <form method="GET" action="{%url 'land_search'%}">
+          <div class="input-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" style="background-color: lightgray;">Земельні ділянки</span>
+            </div>
+            <input type="text" class="form-control" name="search_query">
+            <input type="submit" value="Знайти" class="btn btn-outline-secondary">
           </div>
-          <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
-        </div>
         </form>
     </div>
   <!--second column-->
-  <div class="col-sm-4" style="background-color:lavender;">
+  <div class="col-sm-4" style="background-color:lavenderblush;">
     <br>
 <!-- Search form -->
     <form action="{%url 'search'%}" method='GET'>
@@ -48,7 +55,7 @@
     <input type="submit" value="Знайти" class="btn btn-primary">
     </form>
     <br /><br />
-    <em><a href="{%url 'realtor_list'%}">  ...усі ріелтори тут</a></em>
+    <p><em><a href="{%url 'realtor_list'%}">  ...усі ріелтори тут</a></em></p>
   </div>
 </div>
 {% endblock content %}

@@ -12,7 +12,6 @@ from .models import Realtor, Agency
 from flats.models import Offer
 from houses.models import House
 from land.models import Land
-from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 
 
 @login_required
@@ -142,6 +141,37 @@ class SearchResultsView(generic.ListView):
         ).order_by('-rank')
         return object_list
 
+
+##==================================================
+##SEARCH
+
+from django.contrib.postgres.search import (
+    SearchVector, 
+    SearchQuery, 
+    SearchRank,
+    TrigramSimilarity,
+)
+
+class SearchResultsView(generic.ListView):
+    model = Agency
+    template_name = 'realtor/search_results.html'
+    pagination = 10
+    def get_queryset(self): # new
+        query = self.request.GET.get('search_query')
+        search_query = SearchQuery(query)
+        search_vector = SearchVector('name', 'body', 'address')
+        search_rank = SearchRank(search_vector, search_query)
+        trigram_similarity = TrigramSimilarity('name', query)
+        object_list = Agency.objects.annotate(
+            search=search_vector
+            ).filter(
+                search=search_query
+            ).annotate(
+                rank=search_rank + trigram_similarity
+            ).order_by('-rank')
+
+        return object_list
+##=========================================================
 
 class RealtorList(generic.ListView):
     model = Realtor 

@@ -101,3 +101,36 @@ def map_land(request):
 
     return render(request, template_name, {'object_list':object_list, "form":form})
 	
+
+##==================================================
+##SEARCH
+
+from django.contrib.postgres.search import (
+    SearchVector, 
+    SearchQuery, 
+    SearchRank,
+    TrigramSimilarity,
+)
+
+class SearchResultsView(generic.ListView):
+    model = Land
+    template_name = 'land/search_results.html'
+    pagination = 10
+    def get_queryset(self): # new
+        query = self.request.GET.get('search_query')
+        print(query)
+        search_query = SearchQuery(query)
+        search_vector = SearchVector('title', 'body', 'address')
+        search_rank = SearchRank(search_vector, search_query)
+        print(search_rank)
+        trigram_similarity = TrigramSimilarity('title', query)
+        object_list = Land.objects.annotate(
+            search=search_vector
+            ).filter(
+                search=search_query
+            ).annotate(
+                rank=search_rank + trigram_similarity
+            ).order_by('-rank')
+
+        return object_list
+##=========================================================

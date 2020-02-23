@@ -6,6 +6,7 @@ from .views import (
 	LandList, 
 	LandUpdate,
 	map_land,
+	SearchResultsView,
 )
 
 urlpatterns = [
@@ -15,4 +16,5 @@ urlpatterns = [
 	path('delete/<int:pk>/land/', delete_land, name='delete_land'), #<- done 
 	path('list/', LandList.as_view(), name='list_land'), #<- done
 	path('map_land/', map_land, name='map_land'), #<- done
+    path('search/', SearchResultsView.as_view(), name='land_search'),
 ]
