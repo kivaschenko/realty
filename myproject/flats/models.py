@@ -102,7 +102,11 @@ class Offer(models.Model):
                     verbose_name="Тип об'єкта", default='flat')
     price = models.PositiveIntegerField(verbose_name='Ціна')
     currency = models.CharField(verbose_name='Валюта', max_length=3,
-             choices=(('UAH', 'грн.'), ('USD', 'USD'),), blank=False, default='USD',)
+             choices=(
+                 ('UAH', 'грн.'), 
+                #  ('USD', 'USD'),
+                 ), 
+             blank=False, default='UAH',)
 
     # COLLABORATION
     agree_price = models.BooleanField('Договірна')
