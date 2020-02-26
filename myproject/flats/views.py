@@ -16,6 +16,7 @@ from flats.forms import (
     SearchForm,
 ) 
 from flats.models import Offer
+from realtor.models import Dollar
 
 
 def flats_map(request):
@@ -119,7 +120,8 @@ def offer_list(request):
 
 
 def details(request, pk, slug):
-    """ This function returns the selected offer and a list of the same offers."""
+    """ This function returns the selected offer
+    """
     try:
         offer = Offer.objects.filter(Q(pk=pk) & Q(slug=slug)).get()
         if request.user != offer.created_by:
@@ -127,6 +129,11 @@ def details(request, pk, slug):
             offer.save()        
     except Offer.DoesNotExist:
         raise Http404("Об'єкт не знайдено в базі.")
+    # price in hryvna
+    usd = Dollar.objects.all()[0]
+    curse = usd.curse
+    price_hrv = round(offer.price * curse)
+    price_hrv = f"{price_hrv:,}"
 
     email = offer.created_by.email
     if request.method == 'POST':
@@ -144,12 +151,18 @@ def details(request, pk, slug):
                 recipient_list=[email,])
             messages.success(request, "Ваше повідомлення відправлено власнику оголошення на email.")
             return render(request, template_name='flats/offer_detail.html', 
-                          context={'object':offer})
+                          context={'object':offer, 
+                                    'price_hrv':price_hrv,
+                                    'curse': curse, #<-new
+                                    })
     else:
         form = ContactForm()
 
-    return render(request, template_name='flats/offer_detail.html',  
-                  context={'object':offer, 'form':form})
+    return render(request, template_name='flats/offer_detail.html', 
+            context={'object':offer, 'form':form, 
+                        'price_hrv':price_hrv, 
+                        'curse':curse, # <- new
+                        })
 
 
 def type_offer(request, type_offer):

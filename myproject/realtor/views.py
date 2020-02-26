@@ -128,18 +128,18 @@ def top_home(request):
     return render(request, 'home.html', {'form_agency':form, })
 
 
-class SearchResultsView(generic.ListView):
-    model = Agency
-    template_name = 'realtor/search_results.html'
-    pagination = 10
-    def get_queryset(self): # new
-        query = self.request.GET.get('search_query')
-        vector = SearchVector('name', 'body', 'address')
-        search_query = SearchQuery(query)
-        object_list = Agency.objects.annotate(
-            rank=SearchRank(vector, search_query)
-        ).order_by('-rank')
-        return object_list
+# class SearchResultsView(generic.ListView):
+#     model = Agency
+#     template_name = 'realtor/search_results.html'
+#     pagination = 10
+#     def get_queryset(self): # new
+#         query = self.request.GET.get('search_query')
+#         vector = SearchVector('name', 'body', 'address')
+#         search_query = SearchQuery(query)
+#         object_list = Agency.objects.annotate(
+#             rank=SearchRank(vector, search_query)
+#         ).order_by('-rank')
+#         return object_list
 
 
 ##==================================================
@@ -178,4 +178,31 @@ class RealtorList(generic.ListView):
     template_name = 'realtor/realtor_list.html'
     pagination = 10 
 
+
+##=============================================
+## PARSER CURSE DOLLAR
+# my Use Agent:
+# Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:73.0) Gecko/20100101 Firefox/73.0
+
+import urllib.request
+from bs4 import BeautifulSoup as BS 
+from .models import Dollar
+
+URL = 'https://www.oschadbank.ua/ua/private/currency'
+
+def get_curse(request):
+    with urllib.request.urlopen(URL) as response:
+        html = response.read()
+
+    soup = BS(html, features="html.parser")
+    # full html table to insert into page:
+    table = soup.find_all(id='currency_date_result')[0]
+    tr = table.find_all('tr', limit=2)
+    usd = tr[1].find_all('td')[-1].text  # '2,455.0000'
+    curse = float(usd.split('.')[0].replace(',', '.')) * 10 # 24.55
+    usd = Dollar(curse=curse)
+    usd.save()
+    context = {'curse':round(curse, 2)}
+    print(context)
+    return render(request, 'realtor/get_curse.html', context)
 

@@ -39,8 +39,12 @@
       <dt>Адреса</dt>
       <dd>{%if object.address%}{{object.address}}{%endif%}</dd>
       <dt>Ціна </dt>
-      <dd><h4><span class="badge badge-warning">
-        {{ object.price}} {{object.get_currency_display}}</span></h4></dd>
+      <dd>
+        <h3><span class="badge badge-primary">{{price_hrv}} грн.</span></h3>
+        <h4><span class="badge badge-warning">{{ object.price}}
+      {{object.get_currency_display}}</span></h4>
+      <em>курс: {{curse}}</em>
+      </dd>
       <dt>
         {%if object.created_by.realtor%}Ріелтор {%else%}Продавець{%endif%}</dt>
       <dd class="col-md-9">{%if object.created_by.realtor%}

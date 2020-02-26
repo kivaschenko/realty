@@ -10,19 +10,24 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidde
 from django.db.models import Q
 from .models import House
 from .forms import HouseForm, HouseUpdateForm, ContactForm, FilterPriceForm
-
-
-# def get_map(request):
-#     data = serialize('geojson', House.objects.all(), geometry_field='geometry',
-#                      fields=('pk', 'slug', 'title', 'price', 'currency', ))
-#     return render(request, 'houses/map.html', context={'data':data})
-
+from realtor.models import Dollar
 
 def details(request, pk, slug):
-    object = House.objects.filter(Q(pk=pk) & Q(slug=slug)).get()
-    if request.user != object.created_by:
-        object.num_visits += 1
-        object.save()
+    """ This function returns the selected house
+    """
+    try:
+        object = House.objects.filter(Q(pk=pk) & Q(slug=slug)).get()
+        if request.user != object.created_by:
+            object.num_visits += 1
+            object.save()
+    except House.DoesNotExist:
+        raise Http404("Об'єкт не знайдено в базі.")
+    # price in hryvna
+    usd = Dollar.objects.all()[0]
+    curse = usd.curse 
+    price_hrv = round(object.price * curse)
+    price_hrv = f"{price_hrv:,}"
+
     email = object.created_by.email
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -39,11 +44,17 @@ def details(request, pk, slug):
                 recipient_list=[email,])
             messages.success(request, "Ваше повідомлення відправлено!")
             return render(request, template_name='houses/house_detail.html', 
-                        context={'object':object})
+                        context={'object':object, 
+                                'price_hrv':price_hrv,
+                                'curse':curse, #<- new
+                                })
     else:
         form = ContactForm()
     return render(request, template_name='houses/house_detail.html', 
-                context={'object':object, 'form':form})
+                context={'object':object, 'form':form,
+                        'price_hrv':price_hrv,
+                        'curse':curse, #<- new
+                        })
 
 
 @login_required

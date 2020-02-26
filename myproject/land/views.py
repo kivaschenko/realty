@@ -7,54 +7,67 @@ from django.http import HttpResponseRedirect, Http404
 from django.core.mail import send_mail
 from .models import Land
 from .forms import LandForm, LandUpdateForm, ContactForm, FilterPriceForm
+from realtor.models import Dollar
 
 
 @login_required
 def create_land(request):
-	if request.method == 'POST':
-		form = LandForm(request.POST, request.FILES)
-		if form.is_valid():
-			form.instance.created_by = request.user
-			form.save()
-			messages.success(request, "Об'єкт успішно створено!")
-			return HttpResponseRedirect('/')
-	else:
-		form = LandForm()
-	return render(request, 'land/create_land.html', {'form':form})
+    if request.method == 'POST':
+        form = LandForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.instance.created_by = request.user
+            form.save()
+            messages.success(request, "Об'єкт успішно створено!")
+            return HttpResponseRedirect('/')
+    else:
+        form = LandForm()
+    return render(request, 'land/create_land.html', {'form':form})
 
 
 def land_detail(request, slug):
-	try:
-		land = Land.objects.get(slug=slug)
-		if land.created_by != request.user:
-			land.num_visits += 1
-			land.save()
-	except Land.DoesNotExist:
-		raise Http404("Об'єкт не знайдено в базі!")
-	email = land.created_by.email
-	if request.method == 'POST':
-		form = ContactForm(request.POST)
-		if form.is_valid():
-			phone = form.cleaned_data['phone']
-			name = form.cleaned_data['name']
-			subject = "[CherkasyRealEstate.Org.ua] Мене зацікавив ваш об'єкт нерухомості"
-			message = f"Мене цікавить: {land.title} {land.price} {land.currency} - {land.address}\
+    try:
+        land = Land.objects.get(slug=slug)
+        if land.created_by != request.user:
+            land.num_visits += 1
+            land.save()
+    except Land.DoesNotExist:
+        raise Http404("Об'єкт не знайдено в базі!")
+    # price in hryvna
+    usd = Dollar.objects.all()[0]
+    curse = usd.curse
+    price_hrv = round(land.price * curse)
+    price_hrv = f"{price_hrv:,}"
+    email = land.created_by.email
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            phone = form.cleaned_data['phone']
+            name = form.cleaned_data['name']
+            subject = "[CherkasyRealEstate.Org.ua] Мене зацікавив ваш об'єкт нерухомості"
+            message = f"Мене цікавить: {land.title} {land.price} {land.currency} - {land.address}\
 Зателефонуйте мені по телефону: {phone}. До мене можна звертатись: {name}"
-			send_mail(
-				subject=subject,
-				message=message,
-				from_email='info@cherkasyrealestate.org.ua',
-				recipient_list=[email,]
-				)
-			messages.success(request, "Ваше повідомлення відправлено власнику оголошення на email.")
-			return render(request, 'land/land_detail.html', {'object':land})
-	else:
-		form = ContactForm()
-	return render(request, 'land/land_detail.html', {'object':land, 'form':form})
+            send_mail(
+                subject=subject,
+                message=message,
+                from_email='info@cherkasyrealestate.org.ua',
+                recipient_list=[email,]
+                )
+            messages.success(request, "Ваше повідомлення відправлено власнику оголошення на email.")
+            return render(request, template_name='land/land_detail.html', 
+                            context={
+                                'object':land,
+                                'price_hrv':price_hrv,
+                                'curse':curse,
+                            })
+    else:
+        form = ContactForm()
+    return render(request, 'land/land_detail.html', {'object':land, 'form':form,
+                                                     'price_hrv':price_hrv,
+                                                     'curse':curse,})
 
 
 class LandList(generic.ListView):
-	model = Land
+    model = Land
 
 
 class LandUpdate(LoginRequiredMixin, generic.UpdateView):
@@ -100,7 +113,7 @@ def map_land(request):
     object_list = Land.objects.filter(price__gte=min_price).filter(price__lte=max_price)
 
     return render(request, template_name, {'object_list':object_list, "form":form})
-	
+    
 
 ##==================================================
 ##SEARCH

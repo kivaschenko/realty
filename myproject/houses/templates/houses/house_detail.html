@@ -15,14 +15,14 @@
 <li class="breadcrumb-item active"><a href="{%url 'house_list'%}">Будинки</a>
 <li class="breadcrumb-item active"><a href="{%url 'type_offer_house' object.type_offer %}">
   {{object.get_type_offer_display}}</a>
-<li class="breadcrumb-item">{{object.title}}</a>
+<li class="breadcrumb-item">{{object.title}}</li>
 {% endblock %}
 
 {% block content %}
 
 <h3>{{ object.title }}</h3>
 <div class="row style="margin-left: 20px;"">
-  <!-- First column -->
+  <!-- about saler -->
   <div class="col-sm-4" style="background-color:lavender;">
     <br>
     <dl>
@@ -41,8 +41,12 @@
       <dt>Адреса</dt>
       <dd>{{object.address}}</dd>
       <dt>Ціна </dt>
-      <dd><h4><span class="badge badge-warning">
-        {{ object.price}} {{object.get_currency_display}}</span></h4></dd>
+      <dd>
+        <h3><span class="badge badge-primary">{{price_hrv}} грн.</span></h3>
+        <h4><span class="badge badge-warning">{{ object.price}}
+      {{object.get_currency_display}}</span></h4>
+      <em>курс: {{curse}}</em>
+      </dd>
       <dt>
         {%if object.created_by.realtor%}Ріелтор {%else%}Продавець{%endif%}</dt>
       <dd>{%if object.created_by.realtor%}
@@ -101,14 +105,11 @@
     </form>
     {%endif%}
     <br />
-
-
   </div>
   <!-- Second column -->
   <div class="col-sm-8" style="background-color:lavenderblush;">
     <!-- here a map -->
     {% include 'include/house_map.html' %}
-
   </div>
 </div>
 
