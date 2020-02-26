@@ -14,4 +14,7 @@ class RealtorAdmin(admin.ModelAdmin):
 
 admin.site.register(Realtor, RealtorAdmin)
 
+admin.site.register(Dollar)
+admin.site.register(StatisticUser)
+admin.site.register(Payment)
 
