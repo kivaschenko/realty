@@ -9,8 +9,8 @@ from django.contrib.auth.models import User
 geolocator = Nominatim(timeout=7, user_agent='agencys')
 
 class Agency(models.Model):
-    geometry = geomodels.PointField(verbose_name='Місце на мапі', 
-             extent=(31.44, 49.217, 32.47, 49.68), 
+    geometry = geomodels.PointField(verbose_name='Місце на мапі',
+             extent=(31.44, 49.217, 32.47, 49.68),
              help_text='<em>Просто поставте маркер на карту</em>')
     name = models.CharField(verbose_name='Назва агенції', max_length=255)
     phone1 = models.CharField(max_length=13, verbose_name="Телефон основний",
@@ -20,7 +20,8 @@ class Agency(models.Model):
     body = models.TextField(verbose_name='Про агенство',max_length=2000,
          help_text='<em>До 2000 символів</em>')
     # INVISIBLE FIELDS IN FORM
-    address = models.CharField(max_length=255, verbose_name='Адреса', null=True, blank=True)
+    address = models.CharField(max_length=255, verbose_name='Адреса',
+                               null=True, blank=True)
     created_by = models.OneToOneField(User, on_delete=models.CASCADE,
                verbose_name='Власник сторінки')
     slug = models.SlugField(default='', editable=False, max_length=100)
@@ -33,7 +34,7 @@ class Agency(models.Model):
     @property
     def lat_lng(self):
         return list(getattr(self.geometry, 'coords', [])[::-1])
-    
+
     @property
     def popupCoords(self):
         lat = round(self.geometry.y, 6)
@@ -52,7 +53,7 @@ class Agency(models.Model):
     def _generate_slug(self):
         value = translit(self.name)
         self.slug = slugify(value, allow_unicode=True)
-        
+
 
     # PREPROCESSING ADDRESS
     def _generate_address(self):
@@ -80,18 +81,29 @@ class Realtor(models.Model):
     """ Model represents all information about rieltor
     """
     phone = models.CharField(max_length=13, verbose_name="Телефон основний",
-        help_text="міжнародний формат, +38067XXXYYZZ",)
+        help_text="міжнародний формат, +38067XXXYYZZ", unique=True)
     start_year = models.CharField(max_length=4,
         verbose_name='Рік початку роботи ріелтором')
-    agency = models.ForeignKey(Agency, on_delete=models.SET_NULL, related_name='realtors',
-            null=True,  blank=True, verbose_name="Агенство",)
+    agency = models.ForeignKey(Agency, on_delete=models.SET_NULL,
+            related_name='realtors', null=True, blank=True,
+            verbose_name="Агенство",)
     bio = models.TextField(max_length=1000, blank=True, null=True,
         verbose_name="Подробиці про ріелтора",
-        help_text="<em>все, що вважаєте за потрібне про себе, свою фірму до 1000 знаків</em>",)
+        help_text="<em>все, що вважаєте за потрібне про себе, \
+свою фірму до 1000 знаків</em>",)
     # INVISIBLE FIELDS
     created_by = models.OneToOneField(User, on_delete=models.CASCADE,
                verbose_name='Власник профілю',)
     num_visits = models.PositiveIntegerField(default=0)
+    # new
+    limit_offers = models.PositiveSmallIntegerField(
+                 verbose_name='Ліміт оголошень, штук', default=20)
+    offers = models.PositiveSmallIntegerField(verbose_name="Об'єктів на продаж",
+            default=0)
+    in_archive = models.PositiveSmallIntegerField(
+               verbose_name="Об'єктів в архіві", default=0)
+    # rating = models.DecimalField(verbose_name='Рейтинг', max_digits=3,
+    #     decimal_places=2, default=0.00)
 
 
     # SAVING MEDIA FILES
@@ -109,7 +121,8 @@ class Realtor(models.Model):
 
     # TO STRING METHOD
     def __str__(self):
-        return f'{self.created_by.first_name} {self.created_by.last_name} - {self.agency}'
+        return f'{self.created_by.first_name} {self.created_by.last_name} - \
+                 {self.agency}'
 
     # ABSOLUTE URL METHOD
     def get_absolute_url(self):
@@ -123,39 +136,58 @@ class Dollar(models.Model):
 
     class Meta:
         ordering = ["-pub_date"]
-    
+
     def __str__(self):
         return f"{self.curse} - {self.pub_date}"
 
 
 class StatisticUser(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="User")
+    user = models.OneToOneField(User, on_delete=models.CASCADE,
+                                verbose_name="User")
     # RATING AND COUNTING OF OFFERS
     # rating = models.DecimalField(verbose_name='Рейтинг', max_digits=3,
     #         decimal_places=2, default=0.00)
-    limit_offers = models.PositiveSmallIntegerField(verbose_name='Ліміт оголошень, штук',
-            default=1)
-    offers = models.PositiveSmallIntegerField(verbose_name="Об'єктів на продаж",
-            default=0)
+    limit_offers = models.PositiveSmallIntegerField(
+                 verbose_name='Ліміт оголошень, штук', default=1)
+    offers = models.PositiveSmallIntegerField(
+           verbose_name="Об'єктів на продаж", default=0)
     in_archive = models.PositiveSmallIntegerField(
-               verbose_name="Об'єктів в архіві", default=0)   
+               verbose_name="Об'єктів в архіві", default=0)
     def __str__(self) :
-        return self.user 
+        return self.user
     class Meta:
         ordering = ["user"]
 
 
 class Payment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name='User')
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+         verbose_name='User')
     payment = models.PositiveIntegerField(verbose_name="Сума оплати")
     currency = models.CharField(verbose_name='Валюта', max_length=3,
-             choices=(('UAH', 'UAH'), ('USD', 'USD'), ('EUR', 'EUR')), blank=False, 
-             default='EUR',)
+             choices=(('UAH', 'UAH'), ('USD', 'USD'), ('EUR', 'EUR')),
+             blank=False, default='EUR',)
     pay_date = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f'{self.payment} {self.currency} - {self.pay_date} - {self.user}'
     class Meta:
         ordering = ["-id"]
+
+
+class LeadGenerator(models.Model):
+    phone = models.CharField(max_length=15)
+    name = models.CharField(max_length=50)
+    offer_type = models.CharField(max_length=50)
+    offer_id = models.PositiveSmallIntegerField()
+    title = models.CharField(max_length=100)
+    price = models.PositiveIntegerField()
+    address = models.CharField(max_length=255)
+    pub_date = models.DateTimeField(auto_now=True)
+    class Meta:
+        ordering = ["-pub_date"]
+    def __str__(self):
+        return f'{self.phone} {self.name} {self.title}'
+
+
 
 # CHOICE_SET = (
 #     ('5', '5- відмінно, Щиро рекомендую'),

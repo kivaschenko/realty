@@ -8,7 +8,7 @@ class RealtorForm(forms.ModelForm):
     class Meta:
         model = Realtor
         exclude = ['created_by', 'num_visits', 'offers', 'in_archive',
-                'rating',]
+                'limit_offers']
     
 
 LEAFLET_WIDGET_ATTRS = {
