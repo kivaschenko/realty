@@ -156,18 +156,18 @@ def details(request, pk, slug):
         if form.is_valid():
             phone = form.cleaned_data['phone']
             name = form.cleaned_data['name']
-            subject = "[CherkasyRealEstate.Org.ua]"
-                      " Мене зацікавив ваш об'єкт нерухомості"
+            subject = "[CherkasyRealEstate.Org.ua] Мене зацікавив ваш об'єкт \
+нерухомості"
             message = f"Мене цікавить: {offer.title} {offer.price} \
-{offer.currency} - {offer.address}. Зателефонуйте мені по номеру: {phone}."
-" До мене можна звертатись:  {name}"
+{offer.currency} - {offer.address}. Зателефонуйте мені по номеру: {phone}. До \
+мене можна звертатись:  {name}"
             send_mail(
                 subject=subject,
                 message=message,
                 from_email='info@cherkasyrealestate.org.ua',
                 recipient_list=[email,])
-            messages.success(request, "Ваше повідомлення відправлено власнику"
-" оголошення на email.")
+            messages.success(request, "Ваше повідомлення відправлено власнику \
+оголошення на email.")
             # to write to lead table
             lead = LeadGenerator(
                 phone=phone,
