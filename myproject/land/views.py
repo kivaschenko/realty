@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect, Http404
 from django.core.mail import send_mail
 from .models import Land
 from .forms import LandForm, LandUpdateForm, ContactForm, FilterPriceForm
-from realtor.models import Dollar
+from realtor.models import Dollar, LeadGenerator
 
 
 @login_required
@@ -43,8 +43,10 @@ def land_detail(request, slug):
         if form.is_valid():
             phone = form.cleaned_data['phone']
             name = form.cleaned_data['name']
-            subject = "[CherkasyRealEstate.Org.ua] Мене зацікавив ваш об'єкт нерухомості"
-            message = f"Мене цікавить: {land.title} {land.price} {land.currency} - {land.address}\
+            subject = "[CherkasyRealEstate.Org.ua] Мене зацікавив ваш \
+об'єкт нерухомості"
+            message = f"Мене цікавить: {land.title} {land.price} \
+{land.currency} - {land.address}\
 Зателефонуйте мені по телефону: {phone}. До мене можна звертатись: {name}"
             send_mail(
                 subject=subject,
@@ -52,8 +54,20 @@ def land_detail(request, slug):
                 from_email='info@cherkasyrealestate.org.ua',
                 recipient_list=[email,]
                 )
-            messages.success(request, "Ваше повідомлення відправлено власнику оголошення на email.")
-            return render(request, template_name='land/land_detail.html', 
+            messages.success(request, "Ваше повідомлення відправлено власнику \
+оголошення на email.")
+            # to write to lead table
+            lead = LeadGenerator(
+                phone=phone,
+                name=name,
+                offer_type=land.type_offer,
+                offer_id=land.pk,
+                title=land.title,
+                price=land.price,
+                address=land.address,
+            )
+            lead.save()
+            return render(request, template_name='land/land_detail.html',
                             context={
                                 'object':land,
                                 'price_hrv':price_hrv,
@@ -82,7 +96,9 @@ class LandUpdate(LoginRequiredMixin, generic.UpdateView):
         if self.object.created_by == request.user:
             return super().get(request, *args, **kwargs)
         else:
-            return HttpResponseForbidden("Ви не маєте прав редагувати це оголошення!")
+            return HttpResponseForbidden(
+                    "Ви не маєте прав редагувати це оголошення!"
+                    )
 
 @login_required
 def delete_land(request, pk):
@@ -93,7 +109,9 @@ def delete_land(request, pk):
             messages.success(request, "Оголошення видалено!")
             return HttpResponseRedirect('/')
         else:
-            return HttpResponseForbidden("У вас немає прав видалити це оголошення!")
+            return HttpResponseForbidden(
+                    "У вас немає прав видалити це оголошення!"
+                    )
     except:
         raise Http404
 
@@ -110,17 +128,21 @@ def map_land(request):
         max_price = request.GET.get('max_price')
     else:
         max_price = 10000000
-    object_list = Land.objects.filter(price__gte=min_price).filter(price__lte=max_price)
+    object_list = Land.objects.filter(
+                price__gte=min_price
+                ).filter(
+                price__lte=max_price
+                )
+    return render(request, template_name,
+                  {'object_list':object_list, "form":form})
 
-    return render(request, template_name, {'object_list':object_list, "form":form})
-    
 
 ##==================================================
 ##SEARCH
 
 from django.contrib.postgres.search import (
-    SearchVector, 
-    SearchQuery, 
+    SearchVector,
+    SearchQuery,
     SearchRank,
     TrigramSimilarity,
 )

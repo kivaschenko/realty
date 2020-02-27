@@ -10,7 +10,7 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidde
 from django.db.models import Q
 from .models import House
 from .forms import HouseForm, HouseUpdateForm, ContactForm, FilterPriceForm
-from realtor.models import Dollar
+from realtor.models import Dollar, LeadGenerator
 
 def details(request, pk, slug):
     """ This function returns the selected house
@@ -24,7 +24,7 @@ def details(request, pk, slug):
         raise Http404("Об'єкт не знайдено в базі.")
     # price in hryvna
     usd = Dollar.objects.all()[0]
-    curse = usd.curse 
+    curse = usd.curse
     price_hrv = round(object.price * curse)
     price_hrv = f"{price_hrv:,}"
 
@@ -34,23 +34,37 @@ def details(request, pk, slug):
         if form.is_valid():
             phone = form.cleaned_data['phone']
             name = form.cleaned_data['name']
-            subject = "[CherkasyRealEstate.Org.ua] Мене зацікавив ваш об'єкт нерухомості"
-            message = f"Мене цікавить: {object.title} {object.price} {object.currency} - \
-{object.address}. Зателефонуйте мені по номеру: {phone}. До мене можна звертатись:  {name}"
+            subject = "[CherkasyRealEstate.Org.ua] Мене зацікавив ваш \
+об'єкт нерухомості"
+            message = f"Мене цікавить: {object.title} {object.price} \
+{object.currency} - {object.address}. Зателефонуйте мені по номеру: {phone}. \
+До мене можна звертатись:  {name}"
             send_mail(
-                subject=subject, 
-                message=message, 
+                subject=subject,
+                message=message,
                 from_email='info@cherkasyrealestate.org.ua',
                 recipient_list=[email,])
-            messages.success(request, "Ваше повідомлення відправлено!")
-            return render(request, template_name='houses/house_detail.html', 
-                        context={'object':object, 
+            messages.success(request, "Ваше повідомлення відправлено власнику \
+оголошення на email.")
+            # to write to lead table
+            lead = LeadGenerator(
+                phone=phone,
+                name=name,
+                offer_type=object.type_offer,
+                offer_id=object.pk,
+                title=object.title,
+                price=object.price,
+                address=object.address,
+            )
+            lead.save()
+            return render(request, template_name='houses/house_detail.html',
+                        context={'object':object,
                                 'price_hrv':price_hrv,
                                 'curse':curse, #<- new
                                 })
     else:
         form = ContactForm()
-    return render(request, template_name='houses/house_detail.html', 
+    return render(request, template_name='houses/house_detail.html',
                 context={'object':object, 'form':form,
                         'price_hrv':price_hrv,
                         'curse':curse, #<- new
@@ -101,7 +115,7 @@ class HouseUpdate(LoginRequiredMixin, generic.UpdateView):
 
 
 class HouseChangeOwner(LoginRequiredMixin, generic.UpdateView):
-    model = House 
+    model = House
     template_name = 'houses/change_owner.html'
     fields = ('created_by',)
     success_url = reverse_lazy('home')
@@ -144,7 +158,7 @@ def type_offer(request, type_offer):
         type = queryset[0].get_type_offer_display
     except:
         return HttpResponse("Поки що немає таких оголошень")
-    
+
     return render(request, 'houses/type_house_list.html',
             {'object_list':queryset, 'type':type})
 
@@ -158,8 +172,8 @@ class HouseList(generic.ListView):
 ##SEARCH
 
 from django.contrib.postgres.search import (
-    SearchVector, 
-    SearchQuery, 
+    SearchVector,
+    SearchQuery,
     SearchRank,
     TrigramSimilarity,
 )
