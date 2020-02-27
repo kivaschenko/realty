@@ -172,11 +172,11 @@ def details(request, pk, slug):
             lead = LeadGenerator(
                 phone=phone,
                 name=name,
-                offer_type=object.type_offer,
-                offer_id=object.pk,
-                title=object.title,
-                price=object.price,
-                address=object.address,
+                offer_type=offer.type_offer, 
+                offer_id=offer.pk,
+                title=offer.title,
+                price=offer.price,
+                address=offer.address,
             )
             lead.save()
             return render(request, template_name='flats/offer_detail.html',
