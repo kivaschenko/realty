@@ -5,18 +5,23 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views import generic
 from django.urls import reverse, reverse_lazy
-from django.http import Http404, HttpResponse, HttpResponseRedirect, HttpResponseForbidden
+from django.http import (
+    Http404,
+    HttpResponse,
+    HttpResponseRedirect,
+    HttpResponseForbidden
+)
 from django.shortcuts import render
 from django.db.models import Q
 from flats.forms import (
-    OfferCreateForm, 
-    OfferUpdateForm, 
+    OfferCreateForm,
+    OfferUpdateForm,
     ContactForm,
     FilterPriceForm,
     SearchForm,
-) 
+)
 from flats.models import Offer
-from realtor.models import Dollar
+from realtor.models import Dollar, LeadGenerator
 
 
 def flats_map(request):
@@ -31,9 +36,14 @@ def flats_map(request):
         max_price = request.GET.get('max_price')
     else:
         max_price = 10000000
-    object_list = Offer.objects.filter(price__gte=min_price).filter(price__lte=max_price)
+    object_list = Offer.objects.filter(
+                price__gte=min_price
+                ).filter(
+                price__lte=max_price
+                )
 
-    return render(request, template_name, {'object_list':object_list, "form":form})
+    return render(request, template_name,
+                  {'object_list':object_list, "form":form})
 
 
 @login_required
@@ -52,7 +62,6 @@ def post_offer(request):
     # if a GET (or any other method) we'll create a blank form
     else:
         form = OfferCreateForm()
-
     return render(request, 'flats/post_offer.html', {'form': form})
 
 
@@ -65,7 +74,9 @@ def delete_offer(request, pk):
             messages.success(request, "Оголошення видалено!")
             return HttpResponseRedirect('/')
         else:
-            return HttpResponseForbidden("У вас немає прав видалити це оголошення!")
+            return HttpResponseForbidden(
+                    "У вас немає прав видалити це оголошення!"
+                    )
     except:
         raise Http404
 
@@ -82,11 +93,13 @@ class OfferUpdate(LoginRequiredMixin, generic.UpdateView):
         if self.object.created_by == request.user:
             return super().get(request, *args, **kwargs)
         else:
-            return HttpResponseForbidden("Ви не маєте прав редагувати це оголошення!")
+            return HttpResponseForbidden(
+                    "Ви не маєте прав редагувати це оголошення!"
+                    )
 
 
 class OfferChangeOwner(LoginRequiredMixin, generic.UpdateView):
-    model = Offer 
+    model = Offer
     template_name = 'flats/change_owner.html'
     fields = ('created_by',)
     success_url = reverse_lazy('home')
@@ -98,8 +111,10 @@ class OfferChangeOwner(LoginRequiredMixin, generic.UpdateView):
         if self.object.created_by == request.user:
             return super().get(request, *args, **kwargs)
         else:
-            return HttpResponseForbidden("Ви не маєте прав редагувати це оголошення!")
-                    
+            return HttpResponseForbidden(
+                    "Ви не маєте прав редагувати це оголошення!"
+                    )
+
 
 class OfferList(generic.ListView):
     """  Generic class-based view for a list of offers.
@@ -115,7 +130,7 @@ def offer_list(request):
         object_list = Offer.objects.all()
     except:
         object_list = []
-    return render(request, template_name="flats/offer_list.html", 
+    return render(request, template_name="flats/offer_list.html",
                   context={'form':form, 'object_list':object_list})
 
 
@@ -126,7 +141,7 @@ def details(request, pk, slug):
         offer = Offer.objects.filter(Q(pk=pk) & Q(slug=slug)).get()
         if request.user != offer.created_by:
             offer.num_visits += 1
-            offer.save()        
+            offer.save()
     except Offer.DoesNotExist:
         raise Http404("Об'єкт не знайдено в базі.")
     # price in hryvna
@@ -141,26 +156,40 @@ def details(request, pk, slug):
         if form.is_valid():
             phone = form.cleaned_data['phone']
             name = form.cleaned_data['name']
-            subject = "[CherkasyRealEstate.Org.ua] Мене зацікавив ваш об'єкт нерухомості"
-            message = f"Мене цікавить: {offer.title} {offer.price} {offer.currency} - \
-{offer.address}. Зателефонуйте мені по номеру: {phone}. До мене можна звертатись:  {name}"
+            subject = "[CherkasyRealEstate.Org.ua]"
+                      " Мене зацікавив ваш об'єкт нерухомості"
+            message = f"Мене цікавить: {offer.title} {offer.price} \
+{offer.currency} - {offer.address}. Зателефонуйте мені по номеру: {phone}."
+" До мене можна звертатись:  {name}"
             send_mail(
-                subject=subject, 
-                message=message, 
+                subject=subject,
+                message=message,
                 from_email='info@cherkasyrealestate.org.ua',
                 recipient_list=[email,])
-            messages.success(request, "Ваше повідомлення відправлено власнику оголошення на email.")
-            return render(request, template_name='flats/offer_detail.html', 
-                          context={'object':offer, 
+            messages.success(request, "Ваше повідомлення відправлено власнику"
+" оголошення на email.")
+            # to write to lead table
+            lead = LeadGenerator(
+                phone=phone,
+                name=name,
+                offer_type=object.type_offer,
+                offer_id=object.pk,
+                title=object.title,
+                price=object.price,
+                address=object.address,
+            )
+            lead.save()
+            return render(request, template_name='flats/offer_detail.html',
+                          context={'object':offer,
                                     'price_hrv':price_hrv,
                                     'curse': curse, #<-new
                                     })
     else:
         form = ContactForm()
 
-    return render(request, template_name='flats/offer_detail.html', 
-            context={'object':offer, 'form':form, 
-                        'price_hrv':price_hrv, 
+    return render(request, template_name='flats/offer_detail.html',
+            context={'object':offer, 'form':form,
+                        'price_hrv':price_hrv,
                         'curse':curse, # <- new
                         })
 
@@ -179,8 +208,8 @@ def type_offer(request, type_offer):
 ##SEARCH
 
 from django.contrib.postgres.search import (
-    SearchVector, 
-    SearchQuery, 
+    SearchVector,
+    SearchQuery,
     SearchRank,
     TrigramSimilarity,
 )
@@ -204,4 +233,6 @@ class SearchResultsView(generic.ListView):
             ).order_by('-rank')
 
         return object_list
+
 ##=========================================================
+## PERMISSION FOR ADD MORE THAN ONE OFFER
