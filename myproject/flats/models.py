@@ -86,8 +86,8 @@ class Offer(models.Model):
     """ Define a row of flat in database.
     """
     # GEOMETRY FIELD
-    geometry = geomodels.PointField(verbose_name='Місце на мапі', 
-             extent=(31.44, 49.217, 32.47, 49.68), 
+    geometry = geomodels.PointField(verbose_name='Місце на мапі',
+             extent=(31.44, 49.217, 32.47, 49.68),
              help_text='<em>Просто поставте маркер на карту</em>')
     # create latitude and longitude coordinates for leaflet map:
     @property
@@ -97,15 +97,15 @@ class Offer(models.Model):
     type_offer = models.CharField(max_length=5, verbose_name="Тип оголошення",
                choices=TYPE_OFFER,default='sale')
     title = models.CharField(max_length=70, verbose_name='Заголовок',
-          help_text='70 знаків', blank=False)
+          help_text='до 70 знаків, повторно не редагується!', blank=False)
     type_object = models.CharField(max_length=10, choices=TYPES_OBJECT,
                     verbose_name="Тип об'єкта", default='flat')
     price = models.PositiveIntegerField(verbose_name='Ціна')
     currency = models.CharField(verbose_name='Валюта', max_length=3,
              choices=(
-                 # ('UAH', 'грн.'), 
+                 # ('UAH', 'грн.'),
                  ('USD', 'USD'),
-                 ), 
+                 ),
              blank=False, default='USD',)
 
     # COLLABORATION
@@ -161,7 +161,7 @@ class Offer(models.Model):
             verbose_name='Фото 8', null=True, blank=True)
     image9 = models.ImageField(upload_to=user_directory_path,
             verbose_name='Фото 9', null=True, blank=True)
- 
+
      # Appliances
     plate = models.BooleanField(verbose_name='Плита')
     cooking_plate = models.BooleanField(verbose_name='Варочна поверхня')
@@ -259,7 +259,10 @@ class Offer(models.Model):
     slug = models.SlugField(default='', editable=False, max_length=100)
     pub_date = models.DateTimeField(auto_now_add=True)
     num_visits = models.PositiveIntegerField(default=0)
-
+    # new field for archivate offers
+    archive = models.BooleanField(verbose_name="Оголошення в архіві",
+            default=False)
+    archivated_date = models.DateTimeField(null=True, blank=True)
     # PREPROCESSING ADDRESS
     def _generate_address(self):
         location = geolocator.reverse((self.geometry.y, self.geometry.x))
@@ -294,28 +297,28 @@ class Offer(models.Model):
         if not self.pk:
             self._generate_slug()
             self._generate_address()
-        # # delete old file when replacing by updating the file
-        # try:
-        #     this = Offer.objects.get(id=self.id)
-        #     if this.image1 != self.image1:
-        #         this.image.delete(save=False)
-        #     if this.image2 != self.image2:
-        #         this.image.delete(save=False)
-        #     if this.image3 != self.image3:
-        #         this.image.delete(save=False)
-        #     if this.image4 != self.image4:
-        #         this.image.delete(save=False)
-        #     if this.image5 != self.image5:
-        #         this.image.delete(save=False)  
-        #     if this.image6 != self.image6:
-        #         this.image6.delete(save=False)          
-        #     if this.image7 != self.image7:
-        #         this.image7.delete(save=False)
-        #     if this.image8 != self.image8:
-        #         this.image8.delete(save=False)
-        #     if this.image9 != self.image9:
-        #         this.image9.delete(save=False)
-        # except: pass # when new images then we do nothing, normal case          
+        # delete old file when replacing by updating the file
+        try:
+            this = Offer.objects.get(id=self.id)
+            if this.image1 != self.image1:
+                this.image.delete(save=False)
+            if this.image2 != self.image2:
+                this.image.delete(save=False)
+            if this.image3 != self.image3:
+                this.image.delete(save=False)
+            if this.image4 != self.image4:
+                this.image.delete(save=False)
+            if this.image5 != self.image5:
+                this.image.delete(save=False)
+            if this.image6 != self.image6:
+                this.image6.delete(save=False)
+            if this.image7 != self.image7:
+                this.image7.delete(save=False)
+            if this.image8 != self.image8:
+                this.image8.delete(save=False)
+            if this.image9 != self.image9:
+                this.image9.delete(save=False)
+        except: pass # when new images then we do nothing, normal case
         super().save(*args, **kwargs)
 
     # ABSOLUTE URL METHOD

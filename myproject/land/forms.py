@@ -20,7 +20,8 @@ class LandForm(ModelForm):
 
     class Meta:
         model = Land
-        exclude = ['address', 'created_by', 'num_visits', 'slug', 'pub_date']
+        exclude = ['address', 'created_by', 'num_visits', 'slug', 'pub_date',
+                'archive', 'archivated_date']
         widgets = {
         'geometry': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS),
     }
@@ -31,12 +32,12 @@ class LandUpdateForm(ModelForm):
 
     class Meta:
         model = Land
-        exclude = ['title', 'geometry', 'type_offer', 'address', 'created_by', 
-                'num_visits', 'slug', 'pub_date']
+        exclude = ['address', 'created_by', 'num_visits', 'slug', 'pub_date',
+                'archive', 'archivated_date', 'geometry', 'title', 'type_offer']
         widgets = {
                 'geometry': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS),
         }
-        
+
 
 class ContactForm(forms.Form):
     name = forms.CharField(max_length=160, label="Ім'я")

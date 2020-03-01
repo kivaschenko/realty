@@ -105,14 +105,14 @@
     </form>
     {%endif%}
     <br />
-
-
+    <!-- data about publicated and visits -->
+    <p><em>Дата публікації: {{ object.pub_date|date}}</em></p>
+    <p><em>Кількість переглядів: {{ object.num_visits }} </em></p>
   </div>
   <!-- Second column -->
   <div class="col-sm-8" style="background-color:lavenderblush;">
     <!-- here a map -->
     {% include 'include/one_land_map.html' %}
-
   </div>
 </div>
 
@@ -227,10 +227,6 @@
     </tbody>
     </table>
     <br />
-    {% if user.is_authenticated %}
-    <p><em>Дата публікації: {{ object.pub_date|date}}</em></p>
-    <p><em>Кількість переглядів: {{ object.num_visits }} </em></p>
-    {% endif %}
   </div>
   <div class="col-sm-8" style="background-color:lavenderblush;">
     <h2>Опис об'єкту</h2>

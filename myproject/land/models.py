@@ -16,17 +16,18 @@ class Land(models.Model):
                     ('sale', 'Продаж'),
                     ('rent', 'Оренда довгострокова')),
                 default='SALE')
-    title = models.CharField(max_length=70, verbose_name='Заголовок оголошення', help_text='до 70 знаків')
-    geometry = geomodels.PolygonField(verbose_name='Площа на мапі',  extent=(31.44, 49.217, 32.47, 49.68), 
-			 help_text='<em>обведіть багатокутник по формі земельної ділянки</em>')
+    title = models.CharField(max_length=70, verbose_name='Заголовок оголошення',
+          help_text='до 70 знаків')
+    geometry = geomodels.PolygonField(verbose_name='Площа на мапі',
+             extent=(31.44, 49.217, 32.47, 49.68),
+			 help_text='<em>багатокутник по формі земельної ділянки</em>')
     price = models.PositiveIntegerField(verbose_name='Ціна')
     currency = models.CharField(verbose_name='Валюта', max_length=3,
              choices=(
-                 # ('UAH', 'грн.'), 
+                 # ('UAH', 'грн.'),
                  ('USD', 'USD'),
-                 ), 
+                 ),
              blank=False, default='USD',)
-
     # COLLABORATION
     agree_price = models.BooleanField('Договірна')
     no_commission = models.BooleanField(verbose_name='Без комісії')
@@ -112,7 +113,12 @@ class Land(models.Model):
     slug = models.SlugField(default='', editable=False, max_length=200)
     pub_date = models.DateTimeField(auto_now_add=True)
     num_visits = models.PositiveIntegerField(default=0)
-    address = models.CharField(max_length=255, verbose_name='Адреса', blank=True, null=True)
+    address = models.CharField(max_length=255, verbose_name='Адреса',
+            blank=True, null=True)
+    # new field for archivate offers
+    archive = models.BooleanField(verbose_name="Оголошення в архіві",
+            default=False)
+    archivated_date = models.DateTimeField(null=True, blank=True)
     # PREPROCESSING ADDRESS
     def _generate_address(self):
         location = geolocator.reverse(self.lat_lng)
@@ -153,9 +159,15 @@ class Land(models.Model):
         if not self.pk:
             self._generate_slug()
             self._generate_address()
+        # delete old file when replacing by updating the file
+        try:
+            this = Land.objects.get(id=self.id)
+            if this.image1 != self.image1:
+                this.image.delete(save=False)
+        except: pass # when new images then we do nothing, normal case
         super().save(*args, **kwargs)
 
     # ABSOLUTE URL METHOD
     def get_absolute_url(self):
         """ Returns the url to access a detail record for this offer."""
-        return reverse('land', kwargs={'slug': self.slug})    
+        return reverse('land', kwargs={'slug': self.slug})

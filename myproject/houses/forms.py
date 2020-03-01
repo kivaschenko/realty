@@ -19,7 +19,8 @@ class HouseForm(forms.ModelForm):
 
     class Meta:
         model = House
-        exclude = ['created_by', 'address', 'num_visits', 'slug', 'pub_date']
+        exclude = ['address', 'created_by', 'num_visits', 'slug', 'pub_date',
+                'archive', 'archivated_date', 'geometry', 'title', 'type_offer']
         widgets = {
         'geometry': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS),
     }
@@ -29,8 +30,8 @@ class HouseUpdateForm(forms.ModelForm):
 
     class Meta:
         model = House
-        exclude = ['title', 'geometry', 'type_offer', 'slug', 'created_by', 
-                'address', 'num_visits', 'pub_date']
+        exclude = ['address', 'created_by', 'num_visits', 'slug', 'pub_date',
+                'archive', 'archivated_date']
         widgets = {
         'geometry': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS),
     }
@@ -43,4 +44,3 @@ class ContactForm(forms.Form):
 class FilterPriceForm(forms.Form):
     min_price = forms.CharField(label='мінім. ціна', required=False)
     max_price = forms.CharField(label='макс. ціна', required=False)
-    

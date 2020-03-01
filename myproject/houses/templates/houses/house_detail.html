@@ -105,6 +105,9 @@
     </form>
     {%endif%}
     <br />
+    <!-- data about publicated and visits -->
+    <p><em>Дата публікації: {{ object.pub_date|date}}</em></p>
+    <p><em>Кількість переглядів: {{ object.num_visits }} </em></p>
   </div>
   <!-- Second column -->
   <div class="col-sm-8" style="background-color:lavenderblush;">
@@ -235,11 +238,11 @@
         <tr>
           <th scope="row">Загальна площа земельної ділянки, га</th>
           <td>{%if object.LandArea%}{{object.LandArea}}{%else%}не вказано{%endif%}</td>
-        </tr>       
+        </tr>
         <tr>
           <th scope="row">Лицьова сторона власності, метрів</th>
           <td>{%if object.LotFrontage%}{{object.LotFrontage}}{%else%}не вказано{%endif%}</td>
-        </tr>       
+        </tr>
         <tr>
           <th scope="row">Форма земельної ділянки</th>
           <td>{{object.get_LotShape_display}}</td>
@@ -622,10 +625,6 @@
     </tbody>
     </table>
     <br />
-    {% if user.is_authenticated %}
-    <p><em>Дата публікації: {{ object.pub_date|date}}</em></p>
-    <p><em>Кількість переглядів: {{ object.num_visits }} </em></p>
-    {% endif %}
   </div>
   <div class="col-sm-8" style="background-color:lavenderblush;">
     <h2>Опис об'єкту</h2>
