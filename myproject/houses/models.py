@@ -440,3 +440,28 @@ class House(models.Model):
     def get_absolute_url(self):
         """ Returns the url to access a detail record for this offer."""
         return reverse('house', kwargs={'pk': self.pk, 'slug': self.slug})
+
+##========================================================================
+## SIGNALS
+
+def delete_image(sender, instance, **kwargs):
+    if instance.image1:
+        instance.image1.delete(False)
+    if instance.image2:
+        instance.image2.delete(False)
+    if instance.image3:
+        instance.image3.delete(False)
+    if instance.image4:
+        instance.image4.delete(False)
+    if instance.image5:
+        instance.image5.delete(False)
+    if instance.image6:
+        instance.image6.delete(False)
+    if instance.image7:
+        instance.image7.delete(False)
+    if instance.image8:
+        instance.image8.delete(False)
+    if instance.image9:
+        instance.image9.delete(False)
+
+models.signals.pre_delete.connect(delete_image, sender=House)

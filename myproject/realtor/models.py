@@ -30,31 +30,24 @@ class Agency(models.Model):
 
     logo = models.ImageField(upload_to='media',
             verbose_name='Логотип', null=True, blank=True)
-
     @property
     def lat_lng(self):
         return list(getattr(self.geometry, 'coords', [])[::-1])
-
     @property
     def popupCoords(self):
         lat = round(self.geometry.y, 6)
         lng = round(self.geometry.x, 6)
         return f'{lat}, {lng}'
-
     # META CLASS
     class Meta:
         ordering = ["-name",]
-
     # TO STRING METHOD
     def __str__(self):
         return self.name
-
     # PREPROCESSING SLUGS
     def _generate_slug(self):
         value = translit(self.name)
         self.slug = slugify(value, allow_unicode=True)
-
-
     # PREPROCESSING ADDRESS
     def _generate_address(self):
         location = geolocator.reverse((self.geometry.y, self.geometry.x))
@@ -62,28 +55,43 @@ class Agency(models.Model):
         addr_split = addr.split(',')
         address = ', '.join(addr_split[:-4])
         self.address = address
-
     # SAVE METHOD
     def save(self, *args, **kwargs):
         if not self.pk:
             self._generate_slug()
             self._generate_address()
+        try:
+            this = Agency.objects.get(id=self.id)
+            if this.logo != self.logo:
+                this.logo.delete(save=False)
+        except:
+            pass
         super().save(*args, **kwargs)
-
     # ABSOLUTE URL METHOD
     def get_absolute_url(self):
         """ Returns the url to access a detail record for the agency.
         """
         return reverse('agency', kwargs={"pk":self.pk, 'slug': self.slug})
 
+##=========================================================================
+## SIGNALS FOR AGENCY
+def delete_logo(sender, instance, **kwargs):
+    if instance.logo:
+        instance.logo.delete(False)
+
+models.signals.pre_delete.connect(delete_logo, sender=Agency)
+
+##==========================================================================
+## REALTOR MODEL
 
 class Realtor(models.Model):
     """ Model represents all information about rieltor
     """
     phone = models.CharField(max_length=13, verbose_name="Телефон основний",
-        help_text="міжнародний формат, +38067XXXYYZZ", unique=True)
+        help_text="міжнародний формат, +38067XXXYYZZ", unique=True, null=True,
+        blank=True)
     start_year = models.CharField(max_length=4,
-        verbose_name='Рік початку роботи ріелтором')
+        verbose_name='Рік початку роботи ріелтором', null=True, blank=True)
     agency = models.ForeignKey(Agency, on_delete=models.SET_NULL,
             related_name='realtors', null=True, blank=True,
             verbose_name="Агенство",)
@@ -105,31 +113,48 @@ class Realtor(models.Model):
     # rating = models.DecimalField(verbose_name='Рейтинг', max_digits=3,
     #     decimal_places=2, default=0.00)
 
-
     # SAVING MEDIA FILES
     def user_directory_path(instance, filename):
         img_path = 'user_{0}/{1}'.format(instance.created_by.id, filename)
         return img_path
-
-
     avatar = models.ImageField(upload_to=user_directory_path, null=True,
             blank=True, verbose_name='Фото ріелтора')
-
     # META CLASS
     class Meta:
         ordering = ['pk']
-
     # TO STRING METHOD
     def __str__(self):
         return f'{self.created_by.first_name} {self.created_by.last_name} - \
                  {self.agency}'
-
+    # SAVE METHOD
+    def save(self, *args, **kwargs):
+        try:
+            this = Realtor.objects.get(id=self.id)
+            if this.avatar != self.avatar:
+                this.avatar.delete(save=False)
+        except:
+            pass
+        super().save(*args, **kwargs)
     # ABSOLUTE URL METHOD
     def get_absolute_url(self):
         """ Returns the url to access a detail record for this offer."""
         return reverse('realtor',  kwargs={'pk': self.pk})
+##==========================================================================
+## SIGNALS FOR REALTOR
+def delete_avatar(sender, instance, **kwargs):
+    if instance.avatar:
+        instance.avatar.delete(False)
 
+models.signals.pre_delete.connect(delete_avatar, sender=Realtor)
 
+def create_realtor(sender, **kwargs):
+    if kwargs['created']:
+        realtor = Realtor.objects.create(created_by=kwargs['instance'])
+
+models.signals.post_save.connect(create_realtor, sender=User)
+
+##===========================================================================
+## FOR SAVING currency curses
 class Dollar(models.Model):
     curse = models.DecimalField(max_digits=5, decimal_places=2)
     pub_date = models.DateTimeField(auto_now_add=True)

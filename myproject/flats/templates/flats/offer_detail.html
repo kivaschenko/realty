@@ -65,11 +65,11 @@
       </dd>
       <dt>Телефон: </dt>
       <dd>
-        {%if object.created_by.realtor%}
+        {% if object.created_by.realtor.phone %}
       <a href="tel:{{object.created_by.realtor.phone}}">
       {{object.created_by.realtor.phone}}</a>
         {% else %}
-        користувач немає профілю "Ріелтор"
+        користувач не вказав телефон
         {%endif%}
       </dd>
       <dt>Агенство: </dt>

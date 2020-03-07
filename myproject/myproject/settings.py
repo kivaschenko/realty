@@ -26,8 +26,8 @@ SECRET_KEY = '60+xw_jdf0437y!b#4%xg+94@cj*2a!plydvlbm%^ie7byy(sa'
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    '127.0.0.1', 
-    '138.68.7.116', 
+    '127.0.0.1',
+    '138.68.7.116',
     'www.cherkasyrealestate.org.ua',
     'cherkasyrealestate.org.ua',
     ]
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     # Third-party
     'leaflet',  # new
     'geopy', #<- new
+    'django_unused_media', #<- new
 
     'flats',
     'accounts',
@@ -89,7 +90,7 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 # JFKed%3W
-# JACK FRUIT KOREAN egg drip % 3 WALMART 
+# JACK FRUIT KOREAN egg drip % 3 WALMART
 
 DATABASES = {
     'default': {
