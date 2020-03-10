@@ -29,7 +29,7 @@ TemplateView.as_view(template_name='cookie_policy.html'), name='cookies'),
     path('realtors/', include('realtor.urls')),
     path('houses/', include('houses.urls')),
     path('land/', include('land.urls')),
-    path('admin/', admin.site.urls),
+    path('realty-admin/', admin.site.urls),
     ]
 
 from django.contrib.auth import views as auth_views
