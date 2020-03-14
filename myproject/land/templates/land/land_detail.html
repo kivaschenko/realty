@@ -113,6 +113,9 @@
   <div class="col-sm-8" style="background-color:lavenderblush;">
     <!-- here a map -->
     {% include 'include/one_land_map.html' %}
+    {% if object.cadastral_number %}
+    <p><strong>Кадастровий номер: </strong>{{ object.cadastral_number }}</p>
+    {% endif %}
   </div>
 </div>
 
