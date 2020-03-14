@@ -33,7 +33,7 @@ def create_agency(request):
     if request.method == 'POST':
         form = AgencyForm(request.POST, request.FILES or None)
         if form.is_valid():
-            form.instance.created_by = request.user 
+            form.instance.created_by = request.user
             form.save()
             messages.success(request, "Ви успішно створили нове агенство. Доступ в вашому меню.")
             return HttpResponseRedirect('/')
@@ -49,7 +49,7 @@ def get_agency(request, pk, slug):
         object.save()
     realtor_list = Realtor.objects.filter(agency_id=object.pk)
     return render(
-        request, 
+        request,
         template_name='realtor/agency.html',
         context={'object':object, 'realtor_list':realtor_list})
 
@@ -93,8 +93,8 @@ def realtor(request, pk):
 
     return render(request, 'realtor/realtor.html',
                   {
-                  'object':q, 
-                  'flat_list':offer_set, 
+                  'object':q,
+                  'flat_list':offer_set,
                   'house_list':house_list,
                   'land_list':land_list
                   })
@@ -120,7 +120,7 @@ def edit_realtor(request, pk):
 
 
 def top_home(request):
-    """The function returns last 3 offers from flats.models.Offer, houses.models.House 
+    """The function returns last 3 offers from flats.models.Offer, houses.models.House
     and randomly choosed 3 realtors.
     """
     form = SearchForm()
@@ -146,8 +146,8 @@ def top_home(request):
 ##SEARCH
 
 from django.contrib.postgres.search import (
-    SearchVector, 
-    SearchQuery, 
+    SearchVector,
+    SearchQuery,
     SearchRank,
     TrigramSimilarity,
 )
@@ -174,9 +174,9 @@ class SearchResultsView(generic.ListView):
 ##=========================================================
 
 class RealtorList(generic.ListView):
-    model = Realtor 
+    model = Realtor
     template_name = 'realtor/realtor_list.html'
-    pagination = 10 
+    pagination = 10
 
 
 ##=============================================
@@ -185,7 +185,7 @@ class RealtorList(generic.ListView):
 # Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:73.0) Gecko/20100101 Firefox/73.0
 
 import urllib.request
-from bs4 import BeautifulSoup as BS 
+from bs4 import BeautifulSoup as BS
 from .models import Dollar
 
 URL = 'https://www.oschadbank.ua/ua/private/currency'
@@ -198,11 +198,11 @@ def get_curse(request):
     # full html table to insert into page:
     table = soup.find_all(id='currency_date_result')[0]
     tr = table.find_all('tr', limit=2)
-    usd = tr[1].find_all('td')[-1].text  # '2,455.0000'
-    curse = float(usd.split('.')[0].replace(',', '.')) * 10 # 24.55
+    usd = tr[1].find_all('td')[-1].text  # '26.85'
+    # curse = float(usd.split('.')[0].replace(',', '.')) # 24.55
+    curse = float(usd)
     usd = Dollar(curse=curse)
     usd.save()
     context = {'curse':round(curse, 2)}
     print(context)
     return render(request, 'realtor/get_curse.html', context)
-
