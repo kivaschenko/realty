@@ -22,6 +22,8 @@ urlpatterns = [
     path('', realtor_views.top_home, name='home'),
     path('donate/', TemplateView.as_view(template_name='donate.html'), name='donate'),
     path('faq/', TemplateView.as_view(template_name='faq.html'), name='faq'),
+    path('public_offerta/', TemplateView.as_view(template_name='public_offerta.html'),
+         name='public_offerta'),
     path('rules/', TemplateView.as_view(template_name='rules.html'), name='rules'),
     path('cookie_policy/',
 TemplateView.as_view(template_name='cookie_policy.html'), name='cookies'),

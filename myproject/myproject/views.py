@@ -14,7 +14,8 @@ def contact(request):
             email = form.cleaned_data['email']
             cc_myself = form.cleaned_data['cc_myself']
 
-            recipients = ['contact@cherkasyrealestate.org.ua',]
+            recipients = ['contact@cherkasyrealestate.org.ua',
+'teodorathome@yahoo.com']
             if cc_myself:
                 recipients.append(email)
 
@@ -24,4 +25,3 @@ def contact(request):
     else:
         form = ContactForm()
     return render(request, 'contact.html', {'form':form})
-
