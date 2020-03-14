@@ -56,6 +56,9 @@ class Land(models.Model):
             verbose_name='Світлина 8', null=True, blank=True)
     image9 = models.ImageField(upload_to=user_directory_path,
             verbose_name='Світлина 9', null=True, blank=True)
+    # cadastral number
+    cadastral_number = models.CharField(max_length=25, verbose_name="Кадастровий номер",
+                     null=True, blank=True)
     # MSZoning: Identifies the general zoning classification of the sale.
     MSZoning = models.CharField(verbose_name='Зонування', max_length=3,
             choices=(
