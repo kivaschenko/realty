@@ -13,6 +13,4 @@ class ContactForm(forms.Form):
             widget=forms.Textarea(attrs={'rows':5}),
             label='Текст')
     email = forms.EmailField(label='Email для відповіді')
-    cc_myself = forms.BooleanField(required=True, label='Надіслати копію собі')
-
-  
+    cc_myself = forms.BooleanField(required=False, label='Надіслати копію собі')
