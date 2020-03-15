@@ -74,7 +74,7 @@ def details(request, pk, slug):
 @login_required
 def create_house(request):
     if request.method == 'POST':
-        form = HouseForm(request.POST)
+        form = HouseForm(request.POST, request.FILES)
         if form.is_valid():
             form.instance.created_by = request.user
             form.save()
