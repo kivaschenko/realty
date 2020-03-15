@@ -56,9 +56,7 @@ def post_offer(request):
             form.instance.created_by = request.user
             form.save()
             messages.success(request, "Об'єкт додано.")
-
             return HttpResponseRedirect('/')
-
     # if a GET (or any other method) we'll create a blank form
     else:
         form = OfferCreateForm()
@@ -172,7 +170,7 @@ def details(request, pk, slug):
             lead = LeadGenerator(
                 phone=phone,
                 name=name,
-                offer_type=offer.type_offer, 
+                offer_type=offer.type_offer,
                 offer_id=offer.pk,
                 title=offer.title,
                 price=offer.price,

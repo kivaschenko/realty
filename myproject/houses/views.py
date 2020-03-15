@@ -76,11 +76,12 @@ def create_house(request):
     if request.method == 'POST':
         form = HouseForm(request.POST)
         if form.is_valid():
+            form.instance.created_by = request.user
             form.save()
             messages.success(request, message="Об'єкт додано!")
             return HttpResponseRedirect('/')
     else:
-        form = HouseForm
+        form = HouseForm()
     return render(request, 'houses/house_form.html', {'form': form})
 
 
