@@ -105,25 +105,6 @@ class Land(models.Model):
     # BODY TEXT
     body = models.TextField(max_length=4000, verbose_name='Опис',
             help_text="<em>до 4000 знаків</em>")
-    # Communications
-    gas = models.BooleanField(verbose_name='Газ')
-    central_water_supply = models.BooleanField(
-                         verbose_name='Центральний водопровід')
-    well = models.BooleanField(verbose_name='Скважина')
-    electricity = models.BooleanField(verbose_name='Електрика')
-    central_sewerage = models.BooleanField(
-                     verbose_name='Центральна каналізація')
-    septic_tank = models.BooleanField(verbose_name='Каналізація септик')
-    removal_of_waste = models.BooleanField(verbose_name='Вивіз відходів')
-    asphalt_road = models.BooleanField(verbose_name='Асфальтована дорога')
-    # Landscape (up to 1 km.)
-    river = models.BooleanField(verbose_name='Річка')
-    reservoir = models.BooleanField(verbose_name='Водосховище')
-    lake = models.BooleanField(verbose_name='Озеро')
-    hills = models.BooleanField(verbose_name='Пагорби')
-    mountains = models.BooleanField(verbose_name='Гори')
-    park = models.BooleanField(verbose_name='Парк')
-    forest = models.BooleanField(verbose_name='Ліс')
 
     # INVISIBLE FIELDS IN FORM
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL,

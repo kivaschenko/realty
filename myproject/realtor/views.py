@@ -1,4 +1,6 @@
 import random
+import urllib.request
+from bs4 import BeautifulSoup as BS
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import generic
@@ -7,11 +9,20 @@ from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from django.contrib.postgres.search import (
+    SearchVector,
+    SearchQuery,
+    SearchRank,
+    TrigramSimilarity,
+)
 from .forms import RealtorForm, AgencyForm, SearchForm
-from .models import Realtor, Agency
+from .models import Realtor, Agency, Dollar
 from flats.models import Offer
 from houses.models import House
 from land.models import Land
+
+# for parsing curse dollar
+URL = 'https://www.oschadbank.ua/ua/private/currency'
 
 
 @login_required
@@ -100,7 +111,6 @@ def realtor(request, pk):
                   })
 
 
-
 @login_required
 def edit_realtor(request, pk):
     try:
@@ -118,7 +128,6 @@ def edit_realtor(request, pk):
         return render(request, 'realtor/edit_realtor.html', {'form':form})
 
 
-
 def top_home(request):
     """The function returns last 3 offers from flats.models.Offer, houses.models.House
     and randomly choosed 3 realtors.
@@ -127,30 +136,8 @@ def top_home(request):
 
     return render(request, 'home.html', {'form_agency':form, })
 
-
-# class SearchResultsView(generic.ListView):
-#     model = Agency
-#     template_name = 'realtor/search_results.html'
-#     pagination = 10
-#     def get_queryset(self): # new
-#         query = self.request.GET.get('search_query')
-#         vector = SearchVector('name', 'body', 'address')
-#         search_query = SearchQuery(query)
-#         object_list = Agency.objects.annotate(
-#             rank=SearchRank(vector, search_query)
-#         ).order_by('-rank')
-#         return object_list
-
-
 ##==================================================
 ##SEARCH
-
-from django.contrib.postgres.search import (
-    SearchVector,
-    SearchQuery,
-    SearchRank,
-    TrigramSimilarity,
-)
 
 class SearchResultsView(generic.ListView):
     model = Agency
@@ -184,11 +171,6 @@ class RealtorList(generic.ListView):
 # my Use Agent:
 # Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:73.0) Gecko/20100101 Firefox/73.0
 
-import urllib.request
-from bs4 import BeautifulSoup as BS
-from .models import Dollar
-
-URL = 'https://www.oschadbank.ua/ua/private/currency'
 
 def get_curse(request):
     with urllib.request.urlopen(URL) as response:
