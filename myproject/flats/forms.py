@@ -11,7 +11,7 @@ LEAFLET_WIDGET_ATTRS = {
     'settings_overrides': {
                 'DEFAULT_CENTER': (49.448, 32.05),
                 'DEFAULT_ZOOM': 12,
-                'SPATIAL_EXTENT': (31.44, 49.217, 32.47, 49.68),
+                'SPATIAL_EXTENT': (31.00, 49.00, 33.00, 50.00),
             }
 }
 
