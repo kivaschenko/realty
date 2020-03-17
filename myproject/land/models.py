@@ -19,7 +19,7 @@ class Land(models.Model):
     title = models.CharField(max_length=70, verbose_name='Заголовок оголошення',
           help_text='до 70 знаків')
     geometry = geomodels.PolygonField(verbose_name='Площа на мапі',
-             extent=(31.44, 49.217, 32.47, 49.68),
+             extent=(31.00, 49.00, 33.00, 49.00),
 			 help_text='<em>багатокутник по формі земельної ділянки</em>')
     price = models.PositiveIntegerField(verbose_name='Ціна')
     currency = models.CharField(verbose_name='Валюта', max_length=3,
