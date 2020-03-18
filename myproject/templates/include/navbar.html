@@ -67,9 +67,9 @@
             Мій профіль ріелтора</a>
             {%if user.agency%}
               <a class="dropdown-item" href="{% url 'agency' user.agency.pk user.agency.slug %}">
-            Моє агенство</a>
+            Моє Агенція</a>
             {%else%}
-              <a class="dropdown-item" href="{%url 'create_agency'%}">Створити агенство</a>
+              <a class="dropdown-item" href="{%url 'create_agency'%}">Створити Агенція</a>
             {%endif%}
           {%else%}
           <a class="dropdown-item" href="{%url 'create_realtor'%}">

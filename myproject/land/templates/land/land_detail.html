@@ -63,7 +63,7 @@
         {% else %}
         користувач не вказав телефон
         {% endif %}</dd>
-      <dt>Агенство: </dt>
+      <dt>Агенція: </dt>
       <dd>
         {%if object.created_by.realtor.agency%}
       <a href="{%url 'agency' object.created_by.realtor.agency.pk object.created_by.realtor.agency.slug%}">
@@ -80,7 +80,7 @@
       {% else %}
       <li>Без торгу</li>
       {% endif %}
-      {% if object.without_commission is True%}
+      {% if object.no_commission is True%}
       <li>Без комісійних</li>
       {% else %}
       <li>Додатково є коміссійні</li>

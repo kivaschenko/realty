@@ -12,12 +12,12 @@
 	<ol>
 		{%for object in object_list%}
 		<li style="font-family: 'Lobster', cursive; font-size: 20px; color:darkslategray;"><a href="{%url 'realtor' object.pk%}">
-		{{ object.created_by.first_name }} {{object.created_by.last_name}}</a> | <strong>Агенство: </strong>
+		{{ object.created_by.first_name }} {{object.created_by.last_name}}</a> | <strong>Агенція: </strong>
 		{%if object.agency%} 
 		<a href="{% url 'agency' object.agency.pk object.agency.slug %}">
 		{{object.agency.name}}</a>
 		{%else%}
-		<em>Агенство не вказано</em>
+		<em>Агенція не вказано</em>
 		{%endif%}
 		</li>
 		{%endfor%}

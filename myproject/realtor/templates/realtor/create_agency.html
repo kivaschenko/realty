@@ -1,6 +1,6 @@
 {% extends 'base.html'%}
 {% load leaflet_tags %}
-{% block title %}Додати нове агенство нерухомості {% endblock title %}
+{% block title %}Додати нове Агенція нерухомості {% endblock title %}
 
 {% block leaflet %}
 {% leaflet_js plugins="forms" %}
@@ -9,14 +9,14 @@
 
 {% block breadcrumb %}
 <li class="breadcrumb-item active"><a href="{%url 'home'%}">Головна</a>
-<li class="breadcrumb-item">Додати нове агенство нерухомості</a>
+<li class="breadcrumb-item">Додати нове Агенція нерухомості</a>
 {% endblock %}
 
 {% block content%}
 <div class="container">
   {%if user.agency%}
-  <h2>Ви вже маєте агенство. Можна мати тільки одне!</h2>
-  <p>Ви можете передати це агенство іншому ріелтору або видалити це.</p>
+  <h2>Ви вже маєте Агенція. Можна мати тільки одне!</h2>
+  <p>Ви можете передати це Агенція іншому ріелтору або видалити це.</p>
   {%else%}
   <div class="col">
     <form method="POST" enctype="multipart/form-data">

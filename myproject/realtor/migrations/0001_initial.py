@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=255, verbose_name='Назва агенції')),
                 ('phone1', models.CharField(help_text='міжнародний формат, +38067XXXYYZZ', max_length=13, verbose_name='Телефон основний')),
                 ('phone2', models.CharField(help_text='міжнародний формат, +38067XXXYYZZ', max_length=13, verbose_name='Телефон додатковий')),
-                ('body', models.TextField(help_text='<em>До 2000 символів</em>', max_length=2000, verbose_name='Про агенство')),
+                ('body', models.TextField(help_text='<em>До 2000 символів</em>', max_length=2000, verbose_name='Про Агенція')),
                 ('address', models.CharField(blank=True, max_length=255, null=True, verbose_name='Адреса')),
                 ('slug', models.SlugField(default='', editable=False, max_length=100)),
                 ('pub_date', models.DateTimeField(auto_now_add=True)),
@@ -58,7 +58,7 @@ class Migration(migrations.Migration):
                 ('bio', models.TextField(blank=True, help_text='<em>все, що вважаєте за потрібне про себе, свою фірму до 1000 знаків</em>', max_length=1000, null=True, verbose_name='Подробиці про ріелтора')),
                 ('num_visits', models.PositiveIntegerField(default=0)),
                 ('avatar', models.ImageField(blank=True, null=True, upload_to=realtor.models.Realtor.user_directory_path, verbose_name='Фото ріелтора')),
-                ('agency', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='realtors', to='realtor.Agency', verbose_name='Агенство')),
+                ('agency', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='realtors', to='realtor.Agency', verbose_name='Агенція')),
                 ('created_by', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Власник профілю')),
             ],
             options={

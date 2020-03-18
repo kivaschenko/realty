@@ -46,7 +46,7 @@ def create_agency(request):
         if form.is_valid():
             form.instance.created_by = request.user
             form.save()
-            messages.success(request, "Ви успішно створили нове агенство. Доступ в вашому меню.")
+            messages.success(request, "Ви успішно створили нове Агенція. Доступ в вашому меню.")
             return HttpResponseRedirect('/')
     else:
         form = AgencyForm()

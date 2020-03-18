@@ -50,7 +50,7 @@ style="font-family: 'Lobster', cursive; font-size: 20px;">
 <a href="tel:{{object.created_by.realtor.phone}}">
 {{object.created_by.realtor.phone}}</a>{% else %}користувач не вказав телефон
 {%endif%}</dd>
-<dt>Агенство: </dt>
+<dt>Агенція: </dt>
 <dd>{%if object.created_by.realtor.agency%}
 <a href="{%url 'agency' object.created_by.realtor.agency.pk object.created_by.realtor.agency.slug%}">
 {{object.created_by.realtor.agency}}</a>{%else%}продавець не працює в агенстві

@@ -17,7 +17,7 @@ class Agency(models.Model):
         help_text="міжнародний формат, +38067XXXYYZZ",)
     phone2 = models.CharField(max_length=13, verbose_name="Телефон додатковий",
         help_text="міжнародний формат, +38067XXXYYZZ",)
-    body = models.TextField(verbose_name='Про агенство',max_length=2000,
+    body = models.TextField(verbose_name='Про Агенція',max_length=2000,
          help_text='<em>До 2000 символів</em>')
     # INVISIBLE FIELDS IN FORM
     address = models.CharField(max_length=255, verbose_name='Адреса',
@@ -94,7 +94,7 @@ class Realtor(models.Model):
         verbose_name='Рік початку роботи ріелтором', null=True, blank=True)
     agency = models.ForeignKey(Agency, on_delete=models.SET_NULL,
             related_name='realtors', null=True, blank=True,
-            verbose_name="Агенство",)
+            verbose_name="Агенція",)
     bio = models.TextField(max_length=1000, blank=True, null=True,
         verbose_name="Подробиці про ріелтора",
         help_text="<em>все, що вважаєте за потрібне про себе, \

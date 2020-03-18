@@ -53,7 +53,7 @@
         <dt>Працює</dt>
         <dd>з {{object.start_year}} року</dd>
         {% endif %}
-        <dt>Агенство, компанія</dt>
+        <dt>Агенція, компанія</dt>
         <dd>
           {%if object.agency%}
             <a href="{% url 'agency' object.agency.pk object.agency.slug %}">
@@ -61,9 +61,9 @@
             {{object.agency.name}}</h2>
             </a>
             {% elif object.created_by == request.user %}
-            <p>У вас не вибрано Агенство нерухомості. Ви можете вибрати із
+            <p>У вас не вибрано Агенція нерухомості. Ви можете вибрати із
             списка існуючих на сторінці "Редагувати профіль" або:</p><br>
-            <a href="{%url 'create_agency'%}" class="btn btn-sm btn-info">Створити свое агенство</a>
+            <a href="{%url 'create_agency'%}" class="btn btn-sm btn-info">Створити свое Агенція</a>
           {%else%}
             Не вказано
           {%endif%}
