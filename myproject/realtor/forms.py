@@ -9,7 +9,7 @@ class RealtorForm(forms.ModelForm):
         model = Realtor
         exclude = ['created_by', 'num_visits', 'offers', 'in_archive',
                 'limit_offers']
-    
+
 
 LEAFLET_WIDGET_ATTRS = {
     'map_height': '500px',
@@ -18,7 +18,7 @@ LEAFLET_WIDGET_ATTRS = {
     'settings_overrides': {
                 'DEFAULT_CENTER': (49.448, 32.05),
                 'DEFAULT_ZOOM': 12,
-                'SPATIAL_EXTENT': (31.44, 49.217, 32.47, 49.68),
+                'SPATIAL_EXTENT': (31.00, 49.00, 33.00, 50.00),
             }
 }
 
@@ -27,13 +27,12 @@ class AgencyForm(forms.ModelForm):
 
     class Meta:
         model = Agency
-        exclude = ['created_by', 'address', 'num_visits', 'slug', 
+        exclude = ['created_by', 'address', 'num_visits', 'slug',
                 'pub_date']
         widgets = {
         'geometry': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS),
-    }     
+    }
 
 class SearchForm(forms.Form):
-    search_query = forms.CharField(max_length=50, 
+    search_query = forms.CharField(max_length=50,
                 label='Пошук агенства за назвою, адресою ', required=False)
-   

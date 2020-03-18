@@ -10,7 +10,7 @@ geolocator = Nominatim(timeout=7, user_agent='agencys')
 
 class Agency(models.Model):
     geometry = geomodels.PointField(verbose_name='Місце на мапі',
-             extent=(31.44, 49.217, 32.47, 49.68),
+             extent=(31.00, 49.00, 33.00, 50.00),
              help_text='<em>Просто поставте маркер на карту</em>')
     name = models.CharField(verbose_name='Назва агенції', max_length=255)
     phone1 = models.CharField(max_length=13, verbose_name="Телефон основний",
