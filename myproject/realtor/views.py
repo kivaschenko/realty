@@ -88,15 +88,15 @@ def realtor(request, pk):
             q.num_visits += 1
             q.save()
         try:
-            offer_set = Offer.objects.filter(created_by=q.created_by).all()
+            offer_set = Offer.objects.filter(archive=False).filter(created_by=q.created_by).all()
         except:
             pass
         try:
-            house_list = House.objects.filter(created_by=q.created_by).all()
+            house_list = House.objects.filter(archive=False).filter(created_by=q.created_by).all()
         except:
             pass
         try:
-            land_list = Land.objects.filter(created_by=q.created_by).all()
+            land_list = Land.objects.filter(archive=False).filter(created_by=q.created_by).all()
         except:
             pass
     except Realtor.DoesNotExist:
@@ -129,11 +129,7 @@ def edit_realtor(request, pk):
 
 
 def top_home(request):
-    """The function returns last 3 offers from flats.models.Offer, houses.models.House
-    and randomly choosed 3 realtors.
-    """
     form = SearchForm()
-
     return render(request, 'home.html', {'form_agency':form, })
 
 ##==================================================

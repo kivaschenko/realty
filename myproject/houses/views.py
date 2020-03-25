@@ -1,5 +1,4 @@
 from django.core.mail import send_mail
-# from django.core.serializers import serialize
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
@@ -17,9 +16,12 @@ def details(request, pk, slug):
     """
     try:
         object = House.objects.filter(Q(pk=pk) & Q(slug=slug)).get()
-        if request.user != object.created_by:
-            object.num_visits += 1
-            object.save()
+        if not object.archive:
+            if request.user != object.created_by:
+                object.num_visits += 1
+                object.save()
+        else:
+            raise Http404("Об'єкт видалено або перенесено в архів.")
     except House.DoesNotExist:
         raise Http404("Об'єкт не знайдено в базі.")
     # price in hryvna
@@ -90,7 +92,8 @@ def delete_house(request, pk):
     try:
         house = House.objects.get(pk=pk)
         if house.created_by == request.user:
-            house.delete()
+            house.archive = True
+            house.save()
             messages.success(request, "Оголошення видалено!")
             return HttpResponseRedirect('/')
         else:
@@ -131,13 +134,9 @@ class HouseChangeOwner(LoginRequiredMixin, generic.UpdateView):
             return HttpResponseForbidden("Ви не маєте прав редагувати це оголошення!")
 
 
-# to represent all markers on map
-# class HouseMap(generic.ListView):
-#     model = House
-#     template_name = 'houses/map_house.html'
-
 def house_map(request):
-    template_name = 'houses/map_house.html'
+    """ This function represnts all instances of House where archive==False
+    """
     object_list = None
     form = FilterPriceForm(request.GET)
     if request.GET.get('min_price'):
@@ -148,17 +147,22 @@ def house_map(request):
         max_price = request.GET.get('max_price')
     else:
         max_price = 10000000
-    object_list = House.objects.filter(price__gte=min_price).filter(price__lte=max_price)
+    object_list = House.objects.filter(
+            archive=False).filter(
+            price__gte=min_price).filter(
+            price__lte=max_price)
 
-    return render(request, template_name, {'object_list':object_list, "form":form})
+    return render(request, template_name='houses/map_house.html',
+            context={'object_list':object_list, "form":form})
 
 
 def type_offer(request, type_offer):
     try:
-        queryset = House.objects.filter(type_offer=type_offer).all()
+        queryset = House.objects.filter(archive=False).filter(
+                 type_offer=type_offer).all()
         type = queryset[0].get_type_offer_display
     except:
-        return HttpResponse("Поки що немає таких оголошень")
+        return HttpResponse("Поки що немає таких оголошень, або вони видалені.")
 
     return render(request, 'houses/type_house_list.html',
             {'object_list':queryset, 'type':type})
@@ -191,7 +195,7 @@ class SearchResultsView(generic.ListView):
         search_rank = SearchRank(search_vector, search_query)
         print(search_rank)
         trigram_similarity = TrigramSimilarity('title', query)
-        object_list = House.objects.annotate(
+        object_list = House.objects.filter(archive=False).annotate(
             search=search_vector
             ).filter(
                 search=search_query
@@ -200,4 +204,3 @@ class SearchResultsView(generic.ListView):
             ).order_by('-rank')
 
         return object_list
-##=========================================================

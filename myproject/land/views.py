@@ -27,9 +27,12 @@ def create_land(request):
 def land_detail(request, slug):
     try:
         land = Land.objects.get(slug=slug)
-        if land.created_by != request.user:
-            land.num_visits += 1
-            land.save()
+        if not land.archive:
+            if land.created_by != request.user:
+                land.num_visits += 1
+                land.save()
+        else:
+            raise Http404("Об'єкт видалено або перенесено в архів.")        
     except Land.DoesNotExist:
         raise Http404("Об'єкт не знайдено в базі!")
     # price in hryvna
@@ -105,7 +108,7 @@ def delete_land(request, pk):
     try:
         house = House.objects.get(pk=pk)
         if house.created_by == request.user:
-            house.delete()
+            house.archive = True
             messages.success(request, "Оголошення видалено!")
             return HttpResponseRedirect('/')
         else:
@@ -129,6 +132,7 @@ def map_land(request):
     else:
         max_price = 10000000
     object_list = Land.objects.filter(
+                archive=False).filter(
                 price__gte=min_price
                 ).filter(
                 price__lte=max_price
@@ -159,7 +163,7 @@ class SearchResultsView(generic.ListView):
         search_rank = SearchRank(search_vector, search_query)
         print(search_rank)
         trigram_similarity = TrigramSimilarity('title', query)
-        object_list = Land.objects.annotate(
+        object_list = Land.objects.filter(archive=False).annotate(
             search=search_vector
             ).filter(
                 search=search_query

@@ -20,7 +20,7 @@ class HouseForm(forms.ModelForm):
     class Meta:
         model = House
         exclude = ['address', 'created_by', 'num_visits', 'slug', 'pub_date',
-                'archive', 'archivated_date']
+                'archive', 'archivated_date', 'currency']
         widgets = {
         'geometry': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS),
     }
@@ -31,7 +31,8 @@ class HouseUpdateForm(forms.ModelForm):
     class Meta:
         model = House
         exclude = ['address', 'created_by', 'num_visits', 'slug', 'pub_date',
-                'archive', 'archivated_date', 'geometry', 'title', 'type_offer']
+                'archive', 'archivated_date', 'geometry', 'title', 'type_offer',
+                'currency']
         widgets = {
         'geometry': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS),
     }

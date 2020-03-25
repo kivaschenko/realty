@@ -34,5 +34,5 @@ class AgencyForm(forms.ModelForm):
     }
 
 class SearchForm(forms.Form):
-    search_query = forms.CharField(max_length=50,
+    search_query = forms.CharField(max_length=30,
                 label='Пошук агенства за назвою, адресою ', required=False)

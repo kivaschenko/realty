@@ -100,7 +100,7 @@ class Offer(models.Model):
                     verbose_name="Тип об'єкта", default='flat')
     price = models.PositiveIntegerField(verbose_name='Ціна')
     currency = models.CharField(verbose_name='Валюта', max_length=3,
-             choices=(('USD', 'USD'),), blank=False, default='USD',)
+             choices=(('UAH', 'грн.'),('USD', 'USD'),), blank=False, default='USD',)
     # COLLABORATION
     agree_price = models.BooleanField('Договірна')
     no_commission = models.BooleanField(verbose_name='Без комісії')
@@ -166,8 +166,8 @@ class Offer(models.Model):
     high_speed_internet = models.BooleanField(
                         verbose_name='Швидкісний інтернет')
     tv = models.BooleanField(verbose_name='Телевізор')
-    cable_digital_tv = models.BooleanField(verbose_name='Кабельнеб цифрове ТБ')
-    satellite_tv = models.BooleanField(verbose_name='Супутникове ТБ')
+    cable_digital_tv = models.BooleanField(verbose_name='Кабельнеб або супутникове ТБ')
+
     # ADDRESS
     address = models.CharField(max_length=255, verbose_name='Адреса', null=True, blank=True)
     # INVISIBLE FIELDS IN FORM

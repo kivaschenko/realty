@@ -37,6 +37,7 @@ def flats_map(request):
     else:
         max_price = 10000000
     object_list = Offer.objects.filter(
+                archive=False).filter(
                 price__gte=min_price
                 ).filter(
                 price__lte=max_price
@@ -68,7 +69,7 @@ def delete_offer(request, pk):
     try:
         offer = Offer.objects.get(pk=pk)
         if offer.created_by == request.user:
-            offer.delete()
+            offer.archive = True
             messages.success(request, "Оголошення видалено!")
             return HttpResponseRedirect('/')
         else:
@@ -120,16 +121,6 @@ class OfferList(generic.ListView):
     """
     model = Offer
     paginate_by = 10
-    form_class = SearchForm()
-
-def offer_list(request):
-    form = SearchForm(request.GET)
-    try:
-        object_list = Offer.objects.all()
-    except:
-        object_list = []
-    return render(request, template_name="flats/offer_list.html",
-                  context={'form':form, 'object_list':object_list})
 
 
 def details(request, pk, slug):
@@ -194,7 +185,7 @@ def details(request, pk, slug):
 
 def type_offer(request, type_offer):
     try:
-        queryset = Offer.objects.filter(type_offer=type_offer).all()
+        queryset = Offer.objects.filter(archive=False).filter(type_offer=type_offer).all()
         type = queryset[0].get_type_offer_display
     except:
         return HttpResponse("Поки що немає таких оголошень")
@@ -222,15 +213,10 @@ class SearchResultsView(generic.ListView):
         search_vector = SearchVector('title', 'body', 'address')
         search_rank = SearchRank(search_vector, search_query)
         trigram_similarity = TrigramSimilarity('title', query)
-        object_list = Offer.objects.annotate(
-            search=search_vector
-            ).filter(
-                search=search_query
-            ).annotate(
-                rank=search_rank + trigram_similarity
-            ).order_by('-rank')
+        object_list = Offer.objects.filter(archive=False).annotate(
+                search=search_vector).filter(search=search_query
+                ).annotate(rank=search_rank + trigram_similarity
+                ).order_by('-rank')
 
         return object_list
 
-##=========================================================
-## PERMISSION FOR ADD MORE THAN ONE OFFER

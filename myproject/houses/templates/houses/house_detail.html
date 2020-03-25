@@ -79,7 +79,6 @@ style="font-family: 'Lobster', cursive; font-size: 20px;">
 </form>
 {%endif%}
 <br />
-
 </div>
 <!-- Second column -->
 <div class="col-sm-8" style="background-color:lavenderblush;">
@@ -106,26 +105,6 @@ style="font-family: 'Lobster', cursive; font-size: 20px;">
 <th scope="row">Тип будинку</th>
 <td>{{object.get_MSSubClass_display}}</td>
 </tr>
-{%if object.YearBuilt%}
-<tr>
-<th scope="row">Рік будівництва</th>
-<td>{{object.YearBuilt}}</td>
-</tr>
-{%endif%}
-{%if object.YearRenovation%}
-<tr>
-<th scope="row">Рік останньої реновації</th>
-<td>{{object.YearRenovation}}</td>
-</tr>
-{%endif%}
-<tr>
-<th scope="row">Архітектурний стиль</th>
-<td>{{object.get_Architecture_display}}</td>
-</tr>
-<tr>
-<th scope="row">Зонування</th>
-<td>{{object.get_MSZoning_display}}</td>
-</tr>
 <tr>
 <th scope="row">Матеріал стін</th>
 <td>{{object.get_Walls_display}}</td>
@@ -134,128 +113,56 @@ style="font-family: 'Lobster', cursive; font-size: 20px;">
 <th scope="row">Матеріал даху</th>
 <td>{{object.get_RoofMatl_display}}</td>
 </tr>
-<tr>
-<th scope="row">Фундамент</th>
-<td>{{object.Foundation}}
-</tr>
-{%if object.FirstFloor %}
-<tr>
-<th scope="row">Загальна площа 1 поверху</th>
-<td>{{object.FirstFloor}}</td>
-</tr>
-{%endif%}
-{%if object.SecondFloor%}
-<tr>
-<th scope="row">Площа 2-го поверху</th>
-<td>{{object.SecondFloor}}</td>
-</tr>
-{%endif%}
-{%if object.LowQualFinSF%}
-<tr>
-<th scope="row">
-Площа де ремонт незакінчено або обробка інтер'єру низької якості, усі поверхи, кв.м
-</th>
-<td>{{object.LowQualFinSF}}</td>
-</tr>
-{%endif%}
-{%if object.GrLivArea%}
-<tr>
-<th scope="row">
-Уся житлова площа над рівнем землі, кв.м
-</th>
-<td>
-{{object.GrLivArea}}
-</td>
-</tr>
-{%endif%}
-
-{%if object.Bedroom%}
-<tr>
-<th scope="row">Кількість спалень над рівнем землі</th>
-<td>{{object.Bedroom}}</td>
-</tr>
-{%endif%}
-
-{%if object.TotRmsAbvGrd%}
-<tr>
-<th scope="row">Кількість кімнат над рівнем землі</th>
-<td>{{object.TotRmsAbvGrd}}</td>
-</tr>
-{%endif%}
-<tr>
-<th scpope="row">Загальний стан кухні</th>
-<td>{{object.get_Kitchen_display}}</td>
-</tr>
-<tr>
-<th scope="row">Санвузол</th>
-<td>{{object.get_Bathroom_display}}</td>
-</tr>
-<tr>
-<th scope="row">Ремонт</th>
-<td>{{object.get_Repair_display}}</td>
-</tr>
-<tr>
-<th scope="row">Опалення</th>
-<td>{{object.get_Heating_display}}</td>
-</tr>
+{%if object.GrLivArea%}<tr><th scope="row">Уся житлова площа, кв.м</th>
+  <td>{{object.GrLivArea}}</td></tr>{%endif%}
+{%if object.Bedroom%}<tr><th scope="row">Кількість спалень</th>
+<td>{{object.Bedroom}}</td></tr>{%endif%}
+{%if object.TotRmsAbvGrd%}<tr>
+  <th scope="row">Кількість кімнат</th>
+<td>{{object.TotRmsAbvGrd}}</td></tr>{%endif%}
+<tr><th scpope="row">Загальний стан кухні</th>
+  <td>{{object.get_Kitchen_display}}</td></tr>
+<tr><th scope="row">Санвузол</th><td>{{object.get_Bathroom_display}}</td></tr>
+<tr><th scope="row">Ремонт</th><td>{{object.get_Repair_display}}</td></tr>
+<tr><th scope="row">Опалення</th><td>{{object.get_Heating_display}}</td></tr>
+<tr><th scope="row">Гараж</th><td>{{ object.get_GarageType_display }}</td></tr>
+<tr><th scope="row">Паркан, огорожа</th><td>{{ <object.get_Fence_display }}</td></tr>
 </tbody>
 </table>
 <br>
 <h3>Земельна ділянка власності</h3>
 <table class="table table-striped">
 <thead>
-<tr>
-<th scope="col">Характеристика</th>
-<th scope="col">Значення</th>
-</tr>
+  <tr><th scope="col">Характеристика</th><th scope="col">Значення</th></tr>
 </thead>
 <tbody>
-<tr>
-<th scope="row">Загальна площа земельної ділянки, га</th>
-<td>{%if object.LandArea%}{{object.LandArea}}{%else%}не вказано{%endif%}</td>
+  <tr><th scope="row">Загальна площа земельної ділянки, га</th>
+  <td>{%if object.LandArea%}{{object.LandArea}}{%else%}не вказано{%endif%}</td>
 </tr>
 <tr>
-<th scope="row">Лицьова сторона власності, метрів</th>
-<td>{%if object.LotFrontage%}{{object.LotFrontage}}{%else%}не вказано{%endif%}</td>
+  <th scope="row">Кадастровий номер</th>
+  <td>{% if object.CadastrNumber %}{{ object.CadastrNumber }}{% else %}не вказано{%endif%}</td>
 </tr>
 <tr>
-<th scope="row">Форма земельної ділянки</th>
-<td>{{object.get_LotShape_display}}</td>
+  <th scope="row">Форма земельної ділянки</th>
+  <td>{{object.get_LotShape_display}}</td>
 </tr>
 <tr>
-<th scope="row">Плоскість власності</th>
-<td>{{object.get_LandContour_display}}</td>
+  <th scope="row">Плоскість власності</th>
+  <td>{{object.get_LandContour_display}}</td>
 </tr>
 </tbody>
 </table>
 <br>
-<h3>Екстер'єр</h3>
-<table class="table table-striped">
-<thead>
-<th scope="col">Характеристика</th>
-<th scope="col">Значення</th>
-</thead>
-<tbody>
-<tr>
-<th scope="row">Матеріали фінішної обробки фасаду</th>
-<td>{{object.Exterior}}</td>
-</tr>
-<tr>
-<th scope="row">Загальний стан екстер'єру будинку</th>
-<td>{{object.get_ExterCond_display}}</td>
-</tr>
-</tbody>
-</table>
-
 
 <h3>Побутова техніка</h3>
 <table class="table table-striped">
-<thead>
-<tr>
-<th scope="col">Прилад</th>
-<th scope="col">Наявність</th>
-</tr>
-</thead>
+  <thead>
+    <tr>
+      <th scope="col">Прилад</th>
+      <th scope="col">Наявність</th>
+    </tr>
+  </thead>
 <tbody>
 <tr>
 <th scope="row">Плита</th>

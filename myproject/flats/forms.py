@@ -21,7 +21,7 @@ class OfferCreateForm(ModelForm):
     class Meta:
         model = Offer
         exclude = ['address', 'created_by', 'num_visits', 'slug', 'pub_date',
-                'archive', 'archivated_date']
+                'archive', 'archivated_date', 'currency']
         widgets = {
         'geometry': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS),
     }
@@ -33,7 +33,8 @@ class OfferUpdateForm(ModelForm):
     class Meta:
         model = Offer
         exclude = ['address', 'created_by', 'num_visits', 'slug', 'pub_date',
-                'archive', 'archivated_date', 'geometry', 'title', 'type_offer']
+                'archive', 'archivated_date', 'geometry', 'title', 'type_offer',
+                'currency']
         widgets = {
                 'geometry': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS),
         }

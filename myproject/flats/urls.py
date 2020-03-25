@@ -2,7 +2,7 @@ from django.urls import path
 from flats.views import *
 
 urlpatterns = [
-    path('list/', offer_list, name='flats'),
+    path('list/', OfferList.as_view(), name='flats'),
     path('<int:pk>/<slug>/', details, name='offer-detail'),
     path('post_offer/', post_offer, name='post_offer'),
     path('edit/<int:pk>/', OfferUpdate.as_view(), name='update_offer'),

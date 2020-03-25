@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% block title %} Список ріелторів Черкас {% endblock %}
+{% block title %} Список ріелторів і продавців житлової нерухомості м. Черкаси {% endblock %}
 
 {% block breadcrumb %}
 <li class="breadcrumb-item active"><a href="{% url 'home' %}">Головна</a>
-<li class="breadcrumb-item">Список ріелторів</a>
+<li class="breadcrumb-item">Список ріелторів і продавців</a>
 {% endblock %}
 
 {%block content%}
@@ -11,13 +11,14 @@
 	{%if object_list%}
 	<ol>
 		{%for object in object_list%}
-		<li style="font-family: 'Lobster', cursive; font-size: 20px; color:darkslategray;"><a href="{%url 'realtor' object.pk%}">
-		{{ object.created_by.first_name }} {{object.created_by.last_name}}</a> | <strong>Агенція: </strong>
-		{%if object.agency%} 
+		<li style="font-family: 'Lobster', cursive; font-size: 20px; color:darkslategray;">
+			<a href="{%url 'realtor' object.pk%}">
+		{{ object.created_by.first_name }} {{object.created_by.last_name}}</a> |
+		{%if object.agency%} <strong>Агенція: </strong>
 		<a href="{% url 'agency' object.agency.pk object.agency.slug %}">
 		{{object.agency.name}}</a>
 		{%else%}
-		<em>Агенція не вказано</em>
+		<em>Агенція не вказана</em>
 		{%endif%}
 		</li>
 		{%endfor%}

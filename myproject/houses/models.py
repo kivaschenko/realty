@@ -25,12 +25,9 @@ class House(models.Model):
                 default='SALE')
     title = models.CharField(max_length=70, verbose_name='Заголовок',
           help_text='70 знаків', blank=False)
-    price = models.PositiveIntegerField(verbose_name='Ціна')
+    price = models.PositiveIntegerField(verbose_name='Ціна, $')
     currency = models.CharField(verbose_name='Валюта', max_length=3,
-             choices=(
-                 # ('UAH', 'грн.'),
-                 ('USD', 'USD'),
-                 ),
+             choices=(('UAH', 'грн.'), ('USD', 'USD'),),
              blank=False, default='USD',)
 
     # COLLABORATION
@@ -64,51 +61,20 @@ class House(models.Model):
     # MSSubClass: Identifies the type of dwelling involved in the sale.
     MSSubClass = models.CharField(max_length=3,
                 choices=(
-                    ('20',    '1-ПОВЕРХ 2000 І НОВІШИЙ ВСІ СТИЛІ'),
-                    ('30',    '1-ПОВЕРХ 1999 І СТАРІШИЙ'),
-                    ('40',	'1-1/2 ПОВЕРХ МАНСАРДА НЕЗАКІНЧЕНИЙ ВСІ РОКИ'),
-                    ('50',	'1-1/2 ПОВЕРХ МАНСАРДА ЗАКІНЧЕНИЙ ВСІ РОКИ'),
-                    ('60',	'2-ПОВЕРХ 2000 І НОВІШИЙ'),
-                    ('70',	'2-ПОВЕРХ 1999 І СТАРІШИЙ'),
-                    ('75',	'2-1/2 ПОВЕРХ ВСІ РОКИ'),
-                    ('80',	'БАГАТОРІВНЕВИЙ'),
-                    ('90',	'КІЛЬКАПОВЕРХОВИЙ З ФОЙЕ'),
-                    ('110',	'ДУПЛЕКС, ТАУНХАУС - УСІ СТИЛІ 2010 І НОВІШІ'),
-                    ('120',	'1-ПОВЕРХ ТИПОВИЙ РАДЯНСЬКИЙ ПРОЕКТ - 1960 І НОВІШІ'),
-                    ('150',	"НА 2 СІМ'Ї - ТИПОВИЙ РАДЯНСЬКИЙ ПРОЕКТ")),
+                    ('20',  '1-поверховий після 2000р., всі стилі'),
+                    ('30',  '1-поверховий до 1999р.'),
+                    ('40',	'1-поверх + мансарда, Незакінчений всі роки'),
+                    ('50',	'1-поверх + мансарда, Закінчений всі роки'),
+                    ('60',	'2-поверховий після 2000р.'),
+                    ('70',	'2-поверховий до 1999р.'),
+                    ('75',	'2-поверховий + мансарда всі роки'),
+                    ('80',	'Багаторівневий'),
+                    ('90',	'Кількаповерховий з фойе'),
+                    ('110',	'Дуплекс, Таунхаус - усі стилі після 2010р.'),
+                    ('120',	'1-поврховий типовий радянський проект після 1960р.'),
+                    ('150',	"на 2 сім'ї - типовий радянський проект")),
                 verbose_name="Тип об'єкта",
-                help_text='Визначає тип житла, що бере участь у продажу',
                 default='20')
-    YearBuilt = models.CharField(max_length=4, verbose_name="Рік будівництва",
-            null=True, blank=True)
-    YearRenovation = models.CharField(max_length=4,
-            verbose_name="Рік останньої реновації",  null=True, blank=True)
-    Architecture = models.CharField(max_length=20, verbose_name="Архітектурний стиль",
-            choices=(
-                ('empire', 'ампір'),
-                ('classicism', 'класицизм'),
-                ('chalet', 'шале'),
-                ('constructivism', 'конструктивізм'),
-                ('hi-tech', 'хай-тек'),
-                ('renaissance', 'ренесанс'),
-                ('baroque', 'барокко'),
-                ('modern', 'модерн'),
-                ('other', 'інший'),),
-            default='classicism')
-    # MSZoning: Identifies the general zoning classification of the sale.
-    MSZoning = models.CharField(verbose_name='Зонування', max_length=3,
-            choices=(
-                ('A',	'СІЛЬСЬКЕ ГОСПОДАРСТВО'),
-                ('C',	'КОМЕРЦІЙНА'),
-                ('FV',	'ПРИМІСЬКА'),
-                ('I',	'ПРОМИСЛОВА'),
-                ('RH',	'ВИСОКА ЩІЛЬНІСТЬ ЗАБУДОВИ'),
-                ('RL',	'НИЗЬКА ЩІЛЬНІСТЬ ЗАБУДОВИ'),
-                ('RP',	'КОТЕДЖНЕ МІСТЕЧКО З НИЗЬКОЮ ЩІЛЬНІСТЮ ЗАБУДОВИ'),
-                ('RM',	'СЕРЕДНЯ ЩІЛЬНІСТЬ ЗАБУДОВИ')),
-            default='A',
-            help_text="Визначає загальну класифікацію зонування продажу")
-
     # Walls
     Walls = models.CharField(max_length=20, verbose_name="Основний матеріал стін",
             choices=(
@@ -134,19 +100,11 @@ class House(models.Model):
                 ('Other', 'Інше'),
             ),
             default='Other')
-    Foundation = models.CharField(max_length=255, verbose_name="Матеріал, тип, глибина, стан фундаменту",
+    GrLivArea = models.CharField(max_length=20, verbose_name="Уся житлова площа, кв.м",
                 null=True, blank=True)
-    FirstFloor = models.CharField(max_length=20, verbose_name="Загальна площа 1 поверху, кв.м",
+    Bedroom = models.CharField(max_length=2, verbose_name="Кількість спалень",
                 null=True, blank=True)
-    SecondFloor = models.CharField(max_length=20, verbose_name="Площа 2-го поверху",
-                null=True, blank=True)
-    LowQualFinSF = models.CharField(max_length=20, verbose_name="Площа де ремонт незакінчено або обробка інтер'єру низької якості, усі поверхи, кв.м",
-                null=True, blank=True)
-    GrLivArea = models.CharField(max_length=20, verbose_name="Уся житлова площа над рівнем землі, кв.м",
-                null=True, blank=True)
-    Bedroom = models.CharField(max_length=2, verbose_name="Кількість спалень над рівнем землі",
-                null=True, blank=True)
-    TotRmsAbvGrd = models.CharField(max_length=2, verbose_name="Кількість кімнат над рівнем землі",
+    TotRmsAbvGrd = models.CharField(max_length=2, verbose_name="Кількість кімнат",
                 null=True, blank=True)
     Kitchen = models.CharField(max_length=2, verbose_name="Загальний стан кухні",
             choices=(
@@ -185,13 +143,32 @@ class House(models.Model):
                 ('combination', 'Комбіноване'),
                 ('other', 'Інше'),),
             default='other')
+    # GARAGE
+    # GarageType: Garage location
+    GarageType = models.CharField(max_length=20, verbose_name="Гараж",
+                choices=(
+                    ('2Types', 'Більше чим 1 тип гаражу'),
+                    ('Attchd', 'Гараж приєднаний до будинку'),
+                    ('Basment', 'Гараж у фундаменті, підземний'),
+                    ('BuiltIn', 'Гараж - частина будинку, має кімнату зверху'),
+                    ('CarPort', 'Навіс для машини'),
+                    ('Detchd', 'Гараж окремо від будинку'),
+                    ('NA', 'Немає гаражу'),),
+                default='NA')
+    # FENCE
+    Fence = models.CharField(max_length=6, verbose_name="Паркан, огорожа",
+            choices=(
+                ('GdPrv', 'Добре захищена приватність'),
+                ('MnPrv', 'Мінімальна приватність'),
+                ('BadPrv', 'Погано захищена приватність'),
+                ('NA', 'Немає огорожі')),
+            default='GdPrv')
     # LAND CONTOUR
     # LandArea: Total square meter of land
     LandArea = models.DecimalField(verbose_name='Загальна площа земельної ділянки, га',
              max_digits=10, decimal_places=2, null=True, blank=True)
-    # LotFrontage: Linear feet of street connected to property
-    LotFrontage = models.PositiveIntegerField(verbose_name="Лицьова сторона власності, метрів",
-                help_text="Довжина вулиці в метрах, де приєднана власність", null=True, blank=True)
+    CadastrNumber = models.CharField(verbose_name='Кадастровий номер',
+            max_length=30, blank=True, null=True)
     # LotShape: General shape of property
     LotShape = models.CharField(max_length=3, verbose_name="Форма земельної ділянки",
             choices=(
@@ -209,74 +186,6 @@ class House(models.Model):
                     ('Low', 'Нижче рівня вулиці, улоговина'),
                     ('Slp', 'Помірний рівномірний схил')),
                 default='Lvl')
-    # EXTERIOR
-    Exterior = models.CharField(max_length=160, verbose_name="Матеріали фінішної обробки фасаду",
-            null=True, blank=True)
-    ExterCond = models.CharField(max_length=2, verbose_name="Загальний стан екстер'єру будинку",
-            choices=(
-                ('Ex', 'Преміум'),
-                ('Gd', 'Добрий'),
-                ('TA', 'Середній'),
-                ('Fa', 'Мінімально достатній'),
-                ('Po', 'Бідний')),
-                default='TA')
-    # GARAGE
-    # GarageType: Garage location
-    GarageType = models.CharField(max_length=20, verbose_name="Тип гаражу",
-                choices=(
-                    ('2Types', 'Більше чим 1 тип гаражу'),
-                    ('Attchd', 'Гараж приєднаний до будинку'),
-                    ('Basment', 'Гараж у фундаменті, підземний'),
-                    ('BuiltIn', 'Гараж - частина будинку, має кімнату зверху'),
-                    ('CarPort', 'Навіс для машини'),
-                    ('Detchd', 'Гараж окремо від будинку'),
-                    ('NA', 'Немає гаражу'),),
-                default='NA')
-    GarageYrBlt = models.CharField(max_length=4, verbose_name='Рік побудови гаражу',
-            null=True, blank=True)
-    GarageFinish = models.CharField(max_length=3, verbose_name="Інтер'єр, обробка",
-                choices=(
-                    ('Fin', 'Закінчена, чистова'),
-                    ('Rfn', 'Чорнова, часткова'),
-                    ('Unf', 'Незакінчена'),
-                    ('NA', 'Немає гаражу')),
-                default='NA')
-    GarageCars = models.CharField(max_length=1, verbose_name='Розмір гаражу, кількість машин',
-                null=True, blank=True)
-    GarageArea = models.CharField(max_length=7, verbose_name='Площа гаражу, кв.м',
-                null=True, blank=True)
-    GarageCond = models.CharField(max_length=2, verbose_name='Загальний стан гаражу',
-                choices=(
-                    ('Ex', 'Преміум'),
-                    ('Gd', 'Добре'),
-                    ('TA', 'Типова/середня'),
-                    ('Fa', 'Достатньо чисто'),
-                    ('Po', 'Бідно'),
-                    ('NA', 'Немає гаражу')),
-                default='NA')
-    # POOL
-    PoolArea = models.CharField(max_length=7, verbose_name='Загальна площа басейну, кв.м',
-                null=True, blank=True)
-    PoolQC = models.CharField(max_length=2, verbose_name='Загальний стан басейну',
-                choices=(
-                    ('Ex', 'Преміум'),
-                    ('Gd', 'Добре'),
-                    ('TA', 'Типова/середня'),
-                    ('Fa', 'Достатньо чисто'),
-                    ('Po', 'Бідно'),
-                    ('NA', 'Немає басейну')),
-                default='NA')
-    # FENCE
-    Fence = models.CharField(max_length=6, verbose_name="Якість паркану, огорожі",
-            choices=(
-                ('GdPrv', 'Добре захищена приватність'),
-                ('MnPrv', 'Мінімальна приватність'),
-                ('BadPrv', 'Погано захищена приватність'),
-                ('NA', 'Немає огорожі')),
-            default='NA')
-    # FIREPLACE
-    Fireplace = models.CharField(max_length=160, verbose_name="Камін, тип, якість, стан",
-                null=True, blank=True)
     # BODY TEXT
     body = models.TextField(max_length=4000, verbose_name='Опис',
             help_text="<em>до 4000 знаків</em>")
@@ -295,11 +204,11 @@ class House(models.Model):
     high_speed_internet = models.BooleanField(
                         verbose_name='Швидкісний інтернет')
     tv = models.BooleanField(verbose_name='Телевізор')
-    cable_digital_tv = models.BooleanField(verbose_name='Кабельнеб цифрове ТБ')
-    satellite_tv = models.BooleanField(verbose_name='Супутникове ТБ')
+    cable_digital_tv = models.BooleanField(verbose_name='Кабельне або супутникове ТБ')
 
     # ADDRESS
-    address = models.CharField(max_length=255, verbose_name='Адреса', null=True, blank=True)
+    address = models.CharField(max_length=255, verbose_name='Адреса', null=True,
+            blank=True)
     # INVISIBLE FIELDS IN FORM
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL,
                related_name='houses', verbose_name='Власник оголошення',
