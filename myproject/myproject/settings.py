@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'leaflet',  # new
     'geopy', #<- new
     'django_unused_media', #<- new
-    'crispy_forms', #<- new
+
     # insiders
     'flats',
     'accounts',
