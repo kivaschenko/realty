@@ -18,11 +18,11 @@
   <div class="col">
     <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    <p>{{ form.as_p }}</p>
+    <table>{{ form.as_table }}</table>
     <input type="submit" class="btn btn-success" value=" Змінити ">
     </form>
     <br>
-    <a href="{%url 'offer_delete' object.pk%}" class="btn btn-danger"> Видалити </a>  
+    <a href="{%url 'offer_delete' object.pk%}" class="btn btn-danger"> Видалити </a>
   </div>
 </div>
 {% endblock%}

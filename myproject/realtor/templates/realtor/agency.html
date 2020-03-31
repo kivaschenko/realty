@@ -22,6 +22,10 @@
     {% if object.logo %}
       <img src="{{ object.logo.url }}" class="img-thumbnail"
       alt="Фото " style="width:300px;">
+    {% else %}
+    <div class="card" style="width:300px;">
+      <img class="card-img-top" src="..." alt="Logo agency">
+    </div>
     {% endif %}
       <br>
       <br>
@@ -32,7 +36,7 @@
       <p><em>Переглядів сторінки: {{object.num_visits}}</em></p>
     {% endif %}
     <!-- here map-->
-    {% include 'realtor/include/agency_map.html' %} 
+    {% include 'realtor/include/agency_map.html' %}
   </div>
   <div class="col-sm-6">
     <dl>
@@ -64,7 +68,7 @@
       <div class="card">
         <div class="card-body">
         <h3 class="card-title">Ріелтори агенства</h3>
-        
+
         {% if realtor_list%}
         {% for object in realtor_list%}
         <ol>
@@ -81,7 +85,7 @@
         <p>Тут поки ще немає ріелторів</p>
         {%endif%}
         </div>
-      </div>       
+      </div>
     </div>
   </div>
 </div>
