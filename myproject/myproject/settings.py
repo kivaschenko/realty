@@ -174,3 +174,6 @@ DEFAULT_TO_EMAIL = 'info@cherkasyrealestate.org.ua'
 #     'NO_GLOBALS' : True,
 #     'DRAW_MARKER': True,
 # }
+
+CAPTCHA_SITE_KEY = '6LcspOYUAAAAAJoiZmQKvKCXWE_nrB_-3c3oRsjE'
+CAPTCHA_SECRET_KEY = '6LcspOYUAAAAAEuSGMCvWCU96U9Y1yZcWfPFsVck'
