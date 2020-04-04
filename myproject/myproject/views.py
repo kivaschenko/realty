@@ -1,8 +1,3 @@
-
-import urllib
-import urllib2
-import json
-from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib import messages
 from django.shortcuts import render
@@ -23,26 +18,8 @@ def contact(request):
             if cc_myself:
                 recipients.append(email)
 
-            ''' Begin reCAPTCHA validation '''
-            recaptcha_response = request.POST.get('g-recaptcha-response')
-            url = 'https://www.google.com/recaptcha/api/siteverify'
-            values = {
-                'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
-                'response': recaptcha_response
-            }
-            data = urllib.urlencode(values)
-            req = urllib2.Request(url, data)
-            response = urllib2.urlopen(req)
-            result = json.load(response)
-            ''' End reCAPTCHA validation '''
-
-            if result['success']:
-                form.save()
-                messages.success(request, 'Ваше повідомлення відправлено!')
-            else:
-                messages.error(request, 'Помилка reCAPTCHA. пробуйте ще раз.')
-            send_mail(subject, message, email, recipients)
-            
+            messages.success(request, 'Ваше повідомлення відправлено!')
+            send_mail(subject, message, email, recipients) 
             return HttpResponseRedirect('/')
     else:
         form = ContactForm()
