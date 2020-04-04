@@ -46,4 +46,4 @@ def contact(request):
             return HttpResponseRedirect('/')
     else:
         form = ContactForm()
-    return render(request, 'contact.html', {'form':form, 'recaptcha_site_key': settings.GOOGLE_RECAPTCHA_SITE_KEY})
+    return render(request, 'contact.html', {'form':form})
