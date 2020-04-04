@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'leaflet',  # new
     'geopy', #<- new
     'django_unused_media', #<- new
-    'crispy_forms', #<- new
+
     # insiders
     'flats',
     'accounts',
@@ -174,3 +174,6 @@ DEFAULT_TO_EMAIL = 'info@cherkasyrealestate.org.ua'
 #     'NO_GLOBALS' : True,
 #     'DRAW_MARKER': True,
 # }
+
+GOOGLE_RECAPTCHA_SITE_KEY = '6LcspOYUAAAAAJoiZmQKvKCXWE_nrB_-3c3oRsjE'
+GOOGLE_RECAPTCHA_SECRET_KEY = '6LcspOYUAAAAAEuSGMCvWCU96U9Y1yZcWfPFsVck'

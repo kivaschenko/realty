@@ -1,7 +1,6 @@
 asgiref==3.2.3
 beautifulsoup4==4.8.2
 Django==2.2.7
-django-crispy-forms==1.9.0
 django-leaflet==0.26.0
 django-unused-media==0.1.13
 geographiclib==1.50

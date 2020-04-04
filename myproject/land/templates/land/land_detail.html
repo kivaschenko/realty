@@ -158,39 +158,17 @@
   </div>
   <div class="col-sm-8" style="background-color:lavenderblush;">
     <h2>Опис об'єкту</h2>
-    <div class="col">
-      {{ object.body |linebreaks }}
+    {{ object.body |linebreaks }}
+    <br />
+    {% if object.image1%}<img src="{{object.image1.url}}" alt="{{object.title}} - світлина 1" class="img-thumbnail">{%endif%}
+    {% if object.image2 %}<img src="{{object.image2.url}}" alt="{{object.title}} - світлина 2" class="img-thumbnail">{%endif%}
+    {% if object.image3 %}<img src="{{object.image3.url}}" alt="{{object.title}} - світлина 3" class="img-thumbnail">{%endif%}
+    {% if object.image4 %}<img src="{{object.image4.url}}" alt="{{object.title}} - світлина 4" class="img-thumbnail">{%endif%}
+    {% if object.image5 %}<img src="{{object.image5.url}}" alt="{{object.title}} - світлина 5" class="img-thumbnail">{%endif%}
+    {% if object.image6 %}<img src="{{object.image6.url}}" alt="{{object.title}} - світлина 6" class="img-thumbnail">{%endif%}
+    {% if object.image7 %}<img src="{{object.image7.url}}" alt="{{object.title}} - світлина 7" class="img-thumbnail">{%endif%}
+    {% if object.image8 %}<img src="{{object.image8.url}}" alt="{{object.title}} - світлина 8" class="img-thumbnail">{%endif%}
+    {% if object.image9 %}<img src="{{object.image9.url}}" alt="{{object.title}} - світлина 9" class="img-thumbnail">{%endif%}
     </div>
-      <br />
-    <div class="row">
-      {% if object.image1%}
-      <img src="{{object.image1.url}}" alt="{{object.title}} - світлина 1" class="img-thumbnail">
-      {%endif%}
-      {% if object.image2 %}
-      <img src="{{object.image2.url}}" alt="{{object.title}} - світлина 2" class="img-thumbnail">
-      {%endif%}
-      {% if object.image3 %}
-      <img src="{{object.image3.url}}" alt="{{object.title}} - світлина 3" class="img-thumbnail">
-      {%endif%}
-      {% if object.image4 %}
-      <img src="{{object.image4.url}}" alt="{{object.title}} - світлина 4" class="img-thumbnail">
-      {%endif%}
-      {% if object.image5 %}
-      <img src="{{object.image5.url}}" alt="{{object.title}} - світлина 5" class="img-thumbnail">
-      {%endif%}
-      {% if object.image6 %}
-      <img src="{{object.image6.url}}" alt="{{object.title}} - світлина 6" class="img-thumbnail">
-      {%endif%}
-      {% if object.image7 %}
-      <img src="{{object.image7.url}}" alt="{{object.title}} - світлина 7" class="img-thumbnail">
-      {%endif%}
-      {% if object.image8 %}
-      <img src="{{object.image8.url}}" alt="{{object.title}} - світлина 8" class="img-thumbnail">
-      {%endif%}
-      {% if object.image9 %}
-      <img src="{{object.image9.url}}" alt="{{object.title}} - світлина 9" class="img-thumbnail">
-      {%endif%}
     </div>
-  </div>
-</div>
-{% endblock content %}
+    {% endblock content %}
