@@ -27,6 +27,7 @@ DEBUG =  False
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
+    '0.0.0.0',
     '138.68.7.116',
     'www.cherkasyrealestate.org.ua',
     'cherkasyrealestate.org.ua',

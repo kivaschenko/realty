@@ -9,7 +9,7 @@
 {%block content%}
 <div class="container">
 	{%if object_list%}
-	<ol>
+	<ul>
 		{%for object in object_list%}
 		<li style="font-family: 'Lobster', cursive; font-size: 20px; color:darkslategray;">
 			<a href="{%url 'realtor' object.pk%}">
@@ -22,7 +22,7 @@
 		{%endif%}
 		</li>
 		{%endfor%}
-	</ol>
+	</ul>
 	{%else%}
 	<p>тут поки що немає зареєстрованих ріелторів. Ви можете стати першим.</p>
 	{%endif%}
