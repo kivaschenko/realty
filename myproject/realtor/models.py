@@ -166,6 +166,7 @@ class Dollar(models.Model):
         return f"{self.curse} - {self.pub_date}"
 
 
+
 class StatisticUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,
                                 verbose_name="User")

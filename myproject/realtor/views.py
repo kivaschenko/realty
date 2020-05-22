@@ -2,7 +2,7 @@ import random
 import urllib.request
 from bs4 import BeautifulSoup as BS
 from django.shortcuts import render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.db.models import Q
 from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden
@@ -20,9 +20,6 @@ from .models import Realtor, Agency, Dollar
 from flats.models import Offer
 from houses.models import House
 from land.models import Land
-
-# for parsing curse dollar
-URL = 'https://www.oschadbank.ua/ua/private/currency'
 
 
 @login_required
@@ -169,18 +166,37 @@ class RealtorList(generic.ListView):
 
 
 def get_curse(request):
+    # for parsing curse dollar
+    URL = 'https://www.oschadbank.ua/ua'
     with urllib.request.urlopen(URL) as response:
         html = response.read()
 
     soup = BS(html, features="html.parser")
+# class="sell-USD" data-sell="26.9800"
+    # usd = soup.span.find("sell-USD")
+    # print(usd)
     # full html table to insert into page:
-    table = soup.find_all(id='currency_date_result')[0]
-    tr = table.find_all('tr', limit=2)
-    usd = tr[1].find_all('td')[-1].text  # '26.85'
-    # curse = float(usd.split('.')[0].replace(',', '.')) # 24.55
+    # table = soup.find_all(id='currency_date_result')[0]
+    # tr = table.find_all('tr', limit=2)
+    # usd = tr[1].find_all('td')[-1].text  # '26.85'
+    # # curse = float(usd.split('.')[0].replace(',', '.')) # 24.55
     curse = float(usd)
     usd = Dollar(curse=curse)
     usd.save()
     context = {'curse':round(curse, 2)}
     print(context)
     return render(request, 'realtor/get_curse.html', context)
+
+#===============================
+# DOLLAR
+class CreateDollarView(generic.CreateView):
+    """ add new curse dollar
+    """
+    model = Dollar
+    fields = ['curse']
+    template_name = 'realtor/dollar_form.html'
+    success_url = reverse_lazy('dollar_table')
+
+class DollarListView(generic.ListView):
+    model = Dollar 
+    

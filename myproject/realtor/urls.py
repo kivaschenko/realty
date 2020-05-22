@@ -16,5 +16,6 @@ urlpatterns += [
 
 urlpatterns += [
     path('search_agency/', SearchResultsView.as_view(), name='search'),
-    path('get_curse/', get_curse, name='get_curse'),
+    path('get_curse/', CreateDollarView.as_view(), name='get_curse'),
+    path('dollar-table/', DollarListView.as_view(), name='dollar_table'),
 ]

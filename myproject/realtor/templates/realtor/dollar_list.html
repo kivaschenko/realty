@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content%}
+<h2>Курс долара </h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Дата</th>
+            <th>Курс долара</th>
+        </tr>
+    <tbody>
+        {% for object in object_list %}
+        <tr>
+            <td>{{ object.pub_date }}</td>
+            <td>{{ object.curse }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </thead>
+</table>
+{% endblock %}
