@@ -5,7 +5,12 @@ from django.views import generic
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
+from django.http import (
+    Http404,
+    HttpResponse,
+    HttpResponseRedirect,
+    HttpResponseForbidden
+)
 from django.db.models import Q
 from .models import House
 from .forms import HouseForm, HouseUpdateForm, ContactForm, FilterPriceForm
